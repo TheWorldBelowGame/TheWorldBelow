@@ -40,7 +40,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update() {
-		if (!pause && Input.GetButtonDown ("Start")) {
+        /*if (!pause && Input.GetButtonDown ("Start")) {
 			Time.timeScale = 0;
 			Element.insertQueue(_elementQueue, new ElementPause());
 			//pause = true;
@@ -54,12 +54,13 @@ public class Player : MonoBehaviour {
 			pause = false;
 		} else {
 			pause = true;
-		}
-	}
+		}*/
+        Element.updateQueue(_elementQueue);
+    }
 
 	void FixedUpdate()
 	{
-		Element.updateQueue(_elementQueue);
+		//Element.updateQueue(_elementQueue);
 	}
 
 

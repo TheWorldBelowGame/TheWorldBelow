@@ -24,6 +24,7 @@ public class ElementStandardControl : Element
 	
 	public override void update() {
 		if (Input.GetButtonDown ("Jump") && player.grounded) {
+            //Debug.Log("jump");
 			jump = true;
 			player.grounded = false;
 		}
