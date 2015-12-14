@@ -77,7 +77,7 @@ public class Player : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D trigger) {
 		if (trigger.gameObject.tag == "Dialogue trigger") {
 			if (Input.GetButtonDown ("X Button")) {
-				Element.insertQueue(_elementQueue, new ElementDialouge());
+				//Element.insertQueue(_elementQueue, new ElementDialouge());
 			}
 		}
 		if (trigger.gameObject.tag == ("Scene trigger")) {

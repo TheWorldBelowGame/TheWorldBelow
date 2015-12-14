@@ -51,6 +51,12 @@ public class ElementStandardControl : Element
 		
 		// Left and right walk movement
 		player.rb2d.velocity = (new Vector2(h * player.moveForce * jumpmove, player.rb2d.velocity.y));
+        Vector3 scale = player.rb2d.transform.localScale;
+        if (h > 0)
+            scale.x = Mathf.Abs(scale.x);
+        if (h < 0)
+            scale.x = -Mathf.Abs(scale.x);
+        player.rb2d.transform.localScale = scale;
 
 		if (Input.GetButton ("B Button") && player.grounded) {
 			player.rb2d.velocity = (new Vector2(h * player.runForce * jumpmove, player.rb2d.velocity.y));
