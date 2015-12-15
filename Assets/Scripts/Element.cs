@@ -9,9 +9,9 @@ public abstract class Element
 	public virtual void onActive() {}
 	public virtual void update() {}
 	public virtual void onRemove() {}
-	public virtual void onCollision(Collision coll) {}
-	
-	public static void disruptQueue(List<Element> ele_queue, Element ele)
+    public virtual void onTrigger2D(Collider2D coll) {}
+
+    public static void disruptQueue(List<Element> ele_queue, Element ele)
 	{
 		if(ele_queue.Count > 0)
 		{
@@ -65,5 +65,12 @@ public abstract class Element
 			}
 		}
 	}
+
+    public static void trigger2DQueue(List<Element> ele_queue, Collider2D coll)
+    {
+        if (ele_queue.Count > 0) {
+            ele_queue[0].onTrigger2D(coll);
+        }
+    }
 }
 
