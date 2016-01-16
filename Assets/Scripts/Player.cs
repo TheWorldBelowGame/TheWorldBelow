@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
 	public float runForce = 500f;
 	public float jumpForce = 1000f;
 	public float jumpTime = 1f;
+	public bool doubleJump = true;
 
 	//private Animator anim;
 	[HideInInspector] public Rigidbody2D rb2d;

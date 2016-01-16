@@ -9,6 +9,7 @@ public class ElementStandardControl : Element
 	private bool jump;
 	private bool running;
 	private float timer;
+
 	
 	public ElementStandardControl(Player player)
 	{
@@ -23,14 +24,33 @@ public class ElementStandardControl : Element
 	}
 	
 	public override void update() {
-		if (Input.GetButtonDown ("Jump") && player.grounded) {
+
+		//if (Input.GetButtonDown ("Jump") && player.grounded) {
+		if (Input.GetButtonDown ("Jump")) {
             //Debug.Log("jump");
 			jump = true;
-			player.grounded = false;
+			//player.grounded = false;
 		}
+
 		float h = Input.GetAxis("Horizontal");
 		float jumpmove;
+
+		// Seeing if the player is running or walking
+		if (Input.GetButton ("B Button") && player.grounded) {
+			running = true;
+			//Debug.Log ("running");
+		} else {
+			running = false;
+			//Debug.Log ("walking");
+		}
 		
+		if (player.grounded && running) {
+			jumpmove = 2f;
+		} else {
+			jumpmove = 1f;
+		}
+
+		// Jumping
 		if (jump) {
 			// Add a vertical force to the player.
 			if (timer > 0) {
@@ -42,15 +62,15 @@ public class ElementStandardControl : Element
 				timer = player.jumpTime;
 			}
 		}
-		
-		if (player.grounded && running) {
-			jumpmove = 1f;
-		} else {
-			jumpmove = 1f;
-		}
+
+
 		
 		// Left and right walk movement
-		player.rb2d.velocity = (new Vector2(h * player.moveForce * jumpmove, player.rb2d.velocity.y));
+		if (running == true) {
+			player.rb2d.velocity = (new Vector2 (h * player.runForce * jumpmove, player.rb2d.velocity.y));
+		} else{
+			player.rb2d.velocity = (new Vector2 (h * player.moveForce * jumpmove, player.rb2d.velocity.y));
+		}
         Vector3 scale = player.rb2d.transform.localScale;
         if (h > 0)
             scale.x = Mathf.Abs(scale.x);
@@ -58,10 +78,6 @@ public class ElementStandardControl : Element
             scale.x = -Mathf.Abs(scale.x);
         player.rb2d.transform.localScale = scale;
 
-		if (Input.GetButton ("B Button") && player.grounded) {
-			player.rb2d.velocity = (new Vector2(h * player.runForce * jumpmove, player.rb2d.velocity.y));
-			running = true;
-		}
 	}
 	
 	public override void onRemove() {
