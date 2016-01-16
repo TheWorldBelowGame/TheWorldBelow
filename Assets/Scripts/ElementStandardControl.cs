@@ -9,6 +9,8 @@ public class ElementStandardControl : Element
 	private bool jump;
 	private bool running;
 	private float timer;
+    private float attack_timer;
+    private bool attacked;
 
 	
 	public ElementStandardControl(Player player)
@@ -20,7 +22,9 @@ public class ElementStandardControl : Element
 	{
 		//player.GetComponent<SimplePlatformController>().enabled = true;
 		timer = player.jumpTime;
-		
+        attack_timer = player.attack_speed;
+        attacked = false;
+        player.sword.SetActive(false);
 	}
 	
 	public override void update() {
@@ -77,6 +81,20 @@ public class ElementStandardControl : Element
         if (h < 0)
             scale.x = -Mathf.Abs(scale.x);
         player.rb2d.transform.localScale = scale;
+
+        if (Input.GetButtonDown("Fire1")) {
+            player.sword.SetActive(true);
+            attacked = true;
+        }
+
+        if (attacked) {
+            attack_timer -= Time.deltaTime;
+            if (attack_timer <= 0) {
+                attack_timer = player.attack_speed;
+                player.sword.SetActive(false);
+                attacked = false;
+            }
+        }
 
 	}
 	

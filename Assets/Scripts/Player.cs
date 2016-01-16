@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
+    public static Player S;
+
 	[HideInInspector] public bool facingRight = true;
 	[HideInInspector] public bool grounded;
 	public float moveForce = 365f;
@@ -12,6 +14,9 @@ public class Player : MonoBehaviour {
 	public float jumpForce = 1000f;
 	public float jumpTime = 1f;
 	public bool doubleJump = true;
+    public float attack_speed = 0.25f;
+
+    public GameObject sword;
 
 	//private Animator anim;
 	[HideInInspector] public Rigidbody2D rb2d;
@@ -27,6 +32,7 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Awake () 
 	{
+        S = this;
 		//anim = GetComponent<Animator>();
 		rb2d = GetComponent<Rigidbody2D>();
 
@@ -89,4 +95,11 @@ public class Player : MonoBehaviour {
 			}
 		}
 	}
+
+    void OnTriggerEnter2D(Collider2D trigger) {
+        if (trigger.gameObject.tag == "Collectable") {
+            Global.S.collected++;
+            Destroy(trigger.gameObject);
+        }
+    }
 }
