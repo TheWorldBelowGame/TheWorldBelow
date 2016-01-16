@@ -8,7 +8,7 @@ public class ElementStandardControl : Element
 	Player player;
 	private bool jump;
 	private bool running;
-	private float timer;
+	private float jump_timer;
     private float attack_timer;
     private bool attacked;
 
@@ -21,7 +21,7 @@ public class ElementStandardControl : Element
 	public override void onActive()
 	{
 		//player.GetComponent<SimplePlatformController>().enabled = true;
-		timer = player.jumpTime;
+		jump_timer = player.jumpTime;
         attack_timer = player.attack_speed;
         attacked = false;
         player.sword.SetActive(false);
@@ -30,9 +30,10 @@ public class ElementStandardControl : Element
 	public override void update() {
 
 		//if (Input.GetButtonDown ("Jump") && player.grounded) {
-		if (Input.GetButtonDown ("Jump")) {
+		if (Input.GetButtonDown ("Jump") && player.jumps_left > 0) {
             //Debug.Log("jump");
 			jump = true;
+            player.jumps_left--;
 			//player.grounded = false;
 		}
 
@@ -57,13 +58,13 @@ public class ElementStandardControl : Element
 		// Jumping
 		if (jump) {
 			// Add a vertical force to the player.
-			if (timer > 0) {
+			if (jump_timer > 0) {
 				player.rb2d.AddForce(new Vector2(0, player.jumpForce), ForceMode2D.Impulse);
-				timer -= Time.deltaTime;
+				jump_timer -= Time.deltaTime;
 			} else {
 				// Make sure the player can't jump again until the jump conditions from Update are satisfied.
 				jump = false;
-				timer = player.jumpTime;
+				jump_timer = player.jumpTime;
 			}
 		}
 

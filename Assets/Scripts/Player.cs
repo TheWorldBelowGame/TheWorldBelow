@@ -8,7 +8,8 @@ public class Player : MonoBehaviour {
     public static Player S;
 
 	[HideInInspector] public bool facingRight = true;
-	[HideInInspector] public bool grounded;
+    [HideInInspector] public bool grounded;
+    [HideInInspector] public int jumps_left;
 	public float moveForce = 365f;
 	public float runForce = 500f;
 	public float jumpForce = 1000f;
@@ -35,7 +36,8 @@ public class Player : MonoBehaviour {
         S = this;
 		//anim = GetComponent<Animator>();
 		rb2d = GetComponent<Rigidbody2D>();
-
+        jumps_left = 0;
+        grounded = false;
 		//gameObject.layer = 8;
 	}
 	
@@ -75,6 +77,7 @@ public class Player : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D coll) {
 		if (coll.gameObject.tag == "Ground") {
 			grounded = true;
+            jumps_left = 2;
 			//Debug.Log ("grounded");
 		}
 	}
