@@ -17,6 +17,8 @@ public class Player : MonoBehaviour {
 	public bool doubleJump = true;
     public float attack_speed = 0.25f;
 
+	public Animator anim;
+
     public GameObject sword;
 
 	//private Animator anim;
@@ -38,6 +40,7 @@ public class Player : MonoBehaviour {
 		rb2d = GetComponent<Rigidbody2D>();
         jumps_left = 0;
         grounded = false;
+		anim.SetBool("Facing left", false);
 		//gameObject.layer = 8;
 	}
 	
