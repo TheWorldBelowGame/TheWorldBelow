@@ -98,7 +98,7 @@ public class ElementStandardControl : Element
 			attacked = true;
 		}
 
-		if (player.rb2d.velocity.magnitude > 0) {
+		if (h > 0) {
 			player.anim.SetInteger ("State", (int)AnimState.running);
 		} else {
 			player.anim.SetInteger ("State", (int)AnimState.idle);
