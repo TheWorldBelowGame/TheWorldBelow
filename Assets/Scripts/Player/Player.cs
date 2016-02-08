@@ -25,8 +25,7 @@ public class Player : MonoBehaviour {
 	[HideInInspector] public Rigidbody2D rb2d;
 
     public StateMachine player_state_machine;
-
-	[HideInInspector] public List<Element> _elementQueue = new List<Element>();
+    
 	[HideInInspector] public bool pause = false;
 	
 	/*public enum player_state { STUNNED, NORMAL }
@@ -74,15 +73,6 @@ public class Player : MonoBehaviour {
 
 	// Checking if the play has entered a trigger zone -----------------
 	void OnTriggerStay2D(Collider2D trigger) {
-		/*if (trigger.gameObject.tag == "Dialogue trigger") {
-            Sign s = trigger.GetComponent<Sign>();
-            if (Input.GetButtonDown ("Submit")) {
-				if(!s.isBeingRead) {
-                    s.isBeingRead = true;
-                    s.sign_state_machine.ChangeState(new State_Dialogue_Play(s, s.messages, s.dialogue));
-                }
-			}
-		}*/
 		if (trigger.gameObject.tag == ("Scene trigger")) {
 			Debug.Log ("poop");
 			if (Input.GetButtonDown ("X Button")) {
