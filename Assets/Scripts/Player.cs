@@ -24,6 +24,8 @@ public class Player : MonoBehaviour {
 	//private Animator anim;
 	[HideInInspector] public Rigidbody2D rb2d;
 
+    public StateMachine player_state_machine;
+
 	[HideInInspector] public List<Element> _elementQueue = new List<Element>();
 	[HideInInspector] public bool pause = false;
 	
@@ -36,43 +38,27 @@ public class Player : MonoBehaviour {
 	void Awake () 
 	{
         S = this;
-		//anim = GetComponent<Animator>();
+		anim = GetComponent<Animator>();
 		rb2d = GetComponent<Rigidbody2D>();
         jumps_left = 0;
         grounded = false;
-		anim.SetBool("Facing left", false);
+		//anim.SetBool("Facing left", false);
 		//gameObject.layer = 8;
 	}
 	
 	void Start()
 	{
-		//Element.addElement(_elementQueue, new ElementSetTextMesh(t, s));
-		//Element.addElement(_elementQueue, new ElementMoveOverTime(120, new Vector3(0f, 0.0f, 0.0f), new Vector3(-10, 0.0f, 0.0f), gameObject, false));
-		Element.addElement(_elementQueue, new ElementStandardControl(this));
+        player_state_machine = new StateMachine();
+        player_state_machine.ChangeState(new State_Player_Normal_Movement(this));
 	}
 
 	void Update() {
-        /*if (!pause && Input.GetButtonDown ("Start")) {
-			Time.timeScale = 0;
-			Element.insertQueue(_elementQueue, new ElementPause());
-			//pause = true;
-		}
-		if (pause && Input.GetButtonDown ("Start")) {
-			Time.timeScale = 1;
-			Element.removeQueue(_elementQueue);
-			//pause = false;
-		}
-		if (Time.timeScale > 0) {
-			pause = false;
-		} else {
-			pause = true;
-		}*/
-        Element.updateQueue(_elementQueue);
+        player_state_machine.Update();
     }
 
 	void FixedUpdate()
 	{
-		//Element.updateQueue(_elementQueue);
+		
 	}
 
 
@@ -88,16 +74,19 @@ public class Player : MonoBehaviour {
 
 	// Checking if the play has entered a trigger zone -----------------
 	void OnTriggerStay2D(Collider2D trigger) {
-		if (trigger.gameObject.tag == "Dialogue trigger") {
-			if (Input.GetButtonDown ("X Button")) {
-				//Element.insertQueue(_elementQueue, new ElementDialouge());
+		/*if (trigger.gameObject.tag == "Dialogue trigger") {
+            Sign s = trigger.GetComponent<Sign>();
+            if (Input.GetButtonDown ("Submit")) {
+				if(!s.isBeingRead) {
+                    s.isBeingRead = true;
+                    s.sign_state_machine.ChangeState(new State_Dialogue_Play(s, s.messages, s.dialogue));
+                }
 			}
-		}
+		}*/
 		if (trigger.gameObject.tag == ("Scene trigger")) {
 			Debug.Log ("poop");
 			if (Input.GetButtonDown ("X Button")) {
-				Element.addElement(_elementQueue, new ElementLoadScene(trigger.gameObject.name));
-				Element.removeQueue(_elementQueue);
+				//scene
 			}
 		}
 	}

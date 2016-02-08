@@ -3,37 +3,49 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Sign : MonoBehaviour {
 
     //HIDE IN INSPECTOR
-    [HideInInspector]
-    public List<Element> _elementQueue = new List<Element>();
+    public StateMachine sign_state_machine;
 
     //PUBLIC
     public List<string> messages;
-    public Canvas canvas;
+    public Text dialogue;
+    public bool isBeingRead = false;
+    bool collided;
 
     //PRIVATE
-    private bool read = false;
+    //private bool read = false;
     // Use this for initialization
     void Start() {
-        Element.addElement(_elementQueue, new DialogueDeactivate(canvas));
-        Element.addElement(_elementQueue, new DialogueWaiting(_elementQueue, messages, canvas));
+        sign_state_machine = new StateMachine();
+        collided = false;
     }
 
     // Update is called once per frame
     void Update() {
-        Element.updateQueue(_elementQueue);
+        if (collided && Input.GetButtonDown("Submit") && !isBeingRead) {
+            isBeingRead = true;
+            sign_state_machine.ChangeState(new State_Dialogue_Play(this, messages, dialogue));
+        }
+        sign_state_machine.Update();
     }
 
     void FixedUpdate() {
         
     }
 
-    void OnTriggerStay2D(Collider2D other) {
-        if (other.CompareTag("Player") && Input.GetButtonDown("Submit")) {
-            Element.trigger2DQueue(_elementQueue, other);
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("Player")) {
+            collided = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other) {
+        if (other.CompareTag("Player")) {
+            collided = false;
         }
     }
 }

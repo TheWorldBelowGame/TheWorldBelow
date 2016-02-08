@@ -14,9 +14,7 @@ public class Enemy : MonoBehaviour {
 	}
 
     void OnCollisionEnter2D(Collision2D coll) {
-        print("HIT");
         if (coll.gameObject.tag == "Sword") {
-            print("sword");
             Global.S.killed++;
             Destroy(this.gameObject);
         } else {
