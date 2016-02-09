@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 
@@ -53,6 +54,9 @@ public class Player : MonoBehaviour {
 
 	void Update() {
         player_state_machine.Update();
+		if (Input.GetButtonDown("Start")){
+			SceneManager.LoadScene (0);
+		}
     }
 
 	void FixedUpdate()
@@ -65,7 +69,7 @@ public class Player : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D coll) {
 		if (coll.gameObject.tag == "Ground") {
 			grounded = true;
-            jumps_left = 2;
+            jumps_left = 1;
 			//Debug.Log ("grounded");
 		}
 	}
