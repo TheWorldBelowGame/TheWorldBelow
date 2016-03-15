@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
 
 	[HideInInspector] public bool facingRight = true;
     [HideInInspector] public bool grounded;
+    [HideInInspector] public bool walled;
     [HideInInspector] public int jumps_left;
 	public float moveForce = 365f;
 	public float runForce = 500f;
@@ -42,6 +43,7 @@ public class Player : MonoBehaviour {
 		rb2d = GetComponent<Rigidbody2D>();
         jumps_left = 0;
         grounded = false;
+        walled = false;
 		//anim.SetBool("Facing left", false);
 		//gameObject.layer = 8;
 	}
@@ -72,11 +74,24 @@ public class Player : MonoBehaviour {
             jumps_left = 1;
 			//Debug.Log ("grounded");
 		}
-	}
+        if (coll.gameObject.tag == "Wall") {
+            walled = true;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D coll) {
+        if (coll.gameObject.tag == "Ground") {
+            grounded = false;
+            //Debug.Log ("grounded");
+        }
+        if (coll.gameObject.tag == "Wall") {
+            walled = false;
+        }
+    }
 
 
-	// Checking if the play has entered a trigger zone -----------------
-	void OnTriggerStay2D(Collider2D trigger) {
+    // Checking if the play has entered a trigger zone -----------------
+    void OnTriggerStay2D(Collider2D trigger) {
 		if (trigger.gameObject.tag == ("Scene trigger")) {
 			Debug.Log ("poop");
 			if (Input.GetButtonDown ("X Button")) {

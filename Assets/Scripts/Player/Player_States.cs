@@ -68,15 +68,12 @@ public class State_Player_Normal_Movement : State
 
 
         // Left and right walk movement
-        if (running == true) {
+        if (player.walled && !player.grounded) {
+            //can't run
+        } else if (running == true) {
             player.rb2d.velocity = (new Vector2(h * player.runForce * jumpmove, player.rb2d.velocity.y));
         } else {
             player.rb2d.velocity = (new Vector2(h * player.moveForce * jumpmove, player.rb2d.velocity.y));
-            /*if(player.rb2d.velocity.x > 0) {
-				player.anim.SetBool("Facing left", false);
-			} else if (player.rb2d.velocity.x < 0) {
-				player.anim.SetBool("Facing left", true);
-			}*/
         }
         Vector3 scale = player.rb2d.transform.localScale;
         if (h > 0)
