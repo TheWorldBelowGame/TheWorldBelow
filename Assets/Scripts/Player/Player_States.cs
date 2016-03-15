@@ -90,7 +90,7 @@ public class State_Player_Normal_Movement : State
             attacked = true;
         }
 
-        if (player.rb2d.velocity.magnitude > 0) {
+        if (player.rb2d.velocity.magnitude > 0f) {
             player.anim.SetInteger("State", (int)AnimState.running);
         } else {
             player.anim.SetInteger("State", (int)AnimState.idle);
