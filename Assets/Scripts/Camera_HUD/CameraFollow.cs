@@ -18,12 +18,7 @@ public class CameraFollow : MonoBehaviour {
     public Camera outside;
     public Camera inside;
 
-    float vel = 0.0f;
-    float smoothtime = 0.1f;
-
-    List<float> player_pos;
-    bool good = false;
-    float count;
+    public float speed = 0.05f;
     bool left;
 
 	//public  offset;
@@ -32,48 +27,35 @@ public class CameraFollow : MonoBehaviour {
 	void Start () {
         //playerScript = player.GetComponent<Player> ();
         transform.position = player.transform.position + init_offset;
-        player_pos = new List<float>();
-        count = 0;
         left = false;
 	}
 	
     void Update () {
 
-        //player_pos.Add(player.transform.position.x);
-
         pos = transform.position;
-
-        //pos.x = Mathf.MoveTowards(transform.position.x, player.transform.position.x, .075f);
-        //pos.x = Mathf.SmoothDamp(transform.position.x, player_pos[0], ref vel, smoothtime);
-
 
         if (player.GetComponent<Rigidbody2D>().velocity.magnitude > 0) {
             if (player.transform.position.x > x_bound + transform.position.x) {
                 pos.x = player.transform.position.x - x_bound;
+                //pos.x = Mathf.MoveTowards(transform.position.x, player.transform.position.x - x_bound, speed);
                 left = true;
-            }
-            if (player.transform.position.x < -x_bound + transform.position.x) {
+            } else if (player.transform.position.x < -x_bound + transform.position.x) {
                 pos.x = player.transform.position.x + x_bound;
+                //pos.x = Mathf.MoveTowards(transform.position.x, player.transform.position.x + x_bound, speed);
                 left = true;
+            } else {
+                left = false;
             }
             if (player.transform.position.y > y_bound + transform.position.y) {
                 pos.y = player.transform.position.y - y_bound;
-                left = true;
+                //pos.y = Mathf.MoveTowards(transform.position.y, player.transform.position.y - y_bound, speed);
             }
             if (player.transform.position.y < -y_bound + transform.position.y) {
                 pos.y = player.transform.position.y + y_bound;
-                left = true;
+                //pos.y = Mathf.MoveTowards(transform.position.y, player.transform.position.y + y_bound, speed);
             }
-            if (pos.x < 1.5f)
-                pos.x = 1.5f;
-            transform.position = pos;
-            count = 0;
         } else if (left) {
-            count += Time.deltaTime;
-                pos.x = Mathf.MoveTowards(transform.position.x, player.transform.position.x, .1f);
-            if (pos.x == player.transform.position.x) {
-                left = false;
-            }
+            pos.x = Mathf.MoveTowards(transform.position.x, player.transform.position.x, speed);
         }
 
         if (pos.x < 1.5f)
