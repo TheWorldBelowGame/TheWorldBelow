@@ -28,11 +28,14 @@ public class CameraFollow : MonoBehaviour {
 
         pos.x = (pos.x < 1.5f ? 1.5f : pos.x);
         
-        if (player.transform.position.y > y_bound + pos.y) {
-            pos.y = player.transform.position.y - y_bound;
-        } else if (player.transform.position.y < -y_bound + pos.y) {
-            pos.y = player.transform.position.y + y_bound;
-        }
+		if (player.transform.position.y > y_bound + pos.y) {
+			pos.y = player.transform.position.y - y_bound + 0;
+		} else if (player.transform.position.y < -y_bound + pos.y) {
+			pos.y = player.transform.position.y + y_bound + 0;
+		} else {
+			//pos.y = player.transform.position.y;	
+		}
+			
 
         pos.z = -10;
         
