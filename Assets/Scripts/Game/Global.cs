@@ -19,4 +19,5 @@ public class Global {
         killed = 0;
         collected = 0;
     }
+    
 }
