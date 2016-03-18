@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class State_Dialogue_Play : State {
     Sign s;
@@ -40,5 +41,8 @@ public class State_Dialogue_Play : State {
     public override void OnFinish() {
         dialogue.gameObject.SetActive(false);
         s.isBeingRead = false;
+        if(s.fall) {
+            SceneManager.LoadScene("Test_03");
+        }
     }
 }
