@@ -12,7 +12,10 @@ public class Sign : MonoBehaviour {
 
     //PUBLIC
     public List<string> messages;
-    public Text dialogue;
+    public List<Sprite> faces;
+    public Text dialogue_go;
+    public Image background_go;
+    public Image face_go;
     public bool isBeingRead = false;
     bool collided;
     public bool fall = false;
@@ -23,13 +26,14 @@ public class Sign : MonoBehaviour {
     void Start() {
         sign_state_machine = new StateMachine();
         collided = false;
+        background_go.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update() {
         if (collided && (Input.GetButtonDown("Submit") || fall) && !isBeingRead) {
             isBeingRead = true;
-            sign_state_machine.ChangeState(new State_Dialogue_Play(this, messages, dialogue));
+            sign_state_machine.ChangeState(new State_Dialogue_Play(this));
         }
         sign_state_machine.Update();
     }

@@ -8,6 +8,8 @@ public class CameraFollow : MonoBehaviour {
     
 	public GameObject player;
     public Vector3 init_offset;
+
+    Vector3 poi;
     Vector3 pos;
 
     public Camera outside;
@@ -16,6 +18,7 @@ public class CameraFollow : MonoBehaviour {
     public float speed = 0.1f;
 
     bool outside_on;
+    bool dialouge;
 
     void Awake() {
         S = this;
@@ -24,17 +27,21 @@ public class CameraFollow : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         transform.position = player.transform.position + init_offset;
+        poi = player.transform.position + init_offset;
         outside_on = true;
         outside.gameObject.SetActive(true);
         inside.gameObject.SetActive(false);
+        dialouge = false;
     }
 	
     void FixedUpdate () {
 
         pos = transform.position;
         
-        if (player.transform)
-            pos = Vector3.Lerp(transform.position, player.transform.position + init_offset, speed);
+        if(!dialouge)
+            poi = player.transform.position + init_offset;
+
+        pos = Vector3.Lerp(transform.position, poi, speed);
 
         pos.x = (pos.x < 1.5f ? 1.5f : pos.x);
 
@@ -61,5 +68,19 @@ public class CameraFollow : MonoBehaviour {
             inside.gameObject.SetActive(false);
         }
         outside_on = ! outside_on;
+    }
+
+    public void set_poi_player() {
+        poi = player.transform.position + init_offset;
+        inside.orthographicSize = 5;
+        dialouge = false;
+    }
+
+    public void set_poi_average(Vector3 go1, Vector3 go2) {
+        dialouge = true;
+        poi.x = (go1.x + go2.x) / 2;
+        poi.y = (go1.y + go2.y) / 2 - 0.5f;
+        poi.z = -10;
+        inside.orthographicSize = 3;
     }
 }

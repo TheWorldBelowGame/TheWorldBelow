@@ -114,6 +114,12 @@ public class State_Player_Normal_Movement : State
     }
 }
 
+public class State_Player_Paused : State {
+    public State_Player_Paused() {
+
+    }
+}
+
 public class State_Player_Load_Scene : State {
     string scene_name;
 

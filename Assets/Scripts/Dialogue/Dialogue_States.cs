@@ -7,21 +7,19 @@ using UnityEngine.SceneManagement;
 
 public class State_Dialogue_Play : State {
     Sign s;
-    List<string> messages;
-    Text dialogue;
     int current;
     int size;
 
-    public State_Dialogue_Play(Sign s, List<string> messages, Text dialogue) {
-        this.messages = messages;
-        this.dialogue = dialogue;
+    public State_Dialogue_Play(Sign s) {
         this.s = s;
     }
 
     public override void OnStart() {
+        Player.S.player_state_machine.ChangeState(new State_Player_Paused());
+        CameraFollow.S.set_poi_average(Player.S.transform.position, s.transform.position);
         s.isBeingRead = true;
-        dialogue.gameObject.SetActive(true);
-        size = messages.Count;
+        s.background_go.gameObject.SetActive(true);
+        size = s.messages.Count;
         current = -1;
     }
 
@@ -30,7 +28,8 @@ public class State_Dialogue_Play : State {
         if (Input.GetButtonDown("Submit")) {
             current++;
             if (current < size) {
-                dialogue.text = messages[current];
+                s.dialogue_go.text = s.messages[current];
+                s.face_go.sprite = s.faces[current];
             }
             else {
                 ConcludeState();
@@ -39,10 +38,12 @@ public class State_Dialogue_Play : State {
     }
 
     public override void OnFinish() {
-        dialogue.gameObject.SetActive(false);
+        s.background_go.gameObject.SetActive(false);
         s.isBeingRead = false;
         if(s.fall) {
             SceneManager.LoadScene("Test_03");
         }
+        CameraFollow.S.set_poi_player();
+        Player.S.player_state_machine.ChangeState(new State_Player_Normal_Movement(Player.S));
     }
 }
