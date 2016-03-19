@@ -102,6 +102,12 @@ public class State_Player_Normal_Movement : State
             }
         }
 
+        if (player.door != null && Input.GetButtonDown("X Button")) {
+            CameraFollow.S.in_out();
+            player.door.GetComponent<Door>().in_out();
+            player.spawn = player.transform.position;
+        }
+
     }
 
     public override void OnFinish() {
