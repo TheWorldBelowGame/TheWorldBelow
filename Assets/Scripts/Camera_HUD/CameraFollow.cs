@@ -45,6 +45,7 @@ public class CameraFollow : MonoBehaviour {
 
         pos.x = (pos.x < 1.5f ? 1.5f : pos.x);
 
+		//ParallaxBackground.S.Move(Vector3.Distance(pos, transform.position));
         transform.position = pos;
 
     }
