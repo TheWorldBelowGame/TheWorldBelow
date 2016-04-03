@@ -60,4 +60,8 @@ public class Enemy : MonoBehaviour {
             start_left = !start_left;
         }
     }
+
+    public void die() {
+        Destroy(gameObject);
+    }
 }
