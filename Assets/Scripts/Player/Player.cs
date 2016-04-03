@@ -26,6 +26,7 @@ public class Player : MonoBehaviour {
 
 	//private Animator anim;
 	[HideInInspector] public Rigidbody2D rb2d;
+	[HideInInspector] public bool dead = false;
 
     public StateMachine player_state_machine;
     
@@ -83,8 +84,10 @@ public class Player : MonoBehaviour {
             case "Wall":
                 walled = true;
                 break;
-            case "Enemy":
-                die();
+		case "Enemy":
+			dead = true;
+			Invoke ("die", 1.5f);
+				//die();
                 break;
         }
     }
@@ -135,5 +138,6 @@ public class Player : MonoBehaviour {
         Vector3 scale = rb2d.transform.localScale;
         scale.x = Mathf.Abs(scale.x);
         rb2d.transform.localScale = scale;
+		dead = false;
     }
 }

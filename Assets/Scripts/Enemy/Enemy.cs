@@ -94,6 +94,7 @@ public class Enemy : MonoBehaviour {
 	public void die() {
 		dead = true;
 		col.enabled = false;
+		rb.isKinematic = true;
 		Vector2 vel = rb.velocity;
 		vel.x = 0f;
 		rb.velocity = vel;

@@ -90,7 +90,10 @@ public class State_Player_Normal_Movement : State
 
 		// Animations -----------------------------------------------
 
-		if (attacked) {
+		if (player.dead) {
+			player.anim.SetInteger ("State", (int)AnimState.death);
+			//player.rb2d.velocity = (new Vector2 (0, 0));
+		} else if (attacked) {
 			player.anim.SetInteger ("State", (int)AnimState.attack);
 		} else if (player.rb2d.velocity.magnitude > .05f && player.grounded) {
 			player.anim.SetInteger ("State", (int)AnimState.running);
