@@ -16,6 +16,8 @@ public class State_Dialogue_Play : State {
 
     public override void OnStart() {
         Player.S.player_state_machine.ChangeState(new State_Player_Paused());
+		Player.S.rb2d.velocity = (new Vector2 (0, 0));
+		Player.S.anim.SetInteger ("State", (int)AnimState.idle);
         CameraFollow.S.set_poi_average(Player.S.transform.position, s.transform.position);
         s.isBeingRead = true;
         s.background_go.gameObject.SetActive(true);

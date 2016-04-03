@@ -90,15 +90,15 @@ public class State_Player_Normal_Movement : State
 
 		// Animations -----------------------------------------------
 
-		if (player.rb2d.velocity.magnitude > .05f && player.grounded) {
+		if (attacked) {
+			player.anim.SetInteger ("State", (int)AnimState.attack);
+		} else if (player.rb2d.velocity.magnitude > .05f && player.grounded) {
 			player.anim.SetInteger ("State", (int)AnimState.running);
 		} else if (player.grounded == false) {
 			player.anim.SetInteger ("State", (int)AnimState.jumping);
-		} else if (attacked) {
-			player.anim.SetInteger ("State", (int)AnimState.attack);
 		} else {
-            player.anim.SetInteger("State", (int)AnimState.idle);
-        }
+			player.anim.SetInteger ("State", (int)AnimState.idle);
+		}
 
 
 		// Attacking
@@ -106,6 +106,7 @@ public class State_Player_Normal_Movement : State
             attack_timer -= Time.deltaTime;
 			if (attack_timer <= .333) {
 				player.sword.SetActive(true);
+				player.rb2d.velocity = (new Vector2 (0, 0));
 				//Debug.Log ("poop");
 			}
             if (attack_timer <= 0) {
@@ -129,7 +130,7 @@ public class State_Player_Normal_Movement : State
 
 public class State_Player_Paused : State {
     public State_Player_Paused() {
-
+		
     }
 }
 

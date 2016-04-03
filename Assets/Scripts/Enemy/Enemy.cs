@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour {
     public bool charge = false;
     public float charge_distance = 5;
 
+	public BoxCollider2D col;
+
     Rigidbody2D rb;
     float start;
 	private bool dead = false;
@@ -31,48 +33,48 @@ public class Enemy : MonoBehaviour {
 		Debug.DrawRay (transform.position, dir * charge_distance, Color.yellow);
 		RaycastHit2D hit = Physics2D.Raycast (transform.position, dir, charge_distance, 1 << LayerMask.NameToLayer ("Player"));
 
-
-		if (charge && hit.collider != null && hit.collider.gameObject.tag == "Player") {
-			Vector2 vel = rb.velocity;
-			vel.x = (start_left ? -1 : 1) * speed;
-			rb.velocity = vel;
-			charging = true;
-			//Debug.Log ("fast poop");
-		} else if (start_left) {
-			charging = false;
-			if (transform.position.x > start - distance) {
+		if (dead == false) {
+			if (charge && hit.collider != null && hit.collider.gameObject.tag == "Player") {
 				Vector2 vel = rb.velocity;
-				vel.x = -speed;
+				vel.x = (start_left ? -1 : 1) * speed * 2;
 				rb.velocity = vel;
+				charging = true;
+				//Debug.Log ("fast poop");
+			} else if (start_left) {
+				charging = false;
+				if (transform.position.x > start - distance) {
+					Vector2 vel = rb.velocity;
+					vel.x = -speed;
+					rb.velocity = vel;
+				} else {
+					start = transform.position.x;
+					start_left = false;
+					Vector3 scale = rb.transform.localScale;
+					scale.x *= -1;
+					rb.transform.localScale = scale;
+				}
 			} else {
-				start = transform.position.x;
-				start_left = false;
-				Vector3 scale = rb.transform.localScale;
-				scale.x *= -1;
-				rb.transform.localScale = scale;
-			}
-		} else {
-			if (transform.position.x < start + distance) {
-				Vector2 vel = rb.velocity;
-				vel.x = speed;
-				rb.velocity = vel;
-			} else {
-				start = transform.position.x;
-				start_left = true;
-				Vector3 scale = rb.transform.localScale;
-				scale.x *= -1;
-				rb.transform.localScale = scale;
+				if (transform.position.x < start + distance) {
+					Vector2 vel = rb.velocity;
+					vel.x = speed;
+					rb.velocity = vel;
+				} else {
+					start = transform.position.x;
+					start_left = true;
+					Vector3 scale = rb.transform.localScale;
+					scale.x *= -1;
+					rb.transform.localScale = scale;
+				}
 			}
 		}
 
 		// Animation----------------------------------------
-		if (charging) {
+		if (dead) {
+			anim.SetInteger ("State", (int)AnimState.death);
+		} else if (charging) {
 			anim.SetInteger ("State", (int)AnimState.charge);
 		} else if (rb.velocity.magnitude > 0f) {
 			anim.SetInteger ("State", (int)AnimState.running);
-		}else if (dead) {
-			anim.SetInteger ("State", (int)AnimState.death);
-			Debug.Log ("dead");
 		} else {
 			anim.SetInteger ("State", (int)AnimState.idle);
 		}
@@ -83,18 +85,21 @@ public class Enemy : MonoBehaviour {
         if (coll.gameObject.tag == "Sword") {
             Global.S.killed++;
 			dead = true;
-			Debug.Log ("poop");
             Destroy(this.gameObject);
         } else if (coll.gameObject.tag == "Wall") {
             start_left = !start_left;
         }
     }
-<<<<<<< HEAD
-}
-=======
 
-    public void die() {
-        Destroy(gameObject);
-    }
+	public void die() {
+		dead = true;
+		col.enabled = false;
+		Vector2 vel = rb.velocity;
+		vel.x = 0f;
+		rb.velocity = vel;
+		//Destroy(gameObject);
+	}
+
 }
->>>>>>> origin/master
+
+

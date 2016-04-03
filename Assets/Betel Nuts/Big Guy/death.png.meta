@@ -1,0 +1,267 @@
+fileFormatVersion: 2
+guid: d63898a15fae2425b9ea18ee41c93077
+timeCreated: 1459663224
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: death_0
+    21300002: death_1
+    21300004: death_2
+    21300006: death_3
+    21300008: death_4
+    21300010: death_5
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 600
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: death_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1831
+        height: 1583
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 112, y: -120.5}
+        - {x: 141, y: -114.5}
+        - {x: 162, y: -77.5}
+        - {x: 166, y: -34.5}
+        - {x: 166, y: 3.5}
+        - {x: 147, y: 73.5}
+        - {x: 54, y: 133.5}
+        - {x: -12, y: 133.5}
+        - {x: -62, y: 107.5}
+        - {x: -93, y: 73.5}
+        - {x: -117, y: 1.5}
+        - {x: -117, y: -43.5}
+        - {x: -116, y: -50.5}
+        - {x: -71, y: -110.5}
+        - {x: -48, y: -120.5}
+        - {x: -11, y: -120.5}
+        - {x: 3, y: -83.5}
+        - {x: 33, y: -118.5}
+        - {x: 40, y: -120.5}
+        - {x: 50, y: -120.5}
+        - {x: 54, y: -119.5}
+        - {x: 54, y: -69.5}
+        - {x: 74, y: -105.5}
+        - {x: 103, y: -120.5}
+    - name: death_1
+      rect:
+        serializedVersion: 2
+        x: 1831
+        y: 0
+        width: 1831
+        height: 1583
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 138.21606, y: -87.5}
+        - {x: 151.21606, y: -39.5}
+        - {x: 151.21606, y: -17.5}
+        - {x: 138.21606, y: 56.5}
+        - {x: 96.216064, y: 104.5}
+        - {x: 44.216064, y: 133.5}
+        - {x: -12.783936, y: 133.5}
+        - {x: -24.783936, y: 131.5}
+        - {x: -97.783936, y: 83.5}
+        - {x: -124.783936, y: 16.5}
+        - {x: -124.783936, y: -44.5}
+        - {x: -116.783936, y: -71.5}
+        - {x: -95.783936, y: -101.5}
+        - {x: -60.783936, y: -102.5}
+        - {x: -34.783936, y: -122.5}
+        - {x: -26.783936, y: -122.5}
+        - {x: -4.7839355, y: -76.5}
+        - {x: 16.216064, y: -113.5}
+        - {x: 23.216064, y: -122.5}
+        - {x: 35.216064, y: -122.5}
+        - {x: 45.216064, y: -103.5}
+        - {x: 73.216064, y: -122.5}
+        - {x: 114.216064, y: -122.5}
+    - name: death_2
+      rect:
+        serializedVersion: 2
+        x: 3662
+        y: 0
+        width: 1831
+        height: 1583
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 104.43213, y: 114.5}
+        - {x: 57.43213, y: 133.5}
+        - {x: -27.567871, y: 133.5}
+        - {x: -97.56787, y: 90.5}
+        - {x: -140.56787, y: 14.5}
+        - {x: -140.56787, y: -65.5}
+        - {x: -124.56787, y: -98.5}
+        - {x: -56.56787, y: -120.5}
+        - {x: -41.56787, y: -108.5}
+        - {x: 9.432129, y: -123.5}
+        - {x: 15.432129, y: -123.5}
+        - {x: 20.432129, y: -120.5}
+        - {x: 22.432129, y: -111.5}
+        - {x: 24.432129, y: -101.5}
+        - {x: 28.432129, y: -86.5}
+        - {x: 26.432129, y: -100.5}
+        - {x: 44.43213, y: -120.5}
+        - {x: 65.43213, y: -123.5}
+        - {x: 92.43213, y: -123.5}
+        - {x: 117.43213, y: -109.5}
+        - {x: 136.43213, y: -71.5}
+        - {x: 136.43213, y: 45.5}
+    - name: death_3
+      rect:
+        serializedVersion: 2
+        x: 5493
+        y: 0
+        width: 1831
+        height: 1583
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 124.64813, y: 33.5}
+        - {x: 124.64813, y: 39.5}
+        - {x: 121.64813, y: 55.5}
+        - {x: 64.64813, y: 126.5}
+        - {x: 36.648132, y: 132.5}
+        - {x: -27.351868, y: 132.5}
+        - {x: -95.35187, y: 98.5}
+        - {x: -148.35187, y: 13.5}
+        - {x: -149.35187, y: -2.5}
+        - {x: -149.35187, y: -57.5}
+        - {x: -144.35187, y: -86.5}
+        - {x: -64.35187, y: -110.5}
+        - {x: -61.351868, y: -101.5}
+        - {x: -29.351868, y: -68.5}
+        - {x: -15.351868, y: -113.5}
+        - {x: -6.3518677, y: -121.5}
+        - {x: -2.3518677, y: -121.5}
+        - {x: 0.6481323, y: -119.5}
+        - {x: 17.648132, y: -121.5}
+        - {x: 38.648132, y: -121.5}
+        - {x: 69.64813, y: -105.5}
+        - {x: 112.64813, y: -51.5}
+      - - {x: -78.35187, y: -66.5}
+        - {x: -75.35187, y: -65.5}
+        - {x: -75.35187, y: -62.5}
+        - {x: -78.35187, y: -61.5}
+        - {x: -80.35187, y: -63.5}
+    - name: death_4
+      rect:
+        serializedVersion: 2
+        x: 7324
+        y: 0
+        width: 1831
+        height: 1583
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 114.36426, y: 8.5}
+        - {x: 114.36426, y: 44.5}
+        - {x: 93.36426, y: 88.5}
+        - {x: 48.364258, y: 122.5}
+        - {x: 26.364258, y: 132.5}
+        - {x: -22.635742, y: 132.5}
+        - {x: -62.635742, y: 123.5}
+        - {x: -99.63574, y: 98.5}
+        - {x: -127.63574, y: 49.5}
+        - {x: -149.63574, y: 11.5}
+        - {x: -149.63574, y: -22.5}
+        - {x: -125.63574, y: -86.5}
+        - {x: -85.63574, y: -106.5}
+        - {x: -52.635742, y: -71.5}
+        - {x: -37.635742, y: -113.5}
+        - {x: -29.635742, y: -117.5}
+        - {x: -20.635742, y: -117.5}
+        - {x: 3.3642578, y: -88.5}
+        - {x: 62.364258, y: -60.5}
+        - {x: 112.36426, y: 4.5}
+    - name: death_5
+      rect:
+        serializedVersion: 2
+        x: 9155
+        y: 0
+        width: 1831
+        height: 1583
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 44.0802, y: 110.5}
+        - {x: -30.9198, y: 110.5}
+        - {x: -90.9198, y: 97.5}
+        - {x: -160.9198, y: 26.5}
+        - {x: -160.9198, y: -84.5}
+        - {x: -146.9198, y: -118.5}
+        - {x: -120.9198, y: -90.5}
+        - {x: -110.9198, y: -89.5}
+        - {x: -95.9198, y: -75.5}
+        - {x: -91.9198, y: -52.5}
+        - {x: -91.9198, y: -68.5}
+        - {x: -100.9198, y: -96.5}
+        - {x: -92.9198, y: -103.5}
+        - {x: -88.9198, y: -105.5}
+        - {x: -78.9198, y: -94.5}
+        - {x: -52.9198, y: -132.5}
+        - {x: -40.9198, y: -136.5}
+        - {x: 37.0802, y: -136.5}
+        - {x: 106.0802, y: -115.5}
+        - {x: 126.0802, y: -60.5}
+        - {x: 126.0802, y: 26.5}
+        - {x: 96.0802, y: 79.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
