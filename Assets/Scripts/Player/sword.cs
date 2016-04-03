@@ -16,7 +16,7 @@ public class sword : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D coll) {
         if (coll.gameObject.tag == "Enemy") {
             Global.S.killed++;
-            Destroy(coll.gameObject);
+            coll.GetComponent<Enemy>().die();
         }
     }
 }

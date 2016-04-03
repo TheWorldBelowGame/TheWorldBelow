@@ -89,4 +89,12 @@ public class Enemy : MonoBehaviour {
             start_left = !start_left;
         }
     }
+<<<<<<< HEAD
 }
+=======
+
+    public void die() {
+        Destroy(gameObject);
+    }
+}
+>>>>>>> origin/master
