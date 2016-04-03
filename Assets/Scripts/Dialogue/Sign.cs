@@ -20,6 +20,9 @@ public class Sign : MonoBehaviour {
     bool collided;
     public bool fall = false;
 
+	public Animator anim;
+	enum AnimState { idle, talking};
+
     //PRIVATE
     //private bool read = false;
     // Use this for initialization
@@ -36,6 +39,13 @@ public class Sign : MonoBehaviour {
             sign_state_machine.ChangeState(new State_Dialogue_Play(this));
         }
         sign_state_machine.Update();
+
+		// Animation
+		if (isBeingRead) {
+			anim.SetInteger ("State", (int)AnimState.talking);
+		} else {
+			anim.SetInteger ("State", (int)AnimState.idle);
+		}
     }
 
     void FixedUpdate() {

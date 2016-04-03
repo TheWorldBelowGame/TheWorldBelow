@@ -91,7 +91,7 @@ public class Player : MonoBehaviour {
 
     void OnCollisionExit2D(Collision2D coll) {
         if (coll.gameObject.tag == "Ground") {
-            grounded = false;
+            //grounded = false;
             //Debug.Log ("grounded");
         }
         if (coll.gameObject.tag == "Wall") {

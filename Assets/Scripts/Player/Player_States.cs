@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-enum AnimState { idle, running};
+enum AnimState { idle, running, jumping, attack, death};
 
 public class State_Player_Normal_Movement : State
 {
@@ -31,7 +31,7 @@ public class State_Player_Normal_Movement : State
             //Debug.Log("jump");
             jump = true;
             player.jumps_left--;
-            //player.grounded = false;
+            player.grounded = false;
         }
 
         float h = Input.GetAxis("Horizontal");
@@ -83,18 +83,31 @@ public class State_Player_Normal_Movement : State
         player.rb2d.transform.localScale = scale;
 
         if (Input.GetButtonDown("Fire1")) {
-            player.sword.SetActive(true);
+            //player.sword.SetActive(true);
             attacked = true;
         }
 
-        if (player.rb2d.velocity.magnitude > 0f) {
-            player.anim.SetInteger("State", (int)AnimState.running);
-        } else {
+
+		// Animations -----------------------------------------------
+
+		if (player.rb2d.velocity.magnitude > .05f && player.grounded) {
+			player.anim.SetInteger ("State", (int)AnimState.running);
+		} else if (player.grounded == false) {
+			player.anim.SetInteger ("State", (int)AnimState.jumping);
+		} else if (attacked) {
+			player.anim.SetInteger ("State", (int)AnimState.attack);
+		} else {
             player.anim.SetInteger("State", (int)AnimState.idle);
         }
 
+
+		// Attacking
         if (attacked) {
             attack_timer -= Time.deltaTime;
+			if (attack_timer <= .333) {
+				player.sword.SetActive(true);
+				//Debug.Log ("poop");
+			}
             if (attack_timer <= 0) {
                 attack_timer = player.attack_speed;
                 player.sword.SetActive(false);

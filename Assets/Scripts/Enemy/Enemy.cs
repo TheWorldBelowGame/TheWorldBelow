@@ -11,6 +11,11 @@ public class Enemy : MonoBehaviour {
 
     Rigidbody2D rb;
     float start;
+	private bool dead = false;
+	private bool charging = false;
+
+	public Animator anim;
+	enum AnimState { idle, running, death, charge};
 
 	// Use this for initialization
 	void Start () {
@@ -22,39 +27,63 @@ public class Enemy : MonoBehaviour {
 	void Update () {
 
         
-        Vector3 dir = (start_left ? Vector3.left : Vector3.right);
-        Debug.DrawRay(transform.position, dir * charge_distance, Color.yellow);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, charge_distance, 1 << LayerMask.NameToLayer("Player"));
-        if (charge && hit.collider != null && hit.collider.gameObject.tag == "Player") {
-            Vector2 vel = rb.velocity;
-            vel.x = (start_left ? -1 : 1) * speed;
-            rb.velocity = vel;
-        } else if (start_left) {
-            if (transform.position.x > start - distance) {
-                Vector2 vel = rb.velocity;
-                vel.x = -speed;
-                rb.velocity = vel;
-            } else {
-                start = transform.position.x;
-                start_left = false;
-            }
-        } else {
-            if (transform.position.x < start + distance) {
-                Vector2 vel = rb.velocity;
-                vel.x = speed;
-                rb.velocity = vel;
-            } else {
-                start = transform.position.x;
-                start_left = true;
-            }
-        }
+		Vector3 dir = (start_left ? Vector3.left : Vector3.right);
+		Debug.DrawRay (transform.position, dir * charge_distance, Color.yellow);
+		RaycastHit2D hit = Physics2D.Raycast (transform.position, dir, charge_distance, 1 << LayerMask.NameToLayer ("Player"));
 
-        
+
+		if (charge && hit.collider != null && hit.collider.gameObject.tag == "Player") {
+			Vector2 vel = rb.velocity;
+			vel.x = (start_left ? -1 : 1) * speed;
+			rb.velocity = vel;
+			charging = true;
+			//Debug.Log ("fast poop");
+		} else if (start_left) {
+			charging = false;
+			if (transform.position.x > start - distance) {
+				Vector2 vel = rb.velocity;
+				vel.x = -speed;
+				rb.velocity = vel;
+			} else {
+				start = transform.position.x;
+				start_left = false;
+				Vector3 scale = rb.transform.localScale;
+				scale.x *= -1;
+				rb.transform.localScale = scale;
+			}
+		} else {
+			if (transform.position.x < start + distance) {
+				Vector2 vel = rb.velocity;
+				vel.x = speed;
+				rb.velocity = vel;
+			} else {
+				start = transform.position.x;
+				start_left = true;
+				Vector3 scale = rb.transform.localScale;
+				scale.x *= -1;
+				rb.transform.localScale = scale;
+			}
+		}
+
+		// Animation----------------------------------------
+		if (charging) {
+			anim.SetInteger ("State", (int)AnimState.charge);
+		} else if (rb.velocity.magnitude > 0f) {
+			anim.SetInteger ("State", (int)AnimState.running);
+		}else if (dead) {
+			anim.SetInteger ("State", (int)AnimState.death);
+			Debug.Log ("dead");
+		} else {
+			anim.SetInteger ("State", (int)AnimState.idle);
+		}
+				
 	}
 
     void OnCollisionEnter2D(Collision2D coll) {
         if (coll.gameObject.tag == "Sword") {
             Global.S.killed++;
+			dead = true;
+			Debug.Log ("poop");
             Destroy(this.gameObject);
         } else if (coll.gameObject.tag == "Wall") {
             start_left = !start_left;
