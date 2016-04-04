@@ -9,6 +9,8 @@ public class CameraFollow : MonoBehaviour {
 	public GameObject player;
     public Vector3 init_offset;
 
+    public bool falling = false;
+
     Vector3 poi;
     Vector3 pos;
 
@@ -51,13 +53,12 @@ public class CameraFollow : MonoBehaviour {
     }
 
     void LateUpdate() {
-        /*pos = transform.position;
-        if (player.transform.position.y > y_bound + pos.y) {
-            pos.y = player.transform.position.y - y_bound;
-        } else if (player.transform.position.y < -y_bound + pos.y) {
-            pos.y = player.transform.position.y + y_bound;
+        if (falling) {
+            pos = transform.position;
+            //if (transform.position.y - init_offset.y > player.transform.position.y)
+                pos.y = player.transform.position.y;
+            transform.position = pos;
         }
-        transform.position = pos;*/
     }
 
     public void in_out() {

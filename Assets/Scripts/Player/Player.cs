@@ -65,6 +65,10 @@ public class Player : MonoBehaviour {
 		if (Input.GetButtonDown("Start")){
 			SceneManager.LoadScene (0);
 		}
+        if (dead) {
+            if (!fade.S.fadingOut)
+                die();
+        }
     }
 
 	void FixedUpdate()
@@ -84,10 +88,10 @@ public class Player : MonoBehaviour {
             case "Wall":
                 walled = true;
                 break;
-		case "Enemy":
-			dead = true;
-			Invoke ("die", 1.5f);
-				//die();
+		    case "Enemy":
+			    dead = true;
+                fade.S.fadingOut = true;
+                //die();
                 break;
         }
     }
@@ -138,6 +142,12 @@ public class Player : MonoBehaviour {
         Vector3 scale = rb2d.transform.localScale;
         scale.x = Mathf.Abs(scale.x);
         rb2d.transform.localScale = scale;
-		dead = false;
+        dead = false;
+        //fade.S.fadingIn = true;
+        Invoke("undie", 0.5f);
+    }
+
+    void undie() {
+        fade.S.fadingIn = true;
     }
 }

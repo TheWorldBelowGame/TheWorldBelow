@@ -15,14 +15,28 @@ public class State_Dialogue_Play : State {
     }
 
     public override void OnStart() {
-        Player.S.player_state_machine.ChangeState(new State_Player_Paused());
+        if (s.fall) {
+            Player.S.player_state_machine.ChangeState(new State_Player_Falling());
+        } else {
+            Player.S.player_state_machine.ChangeState(new State_Player_Paused());
+        }
 		Player.S.rb2d.velocity = (new Vector2 (0, 0));
 		Player.S.anim.SetInteger ("State", (int)AnimState.idle);
-        CameraFollow.S.set_poi_average(Player.S.transform.position, s.transform.position);
+        if (s.fall) {
+            Vector3 poi = Player.S.transform.position + Vector3.forward * CameraFollow.S.init_offset.z;
+            CameraFollow.S.set_poi_average(poi, poi);
+        } else {
+            CameraFollow.S.set_poi_average(Player.S.transform.position, s.transform.position);
+        }
         s.isBeingRead = true;
         s.background_go.gameObject.SetActive(true);
         size = s.messages.Count;
-        current = -1;
+        if (s.fall) {
+            current = 0;
+            s.dialogue_go.text = s.messages[current];
+            s.face_go.sprite = s.faces[current];
+        } else
+            current = -1;
     }
 
     public override void OnUpdate(float time_delta_fraction) {
@@ -42,10 +56,13 @@ public class State_Dialogue_Play : State {
     public override void OnFinish() {
         s.background_go.gameObject.SetActive(false);
         s.isBeingRead = false;
-        if(s.fall) {
-            SceneManager.LoadScene("Test_03");
+        if (s.fall) {
+            fade.S.scene = "Main";
+            fade.S.fadingOut = true;
+            fade.S.changeScene = true;
+        } else {
+            CameraFollow.S.set_poi_player();
+            Player.S.player_state_machine.ChangeState(new State_Player_Normal_Movement(Player.S));
         }
-        CameraFollow.S.set_poi_player();
-        Player.S.player_state_machine.ChangeState(new State_Player_Normal_Movement(Player.S));
     }
 }
