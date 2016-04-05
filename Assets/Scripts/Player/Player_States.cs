@@ -40,13 +40,13 @@ public class State_Player_Normal_Movement : State
             float jumpmove;
 
             // Seeing if the player is running or walking
-            if (Input.GetButton("B Button") && player.grounded) {
+            /*if (Input.GetButton("B Button") && player.grounded) {
                 running = true;
                 //Debug.Log ("running");
             } else {
                 running = false;
                 //Debug.Log ("walking");
-            }
+            }*/
 
             if (player.grounded && running) {
                 jumpmove = 2f;
@@ -84,7 +84,7 @@ public class State_Player_Normal_Movement : State
                 scale.x = Mathf.Abs(scale.x);
             player.rb2d.transform.localScale = scale;
 
-            if (Input.GetButtonDown("Fire1")) {
+            if (Input.GetButtonDown("X Button")) {
                 //player.sword.SetActive(true);
                 attacked = true;
             }
@@ -105,7 +105,7 @@ public class State_Player_Normal_Movement : State
             }
 
             //Doors
-            if (player.door != null && Input.GetButtonDown("X Button")) {
+            if (player.door != null && Input.GetButtonDown("B Button")) {
                 CameraFollow.S.in_out();
                 player.door.GetComponent<Door>().in_out();
                 player.spawn = player.transform.position;
