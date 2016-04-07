@@ -75,6 +75,8 @@ public class Enemy : MonoBehaviour {
 			anim.SetInteger ("State", (int)AnimState.charge);
 		} else if (rb.velocity.magnitude > 0f) {
 			anim.SetInteger ("State", (int)AnimState.running);
+		} else if (distance == 0) {
+			anim.SetInteger ("State", (int)AnimState.idle);
 		} else {
 			anim.SetInteger ("State", (int)AnimState.idle);
 		}
