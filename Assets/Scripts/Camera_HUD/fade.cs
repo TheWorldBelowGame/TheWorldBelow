@@ -25,11 +25,11 @@ public class fade : MonoBehaviour {
         fadingOut = false;
         changeScene = false;
         t = 0;
-	}
+        img.color = Color.black;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        //print(fadingIn.ToString() + fadingOut.ToString() + t.ToString());
         if (fadingIn) {
             fadeIn();
         }
@@ -39,33 +39,29 @@ public class fade : MonoBehaviour {
         if (changeScene && !fadingOut) {
             SceneManager.LoadScene(scene);
         }
-        /*if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.X))
             fadingIn = true;
         if (Input.GetKeyDown(KeyCode.Z))
-            fadingOut = true;*/
+            fadingOut = true;
     }
 
     void fadeIn() {
-        //Time.timeScale = 0;
         img.color = Color.Lerp(Color.black, Color.clear, (t) / duration);
-        t += Time.unscaledDeltaTime;
+        t += Time.deltaTime;
         if (img.color.a < 0.05) {
             img.color = Color.clear;
             fadingIn = false;
             t = 0;
-            //Time.timeScale = 1;
         }
     }
 
     void fadeOut() {
-        //Time.timeScale = 0;
         img.color = Color.Lerp(Color.black, Color.clear, (duration - t) / duration);
-        t += Time.unscaledDeltaTime;
+        t += Time.deltaTime;
         if (img.color.a > 0.95) {
             img.color = Color.black;
             fadingOut = false;
             t = 0;
-            //Time.timeScale = 1;
         }
     }
 }
