@@ -70,12 +70,14 @@ public class State_Player_Normal_Movement : State
 
 
             // Left and right walk movement
-            if (player.walled && !player.grounded) {
-                //can't run
-            } else if (running == true) {
-                player.rb2d.velocity = (new Vector2(h * player.runForce * jumpmove, player.rb2d.velocity.y));
-            } else {
-                player.rb2d.velocity = (new Vector2(h * player.moveForce * jumpmove, player.rb2d.velocity.y));
+            if (!attacked) {
+                if (player.walled && !player.grounded) {
+                    //can't run
+                } else if (running == true) {
+                    player.rb2d.velocity = (new Vector2(h * player.runForce * jumpmove, player.rb2d.velocity.y));
+                } else {
+                    player.rb2d.velocity = (new Vector2(h * player.moveForce * jumpmove, player.rb2d.velocity.y));
+                }
             }
             Vector3 scale = player.rb2d.transform.localScale;
             if (h > 0)
@@ -94,7 +96,9 @@ public class State_Player_Normal_Movement : State
                 attack_timer -= Time.deltaTime;
                 if (attack_timer <= .333) {
                     player.sword.SetActive(true);
-                    player.rb2d.velocity = (new Vector2(0, 0));
+                    if (player.grounded) {
+                        player.rb2d.velocity = (new Vector2(0, 0));
+                    }
                     //Debug.Log ("poop");
                 }
                 if (attack_timer <= 0) {

@@ -39,10 +39,10 @@ public class fade : MonoBehaviour {
         if (changeScene && !fadingOut) {
             SceneManager.LoadScene(scene);
         }
-        if (Input.GetKeyDown(KeyCode.X))
+        /*if (Input.GetKeyDown(KeyCode.X))
             fadingIn = true;
         if (Input.GetKeyDown(KeyCode.Z))
-            fadingOut = true;
+            fadingOut = true;*/
     }
 
     void fadeIn() {
