@@ -146,11 +146,16 @@ public class State_Player_Paused : State {
 }
 
 public class State_Player_Falling : State {
-    public State_Player_Falling() {
 
+    
+    public State_Player_Falling() {
     }
 
     public override void OnUpdate(float time_delta_fraction) {
         Player.S.anim.SetInteger("State", (int)AnimState.falling);
+    }
+
+    public override void OnFinish() {
+        MonoBehaviour.print("hmm");
     }
 }

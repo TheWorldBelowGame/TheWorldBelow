@@ -16,7 +16,7 @@ public class State_Dialogue_Play : State {
 
     public override void OnStart() {
         if (s.fall) {
-            Player.S.player_state_machine.ChangeState(new State_Player_Falling());
+            //Player.S.player_state_machine.ChangeState(new State_Player_Falling());
         } else {
             Player.S.player_state_machine.ChangeState(new State_Player_Paused());
         }
