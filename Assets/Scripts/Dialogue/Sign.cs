@@ -19,6 +19,7 @@ public class Sign : MonoBehaviour {
     public bool isBeingRead = false;
     bool collided;
     public bool fall = false;
+    public GameObject button;
 
 	public Animator anim = null;
 	enum AnimState { idle, talking};
@@ -30,6 +31,7 @@ public class Sign : MonoBehaviour {
         sign_state_machine = new StateMachine();
         collided = false;
         background_go.gameObject.SetActive(false);
+        button.SetActive(false);
     }
 
     // Update is called once per frame
@@ -57,12 +59,14 @@ public class Sign : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             collided = true;
+            button.SetActive(true);
         }
     }
 
     void OnTriggerExit2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             collided = false;
+            button.SetActive(false);
         }
     }
 }
