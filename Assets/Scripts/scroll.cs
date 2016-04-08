@@ -14,13 +14,11 @@ public class scroll : MonoBehaviour {
     void Start() {
         s = false;
         startPosition = transform.localPosition;
-        print(startPosition);
     }
 
     void Update() {
         if (s) {
             float newPosition = Mathf.Repeat((Time.time - startTime) * scrollSpeed, tileSizeZ);
-            print(newPosition);
             transform.localPosition = startPosition + Vector3.up * newPosition;
         }
     }
