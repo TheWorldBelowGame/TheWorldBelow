@@ -4,6 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
     public float speed = 0.1f;
+	public float charge_speed = 3f;
     public float distance = 2;
     public bool start_left = true;
     public bool charge = false;
@@ -36,7 +37,7 @@ public class Enemy : MonoBehaviour {
 		if (dead == false) {
 			if (charge && hit.collider != null && hit.collider.gameObject.tag == "Player") {
 				Vector2 vel = rb.velocity;
-				vel.x = (start_left ? -1 : 1) * speed * 2;
+				vel.x = (start_left ? -1 : 1) * charge_speed;
 				rb.velocity = vel;
 				charging = true;
 				//Debug.Log ("fast poop");
