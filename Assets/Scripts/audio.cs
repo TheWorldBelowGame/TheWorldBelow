@@ -10,13 +10,20 @@ public class audio : MonoBehaviour {
     public AudioClip main_music;
 
     void OnLevelWasLoaded(int level) {
-        print(SceneManager.GetActiveScene().name);
+		if (S != this) {
+			Destroy (gameObject);
+			return;
+		}
         if (level == SceneManager.GetSceneByName("Menu").buildIndex) {
-            source.clip = title_music;
-            source.Play();
+			if (source.clip != title_music) {
+				source.clip = title_music;
+				source.Play ();
+			}
         } else if (level == SceneManager.GetSceneByName("Main").buildIndex) {
-            source.clip = main_music;
-            source.Play();
+			if (source.clip != main_music) {
+				source.clip = main_music;
+				source.Play ();
+			}
         } else if (level == SceneManager.GetSceneByName("Falling").buildIndex) {
             source.Stop();
         }
@@ -25,6 +32,10 @@ public class audio : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+		if (S != null) {
+			Destroy (gameObject);
+			return;
+		}
         S = this;
         DontDestroyOnLoad(gameObject);
 

@@ -13,6 +13,6 @@ public class HUD : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        text.text = "Collected: " + Global.S.collected + "\nKilled: " + Global.S.killed;
+		text.text =  (10 - Global.S.collected).ToString();
 	}
 }
