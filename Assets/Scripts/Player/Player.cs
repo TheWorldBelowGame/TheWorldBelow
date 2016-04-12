@@ -122,10 +122,12 @@ public class Player : MonoBehaviour {
 	}
 
     void OnTriggerEnter2D(Collider2D trigger) {
-        if (trigger.gameObject.tag == "Collectable") {
+        /*if (trigger.gameObject.tag == "Collectable") {
+			trigger.gameObject.GetComponent<AudioSource> ().Play ();
             Global.S.collected++;
-            Destroy(trigger.gameObject);
-        }
+            //Destroy(trigger.gameObject);
+			//dtrigger.gameObject.SetActive (false);
+        }*/
         if (trigger.gameObject.tag == ("Door")) {
             door = trigger.gameObject;
         }

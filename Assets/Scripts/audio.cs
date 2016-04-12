@@ -8,19 +8,25 @@ public class audio : MonoBehaviour {
     AudioSource source;
     public AudioClip title_music;
     public AudioClip main_music;
+	public AudioClip wind;
 
     void OnLevelWasLoaded(int level) {
 		if (S != this) {
 			Destroy (gameObject);
 			return;
 		}
-        if (level == SceneManager.GetSceneByName("Menu").buildIndex) {
+		if (level == SceneManager.GetSceneByName ("Menu").buildIndex) {
 			if (source.clip != title_music) {
 				source.clip = title_music;
 				source.Play ();
-                Global.S.collected = 0;
-            }
-        } else if (level == SceneManager.GetSceneByName("Main").buildIndex) {
+				Global.S.collected = 0;
+			}
+		} else if (level == SceneManager.GetSceneByName ("Falling").buildIndex) {
+			if (source.clip != wind) {
+				source.clip = wind;
+				source.Play ();
+			}
+		} else if (level == SceneManager.GetSceneByName("Main").buildIndex) {
 			if (source.clip != main_music) {
 				source.clip = main_music;
 				source.Play ();
