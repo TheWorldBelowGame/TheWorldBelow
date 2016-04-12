@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour {
     public bool start_left = true;
     public bool charge = false;
     public float charge_distance = 5;
+    public GameObject button = null;
 
 	public BoxCollider2D col;
 
@@ -101,6 +102,9 @@ public class Enemy : MonoBehaviour {
 		Vector2 vel = rb.velocity;
 		vel.x = 0f;
 		rb.velocity = vel;
+        if (button != null) {
+            Destroy(button.gameObject);
+        }
 		//Destroy(gameObject);
 	}
 
