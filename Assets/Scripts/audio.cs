@@ -18,7 +18,8 @@ public class audio : MonoBehaviour {
 			if (source.clip != title_music) {
 				source.clip = title_music;
 				source.Play ();
-			}
+                Global.S.collected = 0;
+            }
         } else if (level == SceneManager.GetSceneByName("Main").buildIndex) {
 			if (source.clip != main_music) {
 				source.clip = main_music;
@@ -48,6 +49,8 @@ public class audio : MonoBehaviour {
             source.clip = main_music;
             source.Play();
         }
+        UnityEngine.Cursor.visible = false;
+        Global.S.collected = 0;
     }
 	
 	// Update is called once per frame
