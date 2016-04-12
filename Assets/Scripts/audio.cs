@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class audio : MonoBehaviour {
 
@@ -9,6 +10,10 @@ public class audio : MonoBehaviour {
     public AudioClip title_music;
     public AudioClip main_music;
 	public AudioClip wind;
+
+	void Awake() {
+		S = this;
+	}
 
     void OnLevelWasLoaded(int level) {
 		if (S != this) {
@@ -39,28 +44,18 @@ public class audio : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		if (S != null) {
-			Destroy (gameObject);
-			return;
-		}
-        S = this;
         DontDestroyOnLoad(gameObject);
 
         source = GetComponent<AudioSource>();
 
-        if (SceneManager.GetActiveScene().name == "Menu") {
-            source.clip = title_music;
-            source.Play();
-        } else if (SceneManager.GetActiveScene().name == "Main") {
-            source.clip = main_music;
-            source.Play();
-        }
+        source.clip = title_music;
+        source.Play();
+
         UnityEngine.Cursor.visible = false;
         Global.S.collected = 0;
     }
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 }
