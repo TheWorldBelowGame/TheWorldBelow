@@ -8,7 +8,7 @@ public class State_Player_Normal_Movement : State
 {
 	Player player;
     private bool jump;
-    private bool running;
+    private bool running = false;
     private float jump_timer;
     private float attack_timer;
     private bool attacked;
