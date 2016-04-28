@@ -13,6 +13,7 @@ TagManager:
   - Sword
   - Wall
   - Door
+  - Hidden_Platform
   layers:
   - Default
   - TransparentFX
