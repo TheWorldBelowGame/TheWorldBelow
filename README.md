@@ -15,3 +15,9 @@ https://onedrive.live.com/view.aspx?resid=F3F908037B4D9AA1!26935&app=OneNote&aut
 Discord
 
 https://discordapp.com/channels/173578450492194816/173578450492194816
+
+-
+
+Slack
+
+https://theworldbelow.slack.com/messages/general/
