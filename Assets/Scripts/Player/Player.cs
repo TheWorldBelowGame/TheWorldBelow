@@ -50,8 +50,8 @@ public class Player : MonoBehaviour {
         walled = false;
         door = null;
         spawn = transform.position;
-		//anim.SetBool("Facing left", false);
-		//gameObject.layer = 8;
+
+        Input_Managment.init();
 	}
 	
 	void Start()
@@ -62,7 +62,7 @@ public class Player : MonoBehaviour {
 
 	void Update() {
         player_state_machine.Update();
-		if (Input.GetButtonDown("Start")){
+		if (Input.GetButtonDown(Input_Managment.i_Start)){
 			SceneManager.LoadScene (0);
 		}
         if (dead) {
@@ -97,37 +97,12 @@ public class Player : MonoBehaviour {
     }
 
     void OnCollisionExit2D(Collision2D coll) {
-        if (coll.gameObject.tag == "Ground") {
-            //grounded = false;
-            //Debug.Log ("grounded");
-        }
         if (coll.gameObject.tag == "Wall") {
             walled = false;
         }
     }
 
-
-    // Checking if the play has entered a trigger zone -----------------
-    void OnTriggerStay2D(Collider2D trigger) {
-       /* print("trigger");
-		if (trigger.gameObject.tag == ("Door")) {
-            print("triggerd");
-            if (Input.GetButtonDown ("X Button")) {
-                print("triggerx");
-                CameraFollow.S.in_out();
-                trigger.GetComponent<Door>().in_out();
-                spawn = transform.position;
-			}
-		}*/
-	}
-
     void OnTriggerEnter2D(Collider2D trigger) {
-        /*if (trigger.gameObject.tag == "Collectable") {
-			trigger.gameObject.GetComponent<AudioSource> ().Play ();
-            Global.S.collected++;
-            //Destroy(trigger.gameObject);
-			//dtrigger.gameObject.SetActive (false);
-        }*/
         if (trigger.gameObject.tag == ("Door")) {
             door = trigger.gameObject;
         }
@@ -145,7 +120,6 @@ public class Player : MonoBehaviour {
         scale.x = Mathf.Abs(scale.x);
         rb2d.transform.localScale = scale;
         dead = false;
-        //fade.S.fadingIn = true;
         Invoke("undie", 0.5f);
     }
 

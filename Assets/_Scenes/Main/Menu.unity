@@ -615,6 +615,7 @@ Canvas:
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -678,9 +679,9 @@ MonoBehaviour:
   m_Script: {fileID: 1077351063, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Jump
+  m_HorizontalAxis: L_XAxis_W
+  m_VerticalAxis: L_YAxis_W
+  m_SubmitButton: Submit
   m_CancelButton: Cancel
   m_InputActionsPerSecond: 10
   m_RepeatDelay: 0.5
@@ -833,7 +834,6 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f37707acd8a3c459fabda901f2197fde, type: 2}
-  m_RootGameObject: {fileID: 1896563120}
   m_IsPrefabParent: 0
 --- !u!1 &1089820457
 GameObject:
@@ -1183,122 +1183,3 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!1 &1896563120
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 197580, guid: f37707acd8a3c459fabda901f2197fde, type: 2}
-  m_PrefabInternal: {fileID: 970867959}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1896563123}
-  - 114: {fileID: 1896563122}
-  - 82: {fileID: 1896563121}
-  m_Layer: 0
-  m_Name: Audio
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &1896563121
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 8200330, guid: f37707acd8a3c459fabda901f2197fde,
-    type: 2}
-  m_PrefabInternal: {fileID: 970867959}
-  m_GameObject: {fileID: 1896563120}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 3ac59f6d599945044bcf0f98c6dd94f1, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.234
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
---- !u!114 &1896563122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11409848, guid: f37707acd8a3c459fabda901f2197fde,
-    type: 2}
-  m_PrefabInternal: {fileID: 970867959}
-  m_GameObject: {fileID: 1896563120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a346ab707568e7944b7c814db5a700c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title_music: {fileID: 8300000, guid: 3ac59f6d599945044bcf0f98c6dd94f1, type: 3}
-  main_music: {fileID: 8300000, guid: 7f6c4f144a9559549a34e221741d9af0, type: 3}
-  wind: {fileID: 8300000, guid: 629c82abb58c14f5da93d8fe3dbc7cec, type: 3}
---- !u!4 &1896563123
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 472326, guid: f37707acd8a3c459fabda901f2197fde, type: 2}
-  m_PrefabInternal: {fileID: 970867959}
-  m_GameObject: {fileID: 1896563120}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.3913476, y: 0.67857516, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3

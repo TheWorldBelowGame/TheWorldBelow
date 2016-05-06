@@ -37,7 +37,7 @@ public class Sign : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (collided && (Input.GetButtonDown("Submit") || fall) && !isBeingRead) {
+        if (collided && (Input.GetButtonDown(Input_Managment.i_Speak) || fall) && !isBeingRead) {
             isBeingRead = true;
             sign_state_machine.ChangeState(new State_Dialogue_Play(this));
         }
