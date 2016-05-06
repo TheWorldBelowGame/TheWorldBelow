@@ -8,8 +8,12 @@ public class Input_Managment : MonoBehaviour {
     /// WILL NEED FUNCTIONS FOR THOSE IF WE USE THEM
     /// </summary>
 
+
+    //CLASS VARIABLES
     static bool initialized = false;
+    static string platform = "";
     
+    //INPUTS
     public static string i_Start;
     public static string i_Move;
     public static string i_Jump;
@@ -18,87 +22,54 @@ public class Input_Managment : MonoBehaviour {
     public static string i_Action;
     public static string i_Speak;
 
+    // INIT
+    // to be called when game starts to detect platform and set key bindings
 	public static void init() {
-
         if (initialized) {
             return;
         }
-
         initialized = true;
+        set_key_bindings();
+    }
 
-        RuntimePlatform platform = Application.platform;
+    // SET_KEY_BINDINGS
+    // maps the actions to the correct keys and platform
+    static void set_key_bindings() {
 
-        switch (platform) {
+        platform = detect_platform();
 
+        i_Start = "Start" + platform;
+        i_Move = "L_XAxis" + platform;
+        i_Jump = "A" + platform;
+        i_Run = "RB" + platform;
+        i_Attack = "X" + platform;
+        i_Action = "B" + platform;
+        i_Speak = "Y" + platform;
+        
+    }
+
+    // DETECT_PLATFORM
+    // detects which platform is being run
+    // returns _W for windows and _M for mac
+    static string detect_platform() {
+
+        RuntimePlatform run_platform = Application.platform;
+
+        switch (run_platform) {
             case RuntimePlatform.WindowsEditor:
-                i_Start = "Start_W";
-                i_Move = "L_XAxis_W";
-                i_Jump = "A_W";
-                i_Run = "RB_W";
-                i_Attack = "X_W";
-                i_Action = "B_W";
-                i_Speak = "Y_W";
-                break;
-
+                return "_W";
             case RuntimePlatform.WindowsPlayer:
-                i_Start = "Start_W";
-                i_Move = "L_XAxis_W";
-                i_Jump = "A_W";
-                i_Run = "RB_W";
-                i_Attack = "X_W";
-                i_Action = "B_W";
-                i_Speak = "Y_W";
-                break;
-
+                return "_W";
             case RuntimePlatform.WindowsWebPlayer:
-                i_Start = "Start_W";
-                i_Move = "L_XAxis_W";
-                i_Jump = "A_W";
-                i_Run = "RB_W";
-                i_Attack = "X_W";
-                i_Action = "B_W";
-                i_Speak = "Y_W";
-                break;
-
+                return "_W";
             case RuntimePlatform.OSXEditor:
-                i_Start = "Start_M";
-                i_Move = "L_XAxis_M";
-                i_Jump = "A_M";
-                i_Run = "RB_M";
-                i_Attack = "X_M";
-                i_Action = "B_M";
-                i_Speak = "Y_M";
-                break;
-
+                return "_M";
             case RuntimePlatform.OSXPlayer:
-                i_Start = "Start_M";
-                i_Move = "L_XAxis_M";
-                i_Jump = "A_M";
-                i_Run = "RB_M";
-                i_Attack = "X_M";
-                i_Action = "B_M";
-                i_Speak = "Y_M";
-                break;
-
+                return "_M";
             case RuntimePlatform.OSXWebPlayer:
-                i_Start = "Start_M";
-                i_Move = "L_XAxis_M";
-                i_Jump = "A_M";
-                i_Run = "RB_M";
-                i_Attack = "X_M";
-                i_Action = "B_M";
-                i_Speak = "Y_M";
-                break;
-
+                return "_M";
             default:
-                i_Start = "Start_M";
-                i_Move = "L_XAxis_M";
-                i_Jump = "A_M";
-                i_Run = "RB_M";
-                i_Attack = "X_M";
-                i_Action = "B_M";
-                i_Speak = "Y_M";
-                break;
+                return "_M";
         }
     }
 }
