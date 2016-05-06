@@ -6,12 +6,15 @@ enum AnimState { idle, running, jumping, attack, death, falling};
 
 public class State_Player_Normal_Movement : State
 {
+
+    //STATE VARIABLES
+
 	Player player;
-    private bool jump;
-    private bool running = false;
-    private float jump_timer;
-    private float attack_timer;
-    private bool attacked;
+    private bool s_jump_input;
+    private bool s_running = false;
+    private float s_jump_timer;
+    private float s_attack_timer;
+    private bool s_attacked;
 
 
     public State_Player_Normal_Movement(Player player) {
@@ -19,64 +22,51 @@ public class State_Player_Normal_Movement : State
     }
 
     public override void OnStart() {
-        jump_timer = player.jumpTime;
-        attack_timer = player.attack_speed;
-        attacked = false;
+        s_jump_timer = player.jumpTime;
+        s_attack_timer = player.attack_speed;
+        s_attacked = false;
         player.sword.SetActive(false);
+        s_jump_input = false;
     }
 
     public override void OnUpdate(float time_delta_fraction) {
         if (!player.dead) {
-
-            //if (Input.GetButtonDown ("Jump") && player.grounded) {
+            
+            // If the jump button is pressed, jump
             if (Input.GetButtonDown("Jump") && player.jumps_left > 0) {
-                //Debug.Log("jump");
-                jump = true;
+                s_jump_input = true;
                 player.jumps_left--;
                 player.grounded = false;
             }
 
             float h = Input.GetAxis("Horizontal");
-            float jumpmove;
 
             // Seeing if the player is running or walking
-            /*if (Input.GetButton("B Button") && player.grounded) {
-                running = true;
-                //Debug.Log ("running");
-            } else {
-                running = false;
-                //Debug.Log ("walking");
-            }*/
-
-            if (player.grounded && running) {
-                jumpmove = 2f;
-            } else {
-                jumpmove = 1f;
-            }
+            s_running = Input.GetButton("B Button") && player.grounded;
 
             // Jumping
-            if (jump) {
+            if (s_jump_input) {
                 // Add a vertical force to the player.
-                if (jump_timer > 0) {
+                if (s_jump_timer > 0) {
                     player.rb2d.AddForce(new Vector2(0, player.jumpForce), ForceMode2D.Impulse);
-                    jump_timer -= Time.deltaTime;
+                    s_jump_timer -= Time.deltaTime;
                 } else {
                     // Make sure the player can't jump again until the jump conditions from Update are satisfied.
-                    jump = false;
-                    jump_timer = player.jumpTime;
+                    s_jump_input = false;
+                    s_jump_timer = player.jumpTime;
                 }
             }
 
 
 
             // Left and right walk movement
-            if (!attacked) {
+            if (!s_attacked) {
                 if (player.walled && !player.grounded) {
                     //can't run
-                } else if (running == true) {
-                    player.rb2d.velocity = (new Vector2(h * player.runForce * jumpmove, player.rb2d.velocity.y));
+                } else if (s_running == true) {
+                    player.rb2d.velocity = (new Vector2(h * player.runForce, player.rb2d.velocity.y));
                 } else {
-                    player.rb2d.velocity = (new Vector2(h * player.moveForce * jumpmove, player.rb2d.velocity.y));
+                    player.rb2d.velocity = (new Vector2(h * player.moveForce, player.rb2d.velocity.y));
                 }
             }
             Vector3 scale = player.rb2d.transform.localScale;
@@ -87,24 +77,24 @@ public class State_Player_Normal_Movement : State
             player.rb2d.transform.localScale = scale;
 
             if (Input.GetButtonDown("X Button")) {
-                //player.sword.SetActive(true);
-                attacked = true;
+                s_attacked = true;
             }
 
             // Attacking
-            if (attacked) {
-                attack_timer -= Time.deltaTime;
-                if (attack_timer <= .333) {
+            if (s_attacked) {
+                s_attack_timer -= Time.deltaTime;
+
+                // hard coded attack time lol
+                if (s_attack_timer <= .333) {
                     player.sword.SetActive(true);
                     if (player.grounded) {
                         player.rb2d.velocity = (new Vector2(0, 0));
                     }
-                    //Debug.Log ("poop");
                 }
-                if (attack_timer <= 0) {
-                    attack_timer = player.attack_speed;
+                if (s_attack_timer <= 0) {
+                    s_attack_timer = player.attack_speed;
                     player.sword.SetActive(false);
-                    attacked = false;
+                    s_attacked = false;
                 }
             }
 
@@ -123,7 +113,7 @@ public class State_Player_Normal_Movement : State
 		if (player.dead) {
 			player.anim.SetInteger ("State", (int)AnimState.death);
 			//player.rb2d.velocity = (new Vector2 (0, 0));
-		} else if (attacked) {
+		} else if (s_attacked) {
 			player.anim.SetInteger ("State", (int)AnimState.attack);
 		} else if (player.rb2d.velocity.magnitude > .05f && player.grounded) {
 			player.anim.SetInteger ("State", (int)AnimState.running);
@@ -156,6 +146,6 @@ public class State_Player_Falling : State {
     }
 
     public override void OnFinish() {
-        MonoBehaviour.print("hmm");
+        
     }
 }
