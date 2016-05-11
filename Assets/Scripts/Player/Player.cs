@@ -85,6 +85,11 @@ public class Player : MonoBehaviour {
                 jumps_left = 1;
                 //Debug.Log ("grounded");
                 break;
+            case "Hidden_Platform":
+                grounded = true;
+                jumps_left = 1;
+                //Debug.Log ("grounded");
+                break;
             case "Wall":
                 walled = true;
                 break;
