@@ -13,21 +13,27 @@ public class Follower_Movement : MonoBehaviour {
 
     // Private variables
     [HideInInspector]
-    public enum State {Idle, Busy }
+    public enum State {Idle, Busy, WaitingForPlayer }
     public State follower_state;
     public bool player_interrupt;
     private Vector2 destination;
-   
+    public Vector2 poi_destination;
 
 	// Use this for initialization
 	void Awake()
     {
         S = this;
 	}
+
+    void Start()
+    {
+        poi_destination = transform.position;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        // If the follower is Busy
+        // Follower State:Busy
+
         if (follower_state == State.Busy)
         {
            // Debug.Log("Follower is now Busy");
@@ -44,7 +50,8 @@ public class Follower_Movement : MonoBehaviour {
 
             }
         }
-        // If the follower is Idle
+
+        // Follower State:Idle
         else if (follower_state == State.Idle)
         {
             if (player_interrupt)
@@ -54,12 +61,44 @@ public class Follower_Movement : MonoBehaviour {
                 player_interrupt = false;
             }
 
-            Debug.Log("Follower is now Idle");
+            //Debug.Log("Follower is now Idle");
             destination = GetPosition();
-            Debug.Log("Going to: " + destination);
+            // Debug.Log("Going to: " + destination);
             follower_state = State.Busy;
         }
-	}
+
+        // Follower State: Waiting For Player
+        else if (follower_state == State.WaitingForPlayer)
+        {
+            //Check if we are already at our desired location
+            if (Vector2.Distance(transform.position, poi_destination) < 0.5)
+            {
+                Debug.Log("Waiting for orders");
+                if (player_interrupt)
+                {
+                    Debug.Log("Player Interrupted");
+                    //Do things the player would ask you to do before going back to moving around
+                    player_interrupt = false;
+                    follower_state = State.Idle;
+                }
+            }
+            else
+            {
+                float tempx = transform.position.x;
+                float tempy = transform.position.y;
+                transform.position = Vector2.MoveTowards(new Vector2(tempx, tempy), poi_destination, speed * Time.deltaTime);
+
+            }
+        }
+    }
+
+
+
+
+
+
+
+
 
     private Vector2 GetPosition()
     {
