@@ -15,12 +15,6 @@ public class Player : MonoBehaviour
 	[HideInInspector] public bool dead = false;
 	[HideInInspector] public bool pause = false;
 	[HideInInspector] public int jumps_left;
-	//public float moveForce = 365f;
-	//public float runForce = 500f;
-	//public float jumpForce = 1000f;
-	//public float jumpTime = 1f;
-	//public bool doubleJump = true;
-    //public float attack_speed = 0.25f;
 
     public GameObject sword;
     public Vector3 spawn;
@@ -45,48 +39,6 @@ public class Player : MonoBehaviour
 		playerSM.ChangeState(new PlayerState.Idle());
 	}
 
-	/*
-	void StateTransition()
-	{
-		Type state = playerSM.GetCurrentState();
-
-		if (state == typeof(PlayerState.Jumping) && grounded) {
-			playerSM.Reset();
-			state = playerSM.GetCurrentState();
-		}
-
-		PlayerState.BasePlayerState newState = null;
-		Debug.Log(state.ToString());
-
-		bool inputJump = Input.GetButtonDown(InputManagement.i_Jump);
-		bool inputRun = Input.GetButton(InputManagement.i_Run);
-		bool inputAttack = Input.GetButton(InputManagement.i_Attack);
-		float inputMove = Input.GetAxis(InputManagement.i_Move);
-
-		if (inputAttack && state != typeof(PlayerState.Jumping)) {
-			newState = new PlayerState.Attacking(anim, rb2d, sword);
-		} else if (inputJump && jumps_left > 0 && grounded && state != typeof(PlayerState.Attacking)) {
-			grounded = false;
-			jumps_left--;
-			newState = new PlayerState.Jumping(anim, rb2d, inputRun);
-		} else if (grounded && state != typeof(PlayerState.Attacking)) {
-			if (inputMove != 0) {
-				if (inputRun) {
-					newState = new PlayerState.Running(anim, rb2d);
-				} else {
-					newState = new PlayerState.Walking(anim, rb2d);
-				}
-			} else {
-				newState = new PlayerState.Idle(anim);
-			}
-		}
-
-		if (newState != null) {
-			playerSM.ChangeState(newState);
-		}
-	}
-	*/
-
 	void Update()
 	{
 		if (InputManagement.Start()){
@@ -98,14 +50,13 @@ public class Player : MonoBehaviour
                 die();
         }
 
-		//Doors
+		// Doors
 		if (door != null && InputManagement.Action()) {
 			CameraFollow.S.in_out();
 			door.GetComponent<Door>().in_out();
 			spawn = transform.position;
 		}
-
-		//StateTransition();
+		
 		playerSM.Update();
 	}
 
