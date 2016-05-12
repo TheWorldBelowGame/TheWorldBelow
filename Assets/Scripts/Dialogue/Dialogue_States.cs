@@ -39,7 +39,7 @@ public class State_Dialogue_Play : State {
             current = -1;
     }
 
-    public override void OnUpdate(float time_delta_fraction) {
+    public override void OnUpdate() {
         
         if (Input.GetButtonDown(Input_Management.i_Speak)) {
             current++;

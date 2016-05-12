@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Sign : MonoBehaviour {
 
     //HIDE IN INSPECTOR
-    public StateMachine sign_state_machine;
+    public StateMachine<State> sign_state_machine;
 
     //PUBLIC
     public List<string> messages;
@@ -28,7 +28,7 @@ public class Sign : MonoBehaviour {
     //private bool read = false;
     // Use this for initialization
     void Start() {
-        sign_state_machine = new StateMachine();
+        sign_state_machine = new StateMachine<State>(new State_Dialogue_Play(this));
         collided = false;
         background_go.gameObject.SetActive(false);
         if (button != null)

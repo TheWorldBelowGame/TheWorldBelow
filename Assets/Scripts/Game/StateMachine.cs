@@ -1,46 +1,53 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
-using System.Collections.Generic;
+﻿using System;
 
-// State Machines are responsible for processing states, notifying them when they're about to begin or conclude, etc.
-public class StateMachine
+// A State Machine class to control state transitions.
+public class StateMachine<T> where T : State
 {
-	private State _current_state;
+	private State currentState;
+	private State defaultState;
 	
-	public void ChangeState(State new_state)
+	// defaultState = The machine will switch to this state whenever another state ends.
+	public StateMachine(State defaultState)
 	{
-		if(_current_state != null)
+		this.defaultState = defaultState;
+	}
+	
+	// End the current state and transition to a new state.
+	// newState = The state to transition to.
+	public void ChangeState(State newState)
+	{
+		if (currentState != null)
 		{
-			_current_state.OnFinish();
+			currentState.OnFinish();
 		}
 		
-		_current_state = new_state;
-		// States sometimes need to reset their machine. 
-		// This reference makes that possible.
-		_current_state.state_machine = this;
-		_current_state.OnStart();
+		currentState = newState;
+		currentState.ConcludeState = this.Reset;
+		currentState.OnStart();
 	}
 	
+	// Reset the state machine to the default state.
 	public void Reset()
 	{
-		if(_current_state != null)
-			_current_state.OnFinish();
-		_current_state = null;
+		if (currentState != null)
+			currentState.OnFinish();
+		currentState = defaultState;
 	}
 	
+	// This should be called every Update tick.
 	public void Update()
 	{
-		if(_current_state != null)
+		if (currentState != null)
 		{
-			float time_delta_fraction = Time.deltaTime / (1.0f / Application.targetFrameRate);
-			_current_state.OnUpdate(time_delta_fraction);
+			currentState.OnUpdate();
 		}
 	}
-
-	public bool IsFinished()
+	
+	// Is the state machine doing anything?
+	// returns true if the state machine is currently in the default state.
+	public bool IsDefault()
 	{
-		return _current_state == null;
+		return currentState == defaultState;
 	}
 }
 
@@ -49,15 +56,12 @@ public class StateMachine
 // OnStart -- Fired once when the state is transitioned to.
 // OnFinish -- Fired as the state concludes.
 // State Constructors often store data that will be used during the execution of the State.
-public class State
+public abstract class State
 {
-	// A reference to the State Machine processing the state.
-	public StateMachine state_machine;
-	
-	public virtual void OnStart() {}
-	public virtual void OnUpdate(float time_delta_fraction) {} // time_delta_fraction is a float near 1.0 indicating how much more / less time this frame took than expected.
-	public virtual void OnFinish() {}
-	
-	// States may call ConcludeState on themselves to end their processing.
-	public void ConcludeState() { state_machine.Reset(); }
+	// States may call ConcludeState() to end their processing.
+	public Action ConcludeState;
+
+	public abstract void OnStart();
+	public abstract void OnUpdate();
+	public abstract void OnFinish();
 }

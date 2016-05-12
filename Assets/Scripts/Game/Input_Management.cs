@@ -8,29 +8,29 @@ public class Input_Management : MonoBehaviour {
     /// WILL NEED FUNCTIONS FOR THOSE IF WE USE THEM
     /// </summary>
 
-
-    //CLASS VARIABLES
+	
+    // CLASS VARIABLES
     static bool initialized = false;
     static string platform = "";
     
-    //INPUTS
+    // INPUTS
     public static string i_Start;
     public static string i_Move;
     public static string i_Jump;
     public static string i_Run;
     public static string i_Attack;
-    public static string i_Action;
-    public static string i_Speak;
-
+	public static string i_Action;
+	public static string i_Speak;
+	
     // INIT
     // to be called when game starts to detect platform and set key bindings
 	public static void init() {
         if (initialized) {
             return;
         }
-        initialized = true;
         set_key_bindings();
-    }
+		initialized = true;
+	}
 
     // SET_KEY_BINDINGS
     // maps the actions to the correct keys and platform

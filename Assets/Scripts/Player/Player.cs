@@ -4,8 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour {
-
+public class Player : MonoBehaviour
+{
     public static Player S;
 
 	[HideInInspector] public bool facingRight = true;
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour {
 	[HideInInspector] public Rigidbody2D rb2d;
 	[HideInInspector] public bool dead = false;
 
-    public StateMachine player_state_machine;
+    public StateMachine<State> player_state_machine;
     
 	[HideInInspector] public bool pause = false;
 
@@ -56,7 +56,7 @@ public class Player : MonoBehaviour {
 	
 	void Start()
 	{
-        player_state_machine = new StateMachine();
+        player_state_machine = new StateMachine<State>(new PlayerState.Idle(this));
         player_state_machine.ChangeState(new State_Player_Normal_Movement(this));
 	}
 

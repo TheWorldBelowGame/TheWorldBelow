@@ -1,8 +1,115 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
-enum AnimState { idle, running, jumping, attack, death, falling};
+public enum AnimState { Idle, Running, Jumping, Attack, Death, Falling };
+
+namespace PlayerState
+{
+	public static class Util
+	{
+		public static int ToInt(this AnimState state)
+		{
+			switch (state) {
+				case AnimState.Idle:
+					return 0;
+				case AnimState.Running:
+					return 1;
+				case AnimState.Jumping:
+					return 2;
+				case AnimState.Attack:
+					return 3;
+				case AnimState.Death:
+					return 4;
+				case AnimState.Falling:
+					return 5;
+				default:
+					throw new System.Exception("Invalid AnimState used!");
+			}
+		}
+	}
+
+	public abstract class BasePlayerState : State
+	{
+		protected Player player;
+		protected AnimState animState;
+
+		public BasePlayerState(Player player)
+		{
+			this.player = player;
+		}
+	}
+
+	public class Idle : BasePlayerState
+	{
+		public Idle(Player player) : base(player) {}
+
+		public override void OnStart()
+		{
+			animState = AnimState.Idle;
+		}
+
+		public override void OnUpdate()
+		{
+			player.anim.SetInteger("State", animState.ToInt());
+		}
+
+		public override void OnFinish() {}
+	}
+
+	public class Moving : BasePlayerState
+	{
+		private float moveSpeed;
+
+		public Moving(Player player) : base(player) {}
+
+		public override void OnStart()
+		{
+			animState = AnimState.Running;
+		}
+
+		public override void OnUpdate()
+		{
+			float moveInputVal = Input.GetAxis(Input_Management.i_Move);
+
+			// Is the player walking or running?
+			bool running = Input.GetButton(Input_Management.i_Run) && player.grounded;
+
+			if (player.walled && !player.grounded) {
+				// can't run
+			} else {
+				float moveAmt = moveInputVal * (running ? player.runForce : player.moveForce);
+				player.rb2d.velocity.Set(moveAmt, player.rb2d.velocity.y);
+			}
+
+			// Control left/right facing
+			Vector3 scale = player.rb2d.transform.localScale;
+			if (moveInputVal > 0) {
+				scale.x = -Mathf.Abs(scale.x);
+			} else if (moveInputVal < 0) {
+				scale.x = Mathf.Abs(scale.x);
+			}
+			player.rb2d.transform.localScale = scale;
+		}
+
+		public override void OnFinish()
+		{
+
+		}
+	}
+
+	public class Jumping : Moving
+	{
+		public Jumping(Player player) : base(player) {}
+
+		public override void OnStart()
+		{
+			animState = AnimState.Jumping;
+		}
+	}
+}
+
 
 public class State_Player_Normal_Movement : State
 {
@@ -29,7 +136,7 @@ public class State_Player_Normal_Movement : State
         s_jump_input = false;
     }
 
-    public override void OnUpdate(float time_delta_fraction) {
+    public override void OnUpdate() {
         if (!player.dead) {
             
             // If the jump button is pressed, jump
@@ -141,7 +248,7 @@ public class State_Player_Falling : State {
     public State_Player_Falling() {
     }
 
-    public override void OnUpdate(float time_delta_fraction) {
+    public override void OnUpdate() {
         Player.S.anim.SetInteger("State", (int)AnimState.falling);
     }
 
