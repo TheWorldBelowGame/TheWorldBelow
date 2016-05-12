@@ -33,16 +33,16 @@ public class State_Player_Normal_Movement : State
         if (!player.dead) {
             
             // If the jump button is pressed, jump
-            if (Input.GetButtonDown(Input_Managment.i_Jump) && player.jumps_left > 0) {
+            if (Input.GetButtonDown(Input_Management.i_Jump) && player.jumps_left > 0) {
                 s_jump_input = true;
                 player.jumps_left--;
                 player.grounded = false;
             }
 
-            float h = Input.GetAxis(Input_Managment.i_Move);
+            float h = Input.GetAxis(Input_Management.i_Move);
 
             // Seeing if the player is running or walking
-            s_running = Input.GetButton(Input_Managment.i_Run) && player.grounded;
+            s_running = Input.GetButton(Input_Management.i_Run) && player.grounded;
 
             // Jumping
             if (s_jump_input) {
@@ -76,7 +76,7 @@ public class State_Player_Normal_Movement : State
                 scale.x = Mathf.Abs(scale.x);
             player.rb2d.transform.localScale = scale;
 
-            if (Input.GetButtonDown(Input_Managment.i_Attack)) {
+            if (Input.GetButtonDown(Input_Management.i_Attack)) {
                 s_attacked = true;
             }
 
@@ -99,7 +99,7 @@ public class State_Player_Normal_Movement : State
             }
 
             //Doors
-            if (player.door != null && Input.GetButtonDown(Input_Managment.i_Action)) {
+            if (player.door != null && Input.GetButtonDown(Input_Management.i_Action)) {
                 CameraFollow.S.in_out();
                 player.door.GetComponent<Door>().in_out();
                 player.spawn = player.transform.position;

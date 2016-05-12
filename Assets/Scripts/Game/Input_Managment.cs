@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Input_Managment : MonoBehaviour {
+public class Input_Management : MonoBehaviour {
 
     /// <summary>
     /// TRIGGERS AND D-PAD ARE DIFFERENT FOR WINDOWS AND MAC

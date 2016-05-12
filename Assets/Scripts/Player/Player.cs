@@ -51,7 +51,7 @@ public class Player : MonoBehaviour {
         door = null;
         spawn = transform.position;
 
-        Input_Managment.init();
+        Input_Management.init();
 	}
 	
 	void Start()
@@ -62,7 +62,7 @@ public class Player : MonoBehaviour {
 
 	void Update() {
         player_state_machine.Update();
-		if (Input.GetButtonDown(Input_Managment.i_Start)){
+		if (Input.GetButtonDown(Input_Management.i_Start)){
 			SceneManager.LoadScene (0);
 		}
         if (dead) {
