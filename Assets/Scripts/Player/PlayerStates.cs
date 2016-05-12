@@ -74,6 +74,9 @@ namespace PlayerState
 				Transition(new Jumping());
 			} else if (InputManagement.Attack()) {
 				Transition(new Attacking());
+			} else if (InputManagement.Speak() && Player.S.sign != null) {
+				Player.S.sign.StartReading();
+				Transition(new Talking());
 			} else if (InputManagement.Move() != 0) {
 				if (InputManagement.Run()) {
 					Transition(new Running());
@@ -82,6 +85,18 @@ namespace PlayerState
 				}
 			}
 		}
+
+		public override void Update() {}
+	}
+
+	public class Talking : BasePlayerState
+	{
+		public override void Start()
+		{
+			SetAnim(AnimState.Idle);
+		}
+
+		public override void CheckState() {}
 
 		public override void Update() {}
 	}
@@ -101,6 +116,9 @@ namespace PlayerState
 				Transition(new Jumping());
 			} else if (InputManagement.Attack()) {
 				Transition(new Attacking());
+			} else if (InputManagement.Speak() && Player.S.sign != null) {
+				Player.S.sign.StartReading();
+				Transition(new Talking());
 			} else if (InputManagement.Move() == 0f) {
 				Transition(new Idle());
 			} else if (InputManagement.Run()) {
@@ -129,6 +147,9 @@ namespace PlayerState
 				Transition(new Jumping());
 			} else if (InputManagement.Attack()) {
 				Transition(new Attacking());
+			} else if (InputManagement.Speak() && Player.S.sign != null) {
+				Player.S.sign.StartReading();
+				Transition(new Talking());
 			} else if (InputManagement.Move() == 0f) {
 				Transition(new Idle());
 			} else if (!InputManagement.Run()) {
@@ -159,7 +180,6 @@ namespace PlayerState
 			}
 
 			Player.S.grounded = false;
-			Player.S.jumps_left--;
 			Player.S.rb2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
 		}
 

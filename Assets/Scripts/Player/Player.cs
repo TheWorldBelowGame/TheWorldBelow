@@ -5,7 +5,7 @@ using System;
 public class Player : MonoBehaviour
 {
 	[HideInInspector] public static Player S;
-	public StateMachine<PlayerState.BasePlayerState> playerSM;
+	[HideInInspector] public StateMachine<PlayerState.BasePlayerState> playerSM;
 
 	[HideInInspector] public GameObject door;
 	[HideInInspector] public Animator anim;
@@ -14,10 +14,17 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool walled;
 	[HideInInspector] public bool dead = false;
 	[HideInInspector] public bool pause = false;
-	[HideInInspector] public int jumps_left;
+	[HideInInspector] public Sign sign;
 
-    public GameObject sword;
+	public GameObject sword;
     public Vector3 spawn;
+
+	public void UseDoor()
+	{
+		CameraFollow.S.in_out();
+		door.GetComponent<Door>().in_out();
+		spawn = transform.position;
+	}
 	
 	void Awake() 
 	{
@@ -25,10 +32,10 @@ public class Player : MonoBehaviour
 		playerSM = new StateMachine<PlayerState.BasePlayerState>(new PlayerState.Idle());
 		anim = GetComponent<Animator>();
 		rb2d = GetComponent<Rigidbody2D>();
-        jumps_left = 0;
         grounded = false;
         walled = false;
         door = null;
+		sign = null;
         spawn = transform.position;
 
 		InputManagement.init();
@@ -41,20 +48,16 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
-		if (InputManagement.Start()){
+		if (InputManagement.Start()) {
 			SceneManager.LoadScene (0);
 		}
 
-        if (dead) {
-            if (!fade.S.fadingOut)
-                die();
+        if (dead && !fade.S.fadingOut) {
+			Die();
         }
 
-		// Doors
-		if (door != null && InputManagement.Action()) {
-			CameraFollow.S.in_out();
-			door.GetComponent<Door>().in_out();
-			spawn = transform.position;
+		if (InputManagement.Action() && door != null) {
+			UseDoor();
 		}
 		
 		playerSM.Update();
@@ -66,7 +69,6 @@ public class Player : MonoBehaviour
             case "Ground":
             case "Hidden_Platform":
                 grounded = true;
-                jumps_left = 1;
                 break;
             case "Wall":
                 walled = true;
@@ -77,23 +79,33 @@ public class Player : MonoBehaviour
                 fade.S.fadingOut = true;
                 //die();
                 break;
+			case "Dialogue trigger":
+				sign = coll.gameObject.GetComponent<Sign>();
+				break;
         }
     }
 
     void OnCollisionExit2D(Collision2D coll) {
-        if (coll.gameObject.tag == "Wall") {
-            walled = false;
-        }
+		switch (coll.gameObject.tag) {
+			case "Wall":
+				walled = false;
+				break;
+			case "Dialogue trigger":
+				sign = null;
+				break;
+		}
     }
 
     void OnTriggerEnter2D(Collider2D trigger) {
+		Debug.Log(trigger.tag);
         if (trigger.gameObject.tag == ("Door")) {
             door = trigger.gameObject;
         }
     }
 
     void OnTriggerExit2D(Collider2D trigger) {
-        if (trigger.gameObject.tag == ("Door")) {
+		Debug.Log(trigger.tag + " poof");
+		if (trigger.gameObject.tag == ("Door")) {
             door = null;
         }
     }
@@ -109,15 +121,15 @@ public class Player : MonoBehaviour
 		playerSM.ChangeState(new PlayerState.Falling());
 	}
 
-    void die() {
+    void Die() {
         transform.position = spawn;
         Vector3 scale = rb2d.transform.localScale;
         scale.x = Mathf.Abs(scale.x);
         rb2d.transform.localScale = scale;
-        Invoke("undie", 0.5f);
+        Invoke("Undie", 0.5f);
     }
 
-    void undie() {
+    void Undie() {
 		playerSM.Reset();
 		fade.S.fadingIn = true;
     }

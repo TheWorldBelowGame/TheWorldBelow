@@ -5,71 +5,76 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class Sign : MonoBehaviour {
+public class Sign : MonoBehaviour
+{
+	const int kAnimIdle = 0;
+	const int kAnimTalking = 1;
 
-    //HIDE IN INSPECTOR
-    public StateMachine<State> sign_state_machine;
-
-    //PUBLIC
     public List<string> messages;
     public List<Sprite> faces;
-    public Text dialogue_go;
-    public Image background_go;
-    public Image face_go;
+    public Text dialogue;
+    public Image background;
+    public Image face;
     public bool isBeingRead = false;
-    bool collided;
     public bool fall = false;
-    public GameObject button;
-
 	public Animator anim = null;
-	enum AnimState { idle, talking};
 
-    //PRIVATE
-    //private bool read = false;
-    // Use this for initialization
-    void Start() {
-        sign_state_machine = new StateMachine<State>(new State_Dialogue_Play(this));
-        collided = false;
-        background_go.gameObject.SetActive(false);
-        if (button != null)
-            button.SetActive(false);
+	int current;
+	int size;
+
+	public void StartReading()
+	{
+		if (fall) {
+			Vector3 poi = Player.S.transform.position + Vector3.forward * CameraFollow.S.init_offset.z;
+			CameraFollow.S.set_poi_average(poi, poi);
+		} else {
+			CameraFollow.S.set_poi_average(Player.S.transform.position, transform.position);
+		}
+
+		isBeingRead = true;
+		background.gameObject.SetActive(true);
+		size = messages.Count;
+		if (fall) {
+			current = 0;
+			dialogue.text = messages[current];
+			face.sprite = faces[current];
+		} else {
+			current = -1;
+		}
+	}
+	
+    void Start()
+	{
+        background.gameObject.SetActive(false);
     }
+	
+    void Update()
+	{
+		if (InputManagement.Speak()) {
+			current++;
+			if (current < size) {
+				dialogue.text = messages[current];
+				face.sprite = faces[current];
+			} else {
+				background.gameObject.SetActive(false);
+				isBeingRead = false;
+				if (fall) {
+					fade.S.scene = "Main";
+					fade.S.fadingOut = true;
+					fade.S.changeScene = true;
+				} else {
+					CameraFollow.S.set_poi_player();
+					Player.S.playerSM.ChangeState(new PlayerState.Idle());
+				}
+			}
+		}
 
-    // Update is called once per frame
-    void Update() {
-        if (collided && (InputManagement.Speak() || fall) && !isBeingRead) {
-            isBeingRead = true;
-            sign_state_machine.ChangeState(new State_Dialogue_Play(this));
-        }
-        sign_state_machine.Update();
-
-        // Animation
-        if (anim != null) {
+		if (anim != null) {
             if (isBeingRead) {
-                anim.SetInteger("State", (int)AnimState.talking);
+                anim.SetInteger("State", kAnimTalking);
             } else {
-                anim.SetInteger("State", (int)AnimState.idle);
+                anim.SetInteger("State", kAnimIdle);
             }
-        }
-    }
-
-    void FixedUpdate() {
-        
-    }
-
-    void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("Player")) {
-            collided = true;
-            if (button != null)
-                button.SetActive(true);
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D other) {
-        if (other.CompareTag("Player")) {
-            collided = false;
-            if (button != null)
-                button.SetActive(false);
         }
     }
 }

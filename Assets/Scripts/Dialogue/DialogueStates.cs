@@ -5,23 +5,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class State_Dialogue_Play : State {
+public class DialoguePlay : State
+{
     Sign s;
     int current;
     int size;
 
-    public State_Dialogue_Play(Sign s) {
+    public DialoguePlay(Sign s)
+	{
         this.s = s;
     }
 
-    public override void Start() {
-        if (s.fall) {
-            //Player.S.player_state_machine.ChangeState(new State_Player_Falling());
-        } else {
-			Player.S.Pause();
-        }
-		Player.S.rb2d.velocity = (new Vector2 (0, 0));
-		Player.S.anim.SetInteger ("State", (int)AnimState.Idle);
+    public override void Start()
+	{
+		Player.S.playerSM.ChangeState(new PlayerState.Talking());
+
         if (s.fall) {
             Vector3 poi = Player.S.transform.position + Vector3.forward * CameraFollow.S.init_offset.z;
             CameraFollow.S.set_poi_average(poi, poi);
@@ -29,32 +27,34 @@ public class State_Dialogue_Play : State {
             CameraFollow.S.set_poi_average(Player.S.transform.position, s.transform.position);
         }
         s.isBeingRead = true;
-        s.background_go.gameObject.SetActive(true);
+        s.background.gameObject.SetActive(true);
         size = s.messages.Count;
         if (s.fall) {
             current = 0;
-            s.dialogue_go.text = s.messages[current];
-            s.face_go.sprite = s.faces[current];
+            s.dialogue.text = s.messages[current];
+            s.face.sprite = s.faces[current];
         } else
             current = -1;
     }
 
-    public override void Update() {
-        
+	public override void CheckState() {}
+
+	public override void Update()
+	{    
         if (InputManagement.Speak()) {
             current++;
             if (current < size) {
-                s.dialogue_go.text = s.messages[current];
-                s.face_go.sprite = s.faces[current];
-            }
-            else {
+                s.dialogue.text = s.messages[current];
+                s.face.sprite = s.faces[current];
+            } else {
                 Transition(null);
             }
         }
     }
 
-    public override void Finish() {
-        s.background_go.gameObject.SetActive(false);
+    public override void Finish()
+	{
+        s.background.gameObject.SetActive(false);
         s.isBeingRead = false;
         if (s.fall) {
             fade.S.scene = "Main";
@@ -65,9 +65,4 @@ public class State_Dialogue_Play : State {
             Player.S.playerSM.ChangeState(new PlayerState.Idle());
         }
     }
-
-	public override void CheckState()
-	{
-		throw new NotImplementedException();
-	}
 }
