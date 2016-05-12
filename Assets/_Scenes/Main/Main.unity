@@ -3241,6 +3241,7 @@ GameObject:
   - 61: {fileID: 371108129}
   - 114: {fileID: 371108128}
   - 95: {fileID: 371108131}
+  - 114: {fileID: 371108132}
   m_Layer: 31
   m_Name: normalSize_creature
   m_TagString: Dialogue trigger
@@ -3278,17 +3279,16 @@ MonoBehaviour:
   - But our small friends have become violent and raw.
   - A small push with X can provide protection.
   faces:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: b3eabab68c0e744b48c51bd2261b4611, type: 3}
+  - {fileID: 21300000, guid: b3eabab68c0e744b48c51bd2261b4611, type: 3}
+  - {fileID: 21300000, guid: b3eabab68c0e744b48c51bd2261b4611, type: 3}
+  - {fileID: 21300000, guid: b3eabab68c0e744b48c51bd2261b4611, type: 3}
+  - {fileID: 21300000, guid: b3eabab68c0e744b48c51bd2261b4611, type: 3}
   dialogue: {fileID: 522325421}
   background: {fileID: 794101313}
   face: {fileID: 187772634}
   isBeingRead: 0
   fall: 0
-  button: {fileID: 1742384716}
   anim: {fileID: 371108131}
 --- !u!61 &371108129
 BoxCollider2D:
@@ -3351,6 +3351,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &371108132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 371108126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5113355e76965a9429e29dc7d4d95c52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 1742384716}
 --- !u!1 &375034736
 GameObject:
   m_ObjectHideFlags: 0
@@ -4881,7 +4893,6 @@ MonoBehaviour:
   face: {fileID: 0}
   isBeingRead: 0
   fall: 0
-  button: {fileID: 2121506481}
   anim: {fileID: 471138144}
 --- !u!95 &471138144
 Animator:
@@ -5985,10 +5996,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0444dce45850e455aaf0e8b2b31ecc7a, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &571996966 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 140162, guid: b25de45a4c01c6f428a701fea94962c2, type: 2}
-  m_PrefabInternal: {fileID: 1013717659}
 --- !u!4 &571996967 stripped
 Transform:
   m_PrefabParentObject: {fileID: 415052, guid: b25de45a4c01c6f428a701fea94962c2, type: 2}
@@ -10482,7 +10489,6 @@ MonoBehaviour:
   face: {fileID: 0}
   isBeingRead: 0
   fall: 0
-  button: {fileID: 1532260796}
   anim: {fileID: 958506761}
 --- !u!95 &958506761
 Animator:
@@ -11289,7 +11295,6 @@ MonoBehaviour:
   face: {fileID: 0}
   isBeingRead: 0
   fall: 0
-  button: {fileID: 571996966}
   anim: {fileID: 1023180508}
 --- !u!61 &1023180510
 BoxCollider2D:
@@ -15898,10 +15903,6 @@ SpriteRenderer:
 Transform:
   m_PrefabParentObject: {fileID: 420852, guid: 73747bbfa4116422aa8b0b03e4befb20, type: 2}
   m_PrefabInternal: {fileID: 1836615752}
---- !u!1 &1532260796 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 140162, guid: b25de45a4c01c6f428a701fea94962c2, type: 2}
-  m_PrefabInternal: {fileID: 1430069754}
 --- !u!4 &1532260797 stripped
 Transform:
   m_PrefabParentObject: {fileID: 415052, guid: b25de45a4c01c6f428a701fea94962c2, type: 2}
@@ -21047,10 +21048,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cb2dc9651d62b4538989f5c065f8c3cf, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &2121506481 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 140162, guid: b25de45a4c01c6f428a701fea94962c2, type: 2}
-  m_PrefabInternal: {fileID: 778088636}
 --- !u!4 &2121506482 stripped
 Transform:
   m_PrefabParentObject: {fileID: 415052, guid: b25de45a4c01c6f428a701fea94962c2, type: 2}
