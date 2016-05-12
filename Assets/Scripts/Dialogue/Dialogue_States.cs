@@ -41,7 +41,7 @@ public class State_Dialogue_Play : State {
 
     public override void OnUpdate(float time_delta_fraction) {
         
-        if (Input.GetButtonDown(Input_Managment.i_Speak)) {
+        if (Input.GetButtonDown(Input_Management.i_Speak)) {
             current++;
             if (current < size) {
                 s.dialogue_go.text = s.messages[current];
