@@ -8,7 +8,7 @@ public class fall : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
-            Player.S.player_state_machine.ChangeState(new State_Player_Falling());
+			Player.S.Fall();
             back1.begin();
             back2.begin();
         }

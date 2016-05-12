@@ -14,14 +14,14 @@ public class State_Dialogue_Play : State {
         this.s = s;
     }
 
-    public override void OnStart() {
+    public override void Start() {
         if (s.fall) {
             //Player.S.player_state_machine.ChangeState(new State_Player_Falling());
         } else {
-            Player.S.player_state_machine.ChangeState(new State_Player_Paused());
+			Player.S.Pause();
         }
 		Player.S.rb2d.velocity = (new Vector2 (0, 0));
-		Player.S.anim.SetInteger ("State", (int)AnimState.idle);
+		Player.S.anim.SetInteger ("State", (int)AnimState.Idle);
         if (s.fall) {
             Vector3 poi = Player.S.transform.position + Vector3.forward * CameraFollow.S.init_offset.z;
             CameraFollow.S.set_poi_average(poi, poi);
@@ -39,21 +39,21 @@ public class State_Dialogue_Play : State {
             current = -1;
     }
 
-    public override void OnUpdate() {
+    public override void Update() {
         
-        if (Input.GetButtonDown(Input_Management.i_Speak)) {
+        if (InputManagement.Speak()) {
             current++;
             if (current < size) {
                 s.dialogue_go.text = s.messages[current];
                 s.face_go.sprite = s.faces[current];
             }
             else {
-                ConcludeState();
+                Transition(null);
             }
         }
     }
 
-    public override void OnFinish() {
+    public override void Finish() {
         s.background_go.gameObject.SetActive(false);
         s.isBeingRead = false;
         if (s.fall) {
@@ -62,7 +62,12 @@ public class State_Dialogue_Play : State {
             fade.S.changeScene = true;
         } else {
             CameraFollow.S.set_poi_player();
-            Player.S.player_state_machine.ChangeState(new State_Player_Normal_Movement(Player.S));
+            Player.S.playerSM.ChangeState(new PlayerState.Idle());
         }
     }
+
+	public override void CheckState()
+	{
+		throw new NotImplementedException();
+	}
 }

@@ -1,39 +1,69 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Input_Management : MonoBehaviour {
+public class InputManagement : MonoBehaviour
+{
+    // TRIGGERS AND D-PAD ARE DIFFERENT FOR WINDOWS AND MAC
+    // WILL NEED FUNCTIONS FOR THOSE IF WE USE THEM
 
-    /// <summary>
-    /// TRIGGERS AND D-PAD ARE DIFFERENT FOR WINDOWS AND MAC
-    /// WILL NEED FUNCTIONS FOR THOSE IF WE USE THEM
-    /// </summary>
-
-	
-    // CLASS VARIABLES
     static bool initialized = false;
     static string platform = "";
     
-    // INPUTS
-    public static string i_Start;
-    public static string i_Move;
-    public static string i_Jump;
-    public static string i_Run;
-    public static string i_Attack;
-	public static string i_Action;
-	public static string i_Speak;
-	
-    // INIT
-    // to be called when game starts to detect platform and set key bindings
+    // Input strings
+    static string i_Start;
+    static string i_Move;
+    static string i_Jump;
+    static string i_Run;
+    static string i_Attack;
+	static string i_Action;
+	static string i_Speak;
+
+	public static bool Start()
+	{
+		return Input.GetButtonDown(i_Start);
+	}
+
+	public static float Move()
+	{
+		return Input.GetAxis(i_Move);
+	}
+
+	public static bool Jump()
+	{
+		return Input.GetButtonDown(i_Jump);
+	}
+
+	public static bool Run()
+	{
+		return Input.GetButton(i_Run);
+	}
+
+	public static bool Attack()
+	{
+		return Input.GetButtonDown(i_Attack);
+	}
+
+	public static bool Action()
+	{
+		return Input.GetButtonDown(i_Action);
+	}
+
+	public static bool Speak()
+	{
+		return Input.GetButtonDown(i_Speak);
+	}
+
+	// Initialization - to be called when game starts.
 	public static void init() {
+		Debug.Log("Initializing input manager");
         if (initialized) {
             return;
         }
         set_key_bindings();
 		initialized = true;
 	}
-
-    // SET_KEY_BINDINGS
-    // maps the actions to the correct keys and platform
+	
+    // Maps the actions to the correct keys and platform.
     static void set_key_bindings() {
 
         platform = detect_platform();
@@ -47,9 +77,8 @@ public class Input_Management : MonoBehaviour {
         i_Speak = "Y" + platform;
         
     }
-
-    // DETECT_PLATFORM
-    // detects which platform is being run
+	
+    // Detects which platform is being run.
     // returns _W for windows and _M for mac
     static string detect_platform() {
 

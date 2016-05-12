@@ -1,48 +1,34 @@
 ﻿using UnityEngine;
-//using UnityEditor;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Player : MonoBehaviour
 {
-    public static Player S;
+	[HideInInspector] public static Player S;
+	public StateMachine<PlayerState.BasePlayerState> playerSM;
 
-	[HideInInspector] public bool facingRight = true;
+	[HideInInspector] public GameObject door;
+	[HideInInspector] public Animator anim;
+	[HideInInspector] public Rigidbody2D rb2d;
     [HideInInspector] public bool grounded;
     [HideInInspector] public bool walled;
-    [HideInInspector] public GameObject door;
-    [HideInInspector] public int jumps_left;
-	public float moveForce = 365f;
-	public float runForce = 500f;
-	public float jumpForce = 1000f;
-	public float jumpTime = 1f;
-	public bool doubleJump = true;
-    public float attack_speed = 0.25f;
-
-	public Animator anim;
+	[HideInInspector] public bool dead = false;
+	[HideInInspector] public bool pause = false;
+	[HideInInspector] public int jumps_left;
+	//public float moveForce = 365f;
+	//public float runForce = 500f;
+	//public float jumpForce = 1000f;
+	//public float jumpTime = 1f;
+	//public bool doubleJump = true;
+    //public float attack_speed = 0.25f;
 
     public GameObject sword;
-
-	//private Animator anim;
-	[HideInInspector] public Rigidbody2D rb2d;
-	[HideInInspector] public bool dead = false;
-
-    public StateMachine<State> player_state_machine;
-    
-	[HideInInspector] public bool pause = false;
-
     public Vector3 spawn;
 	
-	/*public enum player_state { STUNNED, NORMAL }
-	public player_state current_state = player_state.NORMAL;
-    public TextMesh t;
-    public string s;*/
-
-	// Use this for initialization
-	void Awake () 
+	void Awake() 
 	{
         S = this;
+		playerSM = new StateMachine<PlayerState.BasePlayerState>(new PlayerState.Idle());
 		anim = GetComponent<Animator>();
 		rb2d = GetComponent<Rigidbody2D>();
         jumps_left = 0;
@@ -51,49 +37,91 @@ public class Player : MonoBehaviour
         door = null;
         spawn = transform.position;
 
-        Input_Management.init();
+		InputManagement.init();
 	}
 	
 	void Start()
 	{
-        player_state_machine = new StateMachine<State>(new PlayerState.Idle(this));
-        player_state_machine.ChangeState(new State_Player_Normal_Movement(this));
+		playerSM.ChangeState(new PlayerState.Idle());
 	}
 
-	void Update() {
-        player_state_machine.Update();
-		if (Input.GetButtonDown(Input_Management.i_Start)){
+	/*
+	void StateTransition()
+	{
+		Type state = playerSM.GetCurrentState();
+
+		if (state == typeof(PlayerState.Jumping) && grounded) {
+			playerSM.Reset();
+			state = playerSM.GetCurrentState();
+		}
+
+		PlayerState.BasePlayerState newState = null;
+		Debug.Log(state.ToString());
+
+		bool inputJump = Input.GetButtonDown(InputManagement.i_Jump);
+		bool inputRun = Input.GetButton(InputManagement.i_Run);
+		bool inputAttack = Input.GetButton(InputManagement.i_Attack);
+		float inputMove = Input.GetAxis(InputManagement.i_Move);
+
+		if (inputAttack && state != typeof(PlayerState.Jumping)) {
+			newState = new PlayerState.Attacking(anim, rb2d, sword);
+		} else if (inputJump && jumps_left > 0 && grounded && state != typeof(PlayerState.Attacking)) {
+			grounded = false;
+			jumps_left--;
+			newState = new PlayerState.Jumping(anim, rb2d, inputRun);
+		} else if (grounded && state != typeof(PlayerState.Attacking)) {
+			if (inputMove != 0) {
+				if (inputRun) {
+					newState = new PlayerState.Running(anim, rb2d);
+				} else {
+					newState = new PlayerState.Walking(anim, rb2d);
+				}
+			} else {
+				newState = new PlayerState.Idle(anim);
+			}
+		}
+
+		if (newState != null) {
+			playerSM.ChangeState(newState);
+		}
+	}
+	*/
+
+	void Update()
+	{
+		if (InputManagement.Start()){
 			SceneManager.LoadScene (0);
 		}
+
         if (dead) {
             if (!fade.S.fadingOut)
                 die();
         }
-    }
 
-	void FixedUpdate()
-	{
-		
+		//Doors
+		if (door != null && InputManagement.Action()) {
+			CameraFollow.S.in_out();
+			door.GetComponent<Door>().in_out();
+			spawn = transform.position;
+		}
+
+		//StateTransition();
+		playerSM.Update();
 	}
 
-
-    // Checking if the player is grounded and can jump -----------------
+    // Checking if the player is grounded and can jump
     void OnCollisionEnter2D(Collision2D coll) {
         switch (coll.gameObject.tag) {
             case "Ground":
-                grounded = true;
-                jumps_left = 1;
-                //Debug.Log ("grounded");
-                break;
             case "Hidden_Platform":
                 grounded = true;
                 jumps_left = 1;
-                //Debug.Log ("grounded");
                 break;
             case "Wall":
                 walled = true;
                 break;
 		    case "Enemy":
+				playerSM.ChangeState(new PlayerState.Dying());
 			    dead = true;
                 fade.S.fadingOut = true;
                 //die();
@@ -119,16 +147,27 @@ public class Player : MonoBehaviour
         }
     }
 
+	// For now just make the player idle when they are paused
+	public void Pause()
+	{
+		playerSM.ChangeState(new PlayerState.Idle());
+	}
+
+	public void Fall()
+	{
+		playerSM.ChangeState(new PlayerState.Falling());
+	}
+
     void die() {
         transform.position = spawn;
         Vector3 scale = rb2d.transform.localScale;
         scale.x = Mathf.Abs(scale.x);
         rb2d.transform.localScale = scale;
-        dead = false;
         Invoke("undie", 0.5f);
     }
 
     void undie() {
-        fade.S.fadingIn = true;
+		playerSM.Reset();
+		fade.S.fadingIn = true;
     }
 }

@@ -13,7 +13,6 @@ public class audio : MonoBehaviour {
 
 	void Awake() {
 		S = this;
-        Input_Management.init();
 	}
 
     void OnLevelWasLoaded(int level) {

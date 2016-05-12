@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.SceneManagement;
 using System;
 
 public enum AnimState { Idle, Running, Jumping, Attack, Death, Falling };
@@ -32,85 +30,228 @@ namespace PlayerState
 
 	public abstract class BasePlayerState : State
 	{
-		protected Player player;
-		protected AnimState animState;
+		public override void Finish() {}
 
-		public BasePlayerState(Player player)
+		protected void SetAnim(AnimState state)
 		{
-			this.player = player;
-		}
-	}
-
-	public class Idle : BasePlayerState
-	{
-		public Idle(Player player) : base(player) {}
-
-		public override void OnStart()
-		{
-			animState = AnimState.Idle;
+			Player.S.anim.SetInteger("State", state.ToInt());
 		}
 
-		public override void OnUpdate()
+		// Move the player using a percentage of the given max speed based on input
+		protected void MovePlayer(bool canMove, float maxSpeed)
 		{
-			player.anim.SetInteger("State", animState.ToInt());
-		}
+			float moveInputVal = InputManagement.Move();
+			Rigidbody2D rb = Player.S.rb2d;
 
-		public override void OnFinish() {}
-	}
-
-	public class Moving : BasePlayerState
-	{
-		private float moveSpeed;
-
-		public Moving(Player player) : base(player) {}
-
-		public override void OnStart()
-		{
-			animState = AnimState.Running;
-		}
-
-		public override void OnUpdate()
-		{
-			float moveInputVal = Input.GetAxis(Input_Management.i_Move);
-
-			// Is the player walking or running?
-			bool running = Input.GetButton(Input_Management.i_Run) && player.grounded;
-
-			if (player.walled && !player.grounded) {
-				// can't run
+			if (canMove) {
+				Debug.Log(moveInputVal + ", " + maxSpeed);
+				//rb.velocity.Set(moveInputVal * maxSpeed, rb.velocity.y);
+				rb.velocity = new Vector2(moveInputVal * maxSpeed, rb.velocity.y);
 			} else {
-				float moveAmt = moveInputVal * (running ? player.runForce : player.moveForce);
-				player.rb2d.velocity.Set(moveAmt, player.rb2d.velocity.y);
+				//rb.velocity.Set(0, rb.velocity.y);
 			}
 
 			// Control left/right facing
-			Vector3 scale = player.rb2d.transform.localScale;
+			Vector3 scale = rb.transform.localScale;
 			if (moveInputVal > 0) {
 				scale.x = -Mathf.Abs(scale.x);
 			} else if (moveInputVal < 0) {
 				scale.x = Mathf.Abs(scale.x);
 			}
-			player.rb2d.transform.localScale = scale;
-		}
-
-		public override void OnFinish()
-		{
-
+			rb.transform.localScale = scale;
 		}
 	}
 
-	public class Jumping : Moving
+	public class Idle : BasePlayerState
 	{
-		public Jumping(Player player) : base(player) {}
-
-		public override void OnStart()
+		public override void Start()
 		{
-			animState = AnimState.Jumping;
+			SetAnim(AnimState.Idle);
 		}
+
+		public override void CheckState()
+		{
+			if (InputManagement.Jump()) {
+				Transition(new Jumping());
+			} else if (InputManagement.Attack()) {
+				Transition(new Attacking());
+			} else if (InputManagement.Move() != 0) {
+				if (InputManagement.Run()) {
+					Transition(new Running());
+				} else {
+					Transition(new Walking());
+				}
+			}
+		}
+
+		public override void Update() {}
+	}
+
+	public class Walking : BasePlayerState
+	{
+		public const float kWalkForce = 4.0f;
+
+		public override void Start()
+		{
+			SetAnim(AnimState.Running);
+		}
+
+		public override void CheckState()
+		{
+			if (InputManagement.Jump()) {
+				Transition(new Jumping());
+			} else if (InputManagement.Attack()) {
+				Transition(new Attacking());
+			} else if (InputManagement.Move() == 0f) {
+				Transition(new Idle());
+			} else if (InputManagement.Run()) {
+				Transition(new Running());
+			}
+		}
+
+		public override void Update()
+		{
+			MovePlayer(true, kWalkForce);
+		}
+	}
+
+	public class Running : BasePlayerState
+	{
+		const float kRunForce = 6.5f;
+
+		public override void Start()
+		{
+			SetAnim(AnimState.Running);
+		}
+
+		public override void CheckState()
+		{
+			if (InputManagement.Jump()) {
+				Transition(new Jumping());
+			} else if (InputManagement.Attack()) {
+				Transition(new Attacking());
+			} else if (InputManagement.Move() == 0f) {
+				Transition(new Idle());
+			} else if (!InputManagement.Run()) {
+				Transition(new Walking());
+			}
+		}
+
+		public override void Update()
+		{
+			MovePlayer(true, kRunForce);
+		}
+	}
+
+	public class Jumping : BasePlayerState
+	{
+		const float kJumpForce = 11f;
+		const float kHighJumpForce = 13f;
+
+		float jumpForce;
+
+		public override void Start()
+		{
+			SetAnim(AnimState.Jumping);
+
+			jumpForce = kJumpForce;
+			if (InputManagement.Run()) {
+				jumpForce = kHighJumpForce;
+			}
+
+			Player.S.grounded = false;
+			Player.S.jumps_left--;
+			Player.S.rb2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+		}
+
+		public override void CheckState()
+		{
+			if (Player.S.grounded) {
+				Transition(new Idle());
+				/*
+				if (InputManagement.Jump()) {
+					Transition(new Jumping);
+				} else if (InputManagement.Move() != 0f) {
+					Transition(new Idle());
+				} else {
+					if (InputManagement.Run()) {
+						Transition(new Running());
+					} else {
+						Transition(new Walking());
+					}
+				}
+				*/
+			}
+		}
+
+		public override void Update()
+		{
+			// Player can only move at walking speed while jumping
+			MovePlayer(true, Walking.kWalkForce);
+		}
+	}
+
+	public class Attacking : BasePlayerState
+	{
+		const float kAttackSpeed = 0.25f;
+		
+		float attackTimer;
+
+		public override void Start()
+		{
+			SetAnim(AnimState.Attack);
+			attackTimer = kAttackSpeed;
+			Player.S.sword.SetActive(true);
+			Player.S.rb2d.velocity = (new Vector2(0, Player.S.rb2d.velocity.y));
+		}
+
+		// Can't take any actions until attack is over
+		public override void CheckState()
+		{
+			if (attackTimer <= 0) {
+				Player.S.sword.SetActive(false);
+				Transition(new Idle());
+			}
+		}
+
+		public override void Update()
+		{
+			attackTimer -= Time.deltaTime;
+		}
+	}
+
+	public class Falling : BasePlayerState
+	{
+		public override void Start()
+		{
+			SetAnim(AnimState.Falling);
+		}
+
+		public override void CheckState() {}
+
+		public override void Update() {}
+	}
+
+	public class Dying : BasePlayerState
+	{
+		public override void Start()
+		{
+			SetAnim(AnimState.Death);
+		}
+
+		public override void CheckState()
+		{
+			if (fade.S.fadingIn == true) {
+				Transition(new Idle());
+			}
+		}
+
+		public override void Update() {}
 	}
 }
 
 
+/*
 public class State_Player_Normal_Movement : State
 {
 
@@ -140,16 +281,16 @@ public class State_Player_Normal_Movement : State
         if (!player.dead) {
             
             // If the jump button is pressed, jump
-            if (Input.GetButtonDown(Input_Management.i_Jump) && player.jumps_left > 0) {
+            if (Input.GetButtonDown(InputManagement.i_Jump) && player.jumps_left > 0) {
                 s_jump_input = true;
                 player.jumps_left--;
                 player.grounded = false;
             }
 
-            float h = Input.GetAxis(Input_Management.i_Move);
+            float h = Input.GetAxis(InputManagement.i_Move);
 
             // Seeing if the player is running or walking
-            s_running = Input.GetButton(Input_Management.i_Run) && player.grounded;
+            s_running = Input.GetButton(InputManagement.i_Run) && player.grounded;
 
             // Jumping
             if (s_jump_input) {
@@ -183,7 +324,7 @@ public class State_Player_Normal_Movement : State
                 scale.x = Mathf.Abs(scale.x);
             player.rb2d.transform.localScale = scale;
 
-            if (Input.GetButtonDown(Input_Management.i_Attack)) {
+            if (Input.GetButtonDown(InputManagement.i_Attack)) {
                 s_attacked = true;
             }
 
@@ -206,7 +347,7 @@ public class State_Player_Normal_Movement : State
             }
 
             //Doors
-            if (player.door != null && Input.GetButtonDown(Input_Management.i_Action)) {
+            if (player.door != null && Input.GetButtonDown(InputManagement.i_Action)) {
                 CameraFollow.S.in_out();
                 player.door.GetComponent<Door>().in_out();
                 player.spawn = player.transform.position;
@@ -218,16 +359,16 @@ public class State_Player_Normal_Movement : State
 		// Animations -----------------------------------------------
 
 		if (player.dead) {
-			player.anim.SetInteger ("State", (int)AnimState.death);
+			player.anim.SetInteger ("State", (int)AnimState.Death);
 			//player.rb2d.velocity = (new Vector2 (0, 0));
 		} else if (s_attacked) {
-			player.anim.SetInteger ("State", (int)AnimState.attack);
+			player.anim.SetInteger ("State", (int)AnimState.Attack);
 		} else if (player.rb2d.velocity.magnitude > .05f && player.grounded) {
-			player.anim.SetInteger ("State", (int)AnimState.running);
+			player.anim.SetInteger ("State", (int)AnimState.Running);
 		} else if (player.grounded == false) {
-			player.anim.SetInteger ("State", (int)AnimState.jumping);
+			player.anim.SetInteger ("State", (int)AnimState.Jumping);
 		} else {
-			player.anim.SetInteger ("State", (int)AnimState.idle);
+			player.anim.SetInteger ("State", (int)AnimState.Idle);
 		}
 
     }
@@ -235,24 +376,4 @@ public class State_Player_Normal_Movement : State
     public override void OnFinish() {
     }
 }
-
-public class State_Player_Paused : State {
-    public State_Player_Paused() {
-		
-    }
-}
-
-public class State_Player_Falling : State {
-
-    
-    public State_Player_Falling() {
-    }
-
-    public override void OnUpdate() {
-        Player.S.anim.SetInteger("State", (int)AnimState.falling);
-    }
-
-    public override void OnFinish() {
-        
-    }
-}
+*/

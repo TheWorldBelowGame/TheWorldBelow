@@ -12,26 +12,33 @@ public class StateMachine<T> where T : State
 		this.defaultState = defaultState;
 	}
 	
+	public Type GetCurrentState()
+	{
+		return currentState.GetType();
+	}
+	
 	// End the current state and transition to a new state.
 	// newState = The state to transition to.
 	public void ChangeState(State newState)
 	{
 		if (currentState != null)
 		{
-			currentState.OnFinish();
+			currentState.Finish();
 		}
 		
+		if (newState == null) {
+			newState = defaultState;
+		}
+
 		currentState = newState;
-		currentState.ConcludeState = this.Reset;
-		currentState.OnStart();
+		currentState.Transition = this.ChangeState;
+		currentState.Start();
 	}
 	
 	// Reset the state machine to the default state.
 	public void Reset()
 	{
-		if (currentState != null)
-			currentState.OnFinish();
-		currentState = defaultState;
+		ChangeState(defaultState);
 	}
 	
 	// This should be called every Update tick.
@@ -39,15 +46,9 @@ public class StateMachine<T> where T : State
 	{
 		if (currentState != null)
 		{
-			currentState.OnUpdate();
+			currentState.CheckState();
+			currentState.Update();
 		}
-	}
-	
-	// Is the state machine doing anything?
-	// returns true if the state machine is currently in the default state.
-	public bool IsDefault()
-	{
-		return currentState == defaultState;
 	}
 }
 
@@ -58,10 +59,12 @@ public class StateMachine<T> where T : State
 // State Constructors often store data that will be used during the execution of the State.
 public abstract class State
 {
-	// States may call ConcludeState() to end their processing.
-	public Action ConcludeState;
+	// States may call Transition() to transition to a new state. If the argument is null, this will transition to the default state
+	public Action<State> Transition;
 
-	public abstract void OnStart();
-	public abstract void OnUpdate();
-	public abstract void OnFinish();
+	public abstract void Start();
+	// CheckState is used to transition to different states
+	public abstract void CheckState();
+	public abstract void Update();
+	public abstract void Finish();
 }
