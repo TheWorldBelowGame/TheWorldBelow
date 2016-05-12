@@ -44,7 +44,6 @@ namespace PlayerState
 			Rigidbody2D rb = Player.S.rb2d;
 
 			if (canMove) {
-				Debug.Log(moveInputVal + ", " + maxSpeed);
 				//rb.velocity.Set(moveInputVal * maxSpeed, rb.velocity.y);
 				rb.velocity = new Vector2(moveInputVal * maxSpeed, rb.velocity.y);
 			} else {
