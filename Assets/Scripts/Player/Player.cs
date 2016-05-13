@@ -95,7 +95,7 @@ public class Player : MonoBehaviour {
                 break;
 		    case "Enemy":
 			    dead = true;
-                fade.S.fadingOut = true;
+                fade.S.fadeOut();
                 //die();
                 break;
         }
@@ -129,6 +129,6 @@ public class Player : MonoBehaviour {
     }
 
     void undie() {
-        fade.S.fadingIn = true;
+        fade.S.fadeIn();
     }
 }

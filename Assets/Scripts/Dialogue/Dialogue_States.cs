@@ -57,9 +57,8 @@ public class State_Dialogue_Play : State {
         s.background_go.gameObject.SetActive(false);
         s.isBeingRead = false;
         if (s.fall) {
-            fade.S.scene = "Main";
-            fade.S.fadingOut = true;
-            fade.S.changeScene = true;
+            fade.S.whenDone("Main");
+            fade.S.fadeOut();
         } else {
             CameraFollow.S.set_poi_player();
             Player.S.player_state_machine.ChangeState(new State_Player_Normal_Movement(Player.S));

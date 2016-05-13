@@ -10,10 +10,15 @@ public class fade : MonoBehaviour {
     public float duration = 1f;
 
     Image img;
-    public bool fadingIn;
-    public bool fadingOut;
-    public bool changeScene;
-    public string scene = "";
+
+    private bool _fadingIn;
+    private bool _fadingOut;
+
+    public bool fadingIn { get { return _fadingIn; } }
+    public bool fadingOut { get { return _fadingOut; } }
+
+    bool changeScene;
+    string scene = "";
     float t;
 
 	// Use this for initialization
@@ -21,8 +26,8 @@ public class fade : MonoBehaviour {
         S = this;
 
         img = GetComponent<Image>();
-        fadingIn = true;
-        fadingOut = false;
+        _fadingIn = true;
+        _fadingOut = false;
         changeScene = false;
         t = 0;
         img.color = Color.black;
@@ -31,10 +36,10 @@ public class fade : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (fadingIn) {
-            fadeIn();
+            stepIn();
         }
         if (fadingOut) {
-            fadeOut();
+            stepOut();
         }
         if (changeScene && !fadingOut) {
             SceneManager.LoadScene(scene);
@@ -45,22 +50,45 @@ public class fade : MonoBehaviour {
             fadingOut = true;*/
     }
 
-    void fadeIn() {
+    public bool fadeIn(float d = 1) {
+        if (fadingIn || fadingOut) {
+            return false;
+        }
+        duration = d;
+        _fadingIn = true;
+        return true;
+    }
+
+    public bool fadeOut(float d = 1) {
+        if (fadingIn || fadingOut) {
+            return false;
+        }
+        duration = d;
+        _fadingOut = true;
+        return true;
+    }
+
+    public void whenDone(string s) {
+        changeScene = true;
+        scene = s;
+    }
+
+    void stepIn() {
         img.color = Color.Lerp(Color.black, Color.clear, (t) / duration);
         t += Time.deltaTime;
         if (img.color.a < 0.05) {
             img.color = Color.clear;
-            fadingIn = false;
+            _fadingIn = false;
             t = 0;
         }
     }
 
-    void fadeOut() {
+    void stepOut() {
         img.color = Color.Lerp(Color.black, Color.clear, (duration - t) / duration);
         t += Time.deltaTime;
         if (img.color.a > 0.95) {
             img.color = Color.black;
-            fadingOut = false;
+            _fadingOut = false;
             t = 0;
         }
     }
