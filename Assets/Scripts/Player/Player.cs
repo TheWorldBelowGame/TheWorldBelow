@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
 	void Awake() 
 	{
         S = this;
-		playerSM = new StateMachine<PlayerState.BasePlayerState>(new PlayerState.Idle());
+		playerSM = new StateMachine<PlayerState.BasePlayerState>(new PlayerState.NormalMovement());
 		anim = GetComponent<Animator>();
 		rb2d = GetComponent<Rigidbody2D>();
         grounded = false;
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
 	
 	void Start()
 	{
-		playerSM.ChangeState(new PlayerState.Idle());
+		playerSM.ChangeState(new PlayerState.NormalMovement());
 	}
 
 	void Update()
@@ -55,10 +55,6 @@ public class Player : MonoBehaviour
         if (dead && !fade.S.fadingOut) {
 			Die();
         }
-
-		if (InputManagement.Action() && door != null) {
-			UseDoor();
-		}
 		
 		playerSM.Update();
 	}
@@ -77,11 +73,7 @@ public class Player : MonoBehaviour
 				playerSM.ChangeState(new PlayerState.Dying());
 			    dead = true;
                 fade.S.fadingOut = true;
-                //die();
                 break;
-			case "Dialogue trigger":
-				sign = coll.gameObject.GetComponent<Sign>();
-				break;
         }
     }
 
@@ -90,30 +82,29 @@ public class Player : MonoBehaviour
 			case "Wall":
 				walled = false;
 				break;
-			case "Dialogue trigger":
-				sign = null;
-				break;
 		}
     }
 
     void OnTriggerEnter2D(Collider2D trigger) {
-		Debug.Log(trigger.tag);
-        if (trigger.gameObject.tag == ("Door")) {
-            door = trigger.gameObject;
-        }
+		switch (trigger.tag) {
+			case "Door":
+				door = trigger.gameObject;
+				break;
+			case "Dialogue trigger":
+				sign = trigger.gameObject.GetComponent<Sign>();
+				break;
+		}
     }
 
     void OnTriggerExit2D(Collider2D trigger) {
-		Debug.Log(trigger.tag + " poof");
-		if (trigger.gameObject.tag == ("Door")) {
-            door = null;
-        }
-    }
-
-	// For now just make the player idle when they are paused
-	public void Pause()
-	{
-		playerSM.ChangeState(new PlayerState.Idle());
+		switch (trigger.tag) {
+			case "Door":
+				door = null;
+				break;
+			case "Dialogue trigger":
+				sign = null;
+				break;
+		}
 	}
 
 	public void Fall()

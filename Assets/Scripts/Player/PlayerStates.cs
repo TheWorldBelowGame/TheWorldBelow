@@ -30,180 +30,103 @@ namespace PlayerState
 
 	public abstract class BasePlayerState : State
 	{
-		protected bool canAttack;
-		protected bool canJump;
-		protected bool canMove;
-
 		public override void Finish() {}
 
 		protected void SetAnim(AnimState state)
 		{
 			Player.S.anim.SetInteger("State", state.ToInt());
 		}
-
-		// Move the player using a percentage of the given max speed based on input
-		protected void MovePlayer(float maxSpeed)
-		{
-			float moveInputVal = InputManagement.Move();
-			Rigidbody2D rb = Player.S.rb2d;
-			
-			if (canMove) {
-				rb.velocity = new Vector2(moveInputVal * maxSpeed, rb.velocity.y);
-			}
-
-			// Control left/right facing
-			Vector3 scale = rb.transform.localScale;
-			if (moveInputVal > 0) {
-				scale.x = -Mathf.Abs(scale.x);
-			} else if (moveInputVal < 0) {
-				scale.x = Mathf.Abs(scale.x);
-			}
-			rb.transform.localScale = scale;
-		}
-
-		protected void BaseStateTransition()
-		{
-			BasePlayerState newState;
-
-			if (InputManagement.Jump() && canJump) {
-				newState = new Jumping();
-			} else if (InputManagement.Attack() && canAttack) {
-				newState = new Attacking();
-			} else if (InputManagement.Speak() && Player.S.sign != null) {
-				Player.S.sign.StartReading();
-				newState = new Talking();
-			} else if (InputManagement.Move() != 0 && canMove && this.GetType() != typeof(Jumping)) {
-				// Jumping state handles its own movement
-				if (InputManagement.Run()) {
-					newState = new Running();
-				} else {
-					newState = new Walking();
-				}
-			} else {
-				newState = new Idle();
-			}
-
-			if (newState != null && newState.GetType() != this.GetType()) {
-				Transition(newState);
-			}
-		}
 	}
 
-	public class Idle : BasePlayerState
+	public class NormalMovement : BasePlayerState
 	{
+		const float kWalkForce = 4.0f;
+		const float kRunForce = 6.5f;
+		const float kJumpForce = 11f;
+		const float kHighJumpForce = 13f;
+
+		Rigidbody2D rb;
+		bool canAttack;
+
 		public override void Start()
 		{
-			canJump = true;
 			canAttack = true;
-			canMove = true;
+			rb = Player.S.rb2d;
 			SetAnim(AnimState.Idle);
 		}
 
 		public override void CheckState()
 		{
-			BaseStateTransition();
-		}
+			if (InputManagement.Attack() && canAttack) {
+				Transition(new Attacking());
+			} else if (InputManagement.Speak() && Player.S.sign != null) {
+				Player.S.sign.StartReading();
+				Transition(new Talking());
+			}
+}
 
-		public override void Update() {}
+		public override void Update()
+		{
+			float moveInput = InputManagement.Move();
+			bool jump = InputManagement.Jump();
+			bool run = InputManagement.Run();
+
+			float jumpForce = kJumpForce;
+			float maxSpeed = kWalkForce;
+
+			if (run) {
+				jumpForce = kHighJumpForce;
+				maxSpeed = kRunForce;
+			}
+
+			// Jumping
+			if (jump && Player.S.grounded) {
+				canAttack = false;
+				Player.S.grounded = false;
+				Player.S.rb2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+			} else if (Player.S.grounded) {
+				canAttack = true;
+			}
+			
+			// Movement
+			if (moveInput == 0f && Player.S.grounded) {
+				SetAnim(AnimState.Idle);
+				rb.velocity = new Vector2(0, 0);
+			} else {
+				SetAnim(AnimState.Running);
+				if (!Player.S.grounded && Player.S.walled) {
+					// cant move
+				} else {
+					rb.velocity = new Vector2(moveInput * maxSpeed, rb.velocity.y);
+				}
+			}
+
+			// Control left/right facing
+			Vector3 scale = rb.transform.localScale;
+			if (moveInput > 0) {
+				scale.x = -Mathf.Abs(scale.x);
+			} else if (moveInput < 0) {
+				scale.x = Mathf.Abs(scale.x);
+			}
+			rb.transform.localScale = scale;
+
+			// Doors
+			if (InputManagement.Action() && Player.S.door != null) {
+				Player.S.UseDoor();
+			}
+		}
 	}
 
 	public class Talking : BasePlayerState
 	{
 		public override void Start()
 		{
-			canJump = false;
-			canAttack = false;
-			canMove = false;
 			SetAnim(AnimState.Idle);
 		}
 
 		public override void CheckState() {}
 
 		public override void Update() {}
-	}
-
-	public class Walking : BasePlayerState
-	{
-		public const float kWalkForce = 4.0f;
-
-		public override void Start()
-		{
-			canJump = true;
-			canAttack = true;
-			canMove = true;
-			SetAnim(AnimState.Running);
-		}
-
-		public override void CheckState()
-		{
-			BaseStateTransition();
-		}
-
-		public override void Update()
-		{
-			MovePlayer(kWalkForce);
-		}
-	}
-
-	public class Running : BasePlayerState
-	{
-		const float kRunForce = 6.5f;
-
-		public override void Start()
-		{
-			canJump = true;
-			canAttack = true;
-			canMove = true;
-			SetAnim(AnimState.Running);
-		}
-
-		public override void CheckState()
-		{
-			BaseStateTransition();
-		}
-
-		public override void Update()
-		{
-			MovePlayer(kRunForce);
-		}
-	}
-
-	public class Jumping : BasePlayerState
-	{
-		const float kJumpForce = 11f;
-		const float kHighJumpForce = 13f;
-
-		float jumpForce;
-
-		public override void Start()
-		{
-			canJump = false;
-			canAttack = false;
-			canMove = true;
-			SetAnim(AnimState.Jumping);
-
-			jumpForce = kJumpForce;
-			if (InputManagement.Run()) {
-				jumpForce = kHighJumpForce;
-			}
-
-			Player.S.grounded = false;
-			Player.S.rb2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-		}
-
-		public override void CheckState()
-		{
-			BaseStateTransition();
-		}
-
-		public override void Update()
-		{
-			// Player can only move at walking speed while jumping
-			// TODO: Make it so you can still move in the direction that is not walled
-			if (!Player.S.walled) {
-				MovePlayer(Walking.kWalkForce);
-			}
-		}
 	}
 
 	public class Attacking : BasePlayerState
@@ -214,9 +137,6 @@ namespace PlayerState
 
 		public override void Start()
 		{
-			canJump = false;
-			canAttack = false;
-			canMove = false;
 			SetAnim(AnimState.Attack);
 			attackTimer = kAttackSpeed;
 			Player.S.sword.SetActive(true);
@@ -228,7 +148,7 @@ namespace PlayerState
 		{
 			if (attackTimer <= 0) {
 				Player.S.sword.SetActive(false);
-				Transition(new Idle());
+				Transition(new NormalMovement());
 			}
 		}
 
@@ -242,9 +162,6 @@ namespace PlayerState
 	{
 		public override void Start()
 		{
-			canJump = false;
-			canAttack = false;
-			canMove = false;
 			SetAnim(AnimState.Falling);
 		}
 
@@ -257,16 +174,13 @@ namespace PlayerState
 	{
 		public override void Start()
 		{
-			canJump = false;
-			canAttack = false;
-			canMove = false;
 			SetAnim(AnimState.Death);
 		}
 
 		public override void CheckState()
 		{
 			if (fade.S.fadingIn == true) {
-				Transition(new Idle());
+				Transition(new NormalMovement());
 			}
 		}
 

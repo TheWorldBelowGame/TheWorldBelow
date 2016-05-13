@@ -64,7 +64,7 @@ public class Sign : MonoBehaviour
 					fade.S.changeScene = true;
 				} else {
 					CameraFollow.S.set_poi_player();
-					Player.S.playerSM.ChangeState(new PlayerState.Idle());
+					Player.S.playerSM.ChangeState(new PlayerState.NormalMovement());
 				}
 			}
 		}

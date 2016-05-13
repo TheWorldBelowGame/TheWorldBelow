@@ -62,7 +62,7 @@ public class DialoguePlay : State
             fade.S.changeScene = true;
         } else {
             CameraFollow.S.set_poi_player();
-            Player.S.playerSM.ChangeState(new PlayerState.Idle());
+            Player.S.playerSM.ChangeState(new PlayerState.NormalMovement());
         }
     }
 }
