@@ -7,32 +7,32 @@ using UnityEngine.SceneManagement;
 
 public class DialoguePlay : State
 {
-    Sign s;
+    Sign sign;
     int current;
     int size;
 
-    public DialoguePlay(Sign s)
+    public DialoguePlay(Sign sign)
 	{
-        this.s = s;
+        this.sign = sign;
     }
 
     public override void Start()
 	{
 		Player.S.playerSM.ChangeState(new PlayerState.Talking());
 
-        if (s.fall) {
-            Vector3 poi = Player.S.transform.position + Vector3.forward * CameraFollow.S.init_offset.z;
-            CameraFollow.S.set_poi_average(poi, poi);
+        if (sign.fall) {
+            Vector3 poi = Player.S.transform.position + Vector3.forward * CameraFollow.S.initOffset.z;
+            CameraFollow.S.SetPoiAverage(poi, poi);
         } else {
-            CameraFollow.S.set_poi_average(Player.S.transform.position, s.transform.position);
+            CameraFollow.S.SetPoiAverage(Player.S.transform.position, sign.transform.position);
         }
-        s.isBeingRead = true;
-        s.background.gameObject.SetActive(true);
-        size = s.messages.Count;
-        if (s.fall) {
+        sign.isBeingRead = true;
+        sign.background.gameObject.SetActive(true);
+        size = sign.messages.Count;
+        if (sign.fall) {
             current = 0;
-            s.dialogue.text = s.messages[current];
-            s.face.sprite = s.faces[current];
+            sign.dialogue.text = sign.messages[current];
+            sign.face.sprite = sign.faces[current];
         } else
             current = -1;
     }
@@ -44,8 +44,8 @@ public class DialoguePlay : State
         if (InputManagement.Speak()) {
             current++;
             if (current < size) {
-                s.dialogue.text = s.messages[current];
-                s.face.sprite = s.faces[current];
+                sign.dialogue.text = sign.messages[current];
+                sign.face.sprite = sign.faces[current];
             } else {
                 Transition(null);
             }
@@ -54,14 +54,14 @@ public class DialoguePlay : State
 
     public override void Finish()
 	{
-        s.background.gameObject.SetActive(false);
-        s.isBeingRead = false;
-        if (s.fall) {
+        sign.background.gameObject.SetActive(false);
+        sign.isBeingRead = false;
+        if (sign.fall) {
             fade.S.scene = "Main";
             fade.S.fadingOut = true;
             fade.S.changeScene = true;
         } else {
-            CameraFollow.S.set_poi_player();
+            CameraFollow.S.SetPoiPlayer();
             Player.S.playerSM.ChangeState(new PlayerState.NormalMovement());
         }
     }

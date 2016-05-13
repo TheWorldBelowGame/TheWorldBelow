@@ -1094,7 +1094,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inside: {fileID: 1245350048}
   outside: {fileID: 175215185}
-  outside_on: 0
+  outsideOn: 0
 --- !u!4 &128695900
 Transform:
   m_ObjectHideFlags: 0
@@ -4131,11 +4131,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  charge_speed: 3
+  chargeSpeed: 3
   distance: 3
-  start_left: 1
+  startLeft: 1
   charge: 1
-  charge_distance: 5
+  chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 423933568}
   anim: {fileID: 423933572}
@@ -4252,7 +4252,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 435777123}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.6481977, y: 3.3814313, z: 0.1796875}
+  m_LocalPosition: {x: -2.6482, y: 3.3814313, z: 0.1796875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 805450275}
@@ -4658,11 +4658,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  charge_speed: 3
+  chargeSpeed: 3
   distance: 5
-  start_left: 1
+  startLeft: 1
   charge: 1
-  charge_distance: 5
+  chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 465814801}
   anim: {fileID: 465814798}
@@ -4805,7 +4805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inside: {fileID: 802354877}
   outside: {fileID: 122472831}
-  outside_on: 0
+  outsideOn: 0
 --- !u!4 &466559366
 Transform:
   m_ObjectHideFlags: 0
@@ -5113,11 +5113,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  charge_speed: 3
+  chargeSpeed: 3
   distance: 5
-  start_left: 1
+  startLeft: 1
   charge: 0
-  charge_distance: 5
+  chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 483481641}
   anim: {fileID: 483481640}
@@ -6994,6 +6994,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 658942930}
   - 61: {fileID: 658942931}
+  - 114: {fileID: 658942932}
   m_Layer: 0
   m_Name: button trigger
   m_TagString: Untagged
@@ -7028,6 +7029,18 @@ BoxCollider2D:
   m_Offset: {x: 0.4339857, y: -0.57285833}
   serializedVersion: 2
   m_Size: {x: 1.6422982, y: 1.8853266}
+--- !u!114 &658942932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 658942929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5113355e76965a9429e29dc7d4d95c52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 1766029639}
 --- !u!4 &664932928 stripped
 Transform:
   m_PrefabParentObject: {fileID: 458020, guid: 883fc124ce3de4958b35a1707550e03c, type: 2}
@@ -7699,11 +7712,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  charge_speed: 3
+  chargeSpeed: 3
   distance: 3
-  start_left: 1
+  startLeft: 1
   charge: 0
-  charge_distance: 5
+  chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 714082463}
   anim: {fileID: 714082462}
@@ -8591,7 +8604,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 788506820}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.177103, y: 4.295793, z: 0.001953125}
+  m_LocalPosition: {x: -5.177102, y: 4.295793, z: 0.001953125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 652521387}
@@ -9529,11 +9542,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  charge_speed: 3
+  chargeSpeed: 3
   distance: 5
-  start_left: 1
+  startLeft: 1
   charge: 1
-  charge_distance: 4
+  chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 862392664}
   anim: {fileID: 862392661}
@@ -12031,11 +12044,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  charge_speed: 3
+  chargeSpeed: 3
   distance: 6
-  start_left: 1
+  startLeft: 1
   charge: 0
-  charge_distance: 5
+  chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 1072662148}
   anim: {fileID: 1072662149}
@@ -12590,11 +12603,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  charge_speed: 3
+  chargeSpeed: 3
   distance: 8
-  start_left: 1
+  startLeft: 1
   charge: 0
-  charge_distance: 5
+  chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 1113447824}
   anim: {fileID: 1113447823}
@@ -14753,11 +14766,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  charge_speed: 3
+  chargeSpeed: 3
   distance: 0
-  start_left: 0
+  startLeft: 1
   charge: 0
-  charge_distance: 5
+  chargeDistance: 5
   button: {fileID: 1766029639}
   col: {fileID: 1305897172}
   anim: {fileID: 1305897173}
@@ -16406,11 +16419,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  charge_speed: 3
+  chargeSpeed: 3
   distance: 8
-  start_left: 1
+  startLeft: 1
   charge: 0
-  charge_distance: 5
+  chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 1580129726}
   anim: {fileID: 1580129725}
@@ -17636,11 +17649,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  charge_speed: 3
+  chargeSpeed: 3
   distance: 7
-  start_left: 1
+  startLeft: 1
   charge: 0
-  charge_distance: 5
+  chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 1668497060}
   anim: {fileID: 1668497062}
@@ -18091,7 +18104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inside: {fileID: 684723318}
   outside: {fileID: 401593401}
-  outside_on: 0
+  outsideOn: 0
 --- !u!114 &1732257619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20244,7 +20257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inside: {fileID: 1595885031}
   outside: {fileID: 1434930998}
-  outside_on: 0
+  outsideOn: 0
 --- !u!114 &2022318831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20892,11 +20905,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.5
-  charge_speed: 3
+  chargeSpeed: 3
   distance: 3
-  start_left: 1
+  startLeft: 1
   charge: 0
-  charge_distance: 5
+  chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 2100436349}
   anim: {fileID: 2100436351}
@@ -20976,7 +20989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1726495039}
-  init_offset: {x: 3, y: 2, z: -10}
+  initOffset: {x: 0, y: 0, z: 0}
   falling: 0
   outside: {fileID: 490195820}
   inside: {fileID: 394716319}

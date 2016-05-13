@@ -1,48 +1,44 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : MonoBehaviour
+{
+	enum AnimState { idle, running, death, charge };
 
-    public float speed = 0.1f;
-	public float charge_speed = 3f;
+	public float speed = 0.1f;
+	public float chargeSpeed = 3f;
     public float distance = 2;
-    public bool start_left = true;
+    public bool startLeft = true;
     public bool charge = false;
-    public float charge_distance = 5;
+    public float chargeDistance = 5;
     public GameObject button = null;
-
 	public BoxCollider2D col;
-
-    Rigidbody2D rb;
-    float start;
-	private bool dead = false;
-	private bool charging = false;
-
 	public Animator anim;
-	enum AnimState { idle, running, death, charge};
 
-	// Use this for initialization
-	void Start () {
+	Rigidbody2D rb;
+    float start;
+	bool dead = false;
+	bool charging = false;
+	
+	void Start ()
+	{
         start = transform.position.x;
         rb = GetComponent<Rigidbody2D>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
+		Vector3 dir = startLeft ? Vector3.left : Vector3.right;
+		Debug.DrawRay(transform.position, dir * chargeDistance, Color.yellow);
+		RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, chargeDistance, 1 << LayerMask.NameToLayer ("Player"));
 
-        
-		Vector3 dir = (start_left ? Vector3.left : Vector3.right);
-		Debug.DrawRay (transform.position, dir * charge_distance, Color.yellow);
-		RaycastHit2D hit = Physics2D.Raycast (transform.position, dir, charge_distance, 1 << LayerMask.NameToLayer ("Player"));
-
-		if (dead == false) {
+		if (!dead) {
 			if (charge && hit.collider != null && hit.collider.gameObject.tag == "Player") {
 				Vector2 vel = rb.velocity;
-				vel.x = (start_left ? -1 : 1) * charge_speed;
+				vel.x = (startLeft ? -1 : 1) * chargeSpeed;
 				rb.velocity = vel;
 				charging = true;
-				//Debug.Log ("fast poop");
-			} else if (start_left) {
+			} else if (startLeft) {
 				charging = false;
 				if (transform.position.x > start - distance) {
 					Vector2 vel = rb.velocity;
@@ -50,7 +46,7 @@ public class Enemy : MonoBehaviour {
 					rb.velocity = vel;
 				} else {
 					start = transform.position.x;
-					start_left = false;
+					startLeft = false;
 					Vector3 scale = rb.transform.localScale;
 					scale.x *= -1;
 					rb.transform.localScale = scale;
@@ -62,7 +58,7 @@ public class Enemy : MonoBehaviour {
 					rb.velocity = vel;
 				} else {
 					start = transform.position.x;
-					start_left = true;
+					startLeft = true;
 					Vector3 scale = rb.transform.localScale;
 					scale.x *= -1;
 					rb.transform.localScale = scale;
@@ -70,7 +66,7 @@ public class Enemy : MonoBehaviour {
 			}
 		}
 
-		// Animation----------------------------------------
+		// Animation
 		if (dead) {
 			anim.SetInteger ("State", (int)AnimState.death);
 		} else if (charging) {
@@ -85,17 +81,19 @@ public class Enemy : MonoBehaviour {
 				
 	}
 
-    void OnCollisionEnter2D(Collision2D coll) {
+    void OnCollisionEnter2D(Collision2D coll)
+	{
         if (coll.gameObject.tag == "Sword") {
             Global.S.killed++;
 			dead = true;
             Destroy(this.gameObject);
         } else if (coll.gameObject.tag == "Wall") {
-            start_left = !start_left;
+            startLeft = !startLeft;
         }
     }
 
-	public void die() {
+	public void Die()
+	{
 		dead = true;
 		col.enabled = false;
 		rb.isKinematic = true;
@@ -105,7 +103,6 @@ public class Enemy : MonoBehaviour {
         if (button != null) {
             Destroy(button.gameObject);
         }
-		//Destroy(gameObject);
 	}
 
 }

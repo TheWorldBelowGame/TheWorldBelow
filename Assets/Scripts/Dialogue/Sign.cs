@@ -25,10 +25,10 @@ public class Sign : MonoBehaviour
 	public void StartReading()
 	{
 		if (fall) {
-			Vector3 poi = Player.S.transform.position + Vector3.forward * CameraFollow.S.init_offset.z;
-			CameraFollow.S.set_poi_average(poi, poi);
+			Vector3 poi = Player.S.transform.position + Vector3.forward * CameraFollow.S.initOffset.z;
+			CameraFollow.S.SetPoiAverage(poi, poi);
 		} else {
-			CameraFollow.S.set_poi_average(Player.S.transform.position, transform.position);
+			CameraFollow.S.SetPoiAverage(Player.S.transform.position, transform.position);
 		}
 
 		isBeingRead = true;
@@ -63,7 +63,7 @@ public class Sign : MonoBehaviour
 					fade.S.fadingOut = true;
 					fade.S.changeScene = true;
 				} else {
-					CameraFollow.S.set_poi_player();
+					CameraFollow.S.SetPoiPlayer();
 					Player.S.playerSM.ChangeState(new PlayerState.NormalMovement());
 				}
 			}

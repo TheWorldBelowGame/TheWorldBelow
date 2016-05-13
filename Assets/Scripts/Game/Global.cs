@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Global {
-    public float killed;
-    public float collected;
-    private static Global _s = null;
+public class Global
+{
+    static Global _s = null;
     public static Global S
     {
         get
@@ -15,7 +14,11 @@ public class Global {
         }
     }
 
-    private Global() {
+	public int killed;
+	public int collected;
+
+	private Global()
+	{
         killed = 0;
         collected = 0;
     }

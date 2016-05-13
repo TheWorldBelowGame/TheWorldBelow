@@ -21,8 +21,8 @@ public class Player : MonoBehaviour
 
 	public void UseDoor()
 	{
-		CameraFollow.S.in_out();
-		door.GetComponent<Door>().in_out();
+		CameraFollow.S.InOut();
+		door.GetComponent<Door>().InOut();
 		spawn = transform.position;
 	}
 	
@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
 	
 	void Start()
 	{
+		sword.SetActive(false);
 		playerSM.ChangeState(new PlayerState.NormalMovement());
 	}
 

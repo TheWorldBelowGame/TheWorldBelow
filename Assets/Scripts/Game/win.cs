@@ -2,30 +2,32 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class win : MonoBehaviour {
-
+public class Win : MonoBehaviour
+{
     bool go;
-    public string good_ending;
-    public string bad_ending;
+    public string goodEnding;
+    public string badEnding;
     string scene;
-
-	// Use this for initialization
-	void Start () {
+	
+	void Start()
+	{
         go = false;
-        scene = bad_ending;
+        scene = badEnding;
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void Update()
+	{
         if (go && !fade.S.fadingOut) {
             SceneManager.LoadScene(scene);
         }
 	}
-    void OnTriggerEnter2D(Collider2D coll) {
+
+    void OnTriggerEnter2D(Collider2D coll)
+	{
         go = true;
         fade.S.fadingOut = true;
         if (Global.S.collected >= 10) {
-            scene = good_ending;
+            scene = goodEnding;
         }
     }
 }
