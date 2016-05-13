@@ -91,7 +91,6 @@ namespace PlayerState
 			// Movement
 			if (moveInput == 0f && Player.S.grounded) {
 				SetAnim(AnimState.Idle);
-				rb.velocity = new Vector2(0, 0);
 			} else {
 				SetAnim(AnimState.Running);
 				if (!Player.S.grounded && Player.S.walled) {
@@ -111,6 +110,7 @@ namespace PlayerState
 			rb.transform.localScale = scale;
 
 			// Doors
+			Debug.Log(Player.S.door.ToString());
 			if (InputManagement.Action() && Player.S.door != null) {
 				Player.S.UseDoor();
 			}

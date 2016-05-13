@@ -85,19 +85,19 @@ public class Player : MonoBehaviour
 		}
     }
 
-    void OnTriggerEnter2D(Collider2D trigger) {
-		switch (trigger.tag) {
+    void OnTriggerEnter2D(Collider2D coll) {
+		switch (coll.tag) {
 			case "Door":
-				door = trigger.gameObject;
+				door = coll.gameObject;
 				break;
 			case "Dialogue trigger":
-				sign = trigger.gameObject.GetComponent<Sign>();
+				sign = coll.gameObject.GetComponent<Sign>();
 				break;
 		}
     }
 
-    void OnTriggerExit2D(Collider2D trigger) {
-		switch (trigger.tag) {
+    void OnTriggerExit2D(Collider2D coll) {
+		switch (coll.tag) {
 			case "Door":
 				door = null;
 				break;
