@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool walled;
 	[HideInInspector] public bool dead = false;
 	[HideInInspector] public bool pause = false;
-	[HideInInspector] public Dialogue sign;
+	[HideInInspector] public Dialogue dialogue;
 
 	public GameObject sword;
     public Vector3 spawn;
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
         grounded = false;
         walled = false;
         door = null;
-		sign = null;
+		dialogue = null;
         spawn = transform.position;
 
 		InputManagement.init();
@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
 			SceneManager.LoadScene (0);
 		}
 
-        if (dead && !fade.S.fadingOut) {
+        if (dead && !Fade.S.fadingOut) {
 			Die();
         }
 		
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
 		    case "Enemy":
 				playerSM.ChangeState(new PlayerState.Dying());
 			    dead = true;
-                fade.S.fadeOut();
+                Fade.S.FadeOut();
                 //die();
                 break;
         }
@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
 				door = coll.gameObject;
 				break;
 			case "Dialogue trigger":
-				sign = coll.gameObject.GetComponent<Dialogue>();
+				dialogue = coll.gameObject.GetComponent<Dialogue>();
 				break;
 		}
     }
@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
 				door = null;
 				break;
 			case "Dialogue trigger":
-				sign = null;
+				dialogue = null;
 				break;
 		}
 	}
@@ -126,6 +126,6 @@ public class Player : MonoBehaviour
     void Undie()
 	{
 		playerSM.Reset();
-        fade.S.fadeIn();
+        Fade.S.FadeIn();
     }
 }

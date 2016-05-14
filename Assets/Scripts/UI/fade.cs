@@ -3,26 +3,23 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class fade : MonoBehaviour {
-
-    public static fade S;
-
+public class Fade : MonoBehaviour
+{
+    public static Fade S;
     public float duration = 1f;
 
-    Image img;
+    bool _fadingIn;
+    bool _fadingOut;
+	public bool fadingIn { get { return _fadingIn; } }
+	public bool fadingOut { get { return _fadingOut; } }
 
-    private bool _fadingIn;
-    private bool _fadingOut;
-
-    public bool fadingIn { get { return _fadingIn; } }
-    public bool fadingOut { get { return _fadingOut; } }
-
-    bool changeScene;
+	Image img;
+	bool changeScene;
     string scene = "";
     float t;
-
-	// Use this for initialization
-	void Start () {
+	
+	void Start()
+	{
         S = this;
 
         img = GetComponent<Image>();
@@ -33,24 +30,21 @@ public class fade : MonoBehaviour {
         img.color = Color.black;
     }
 	
-	// Update is called once per frame
-	void Update () {
+	void Update()
+	{
         if (fadingIn) {
-            stepIn();
+            StepIn();
         }
         if (fadingOut) {
-            stepOut();
+            StepOut();
         }
         if (changeScene && !fadingOut) {
             SceneManager.LoadScene(scene);
         }
-        /*if (Input.GetKeyDown(KeyCode.X))
-            fadingIn = true;
-        if (Input.GetKeyDown(KeyCode.Z))
-            fadingOut = true;*/
     }
 
-    public bool fadeIn(float d = 1) {
+    public bool FadeIn(float d = 1)
+	{
         if (fadingIn || fadingOut) {
             return false;
         }
@@ -59,7 +53,8 @@ public class fade : MonoBehaviour {
         return true;
     }
 
-    public bool fadeOut(float d = 1) {
+    public bool FadeOut(float d = 1)
+	{
         if (fadingIn || fadingOut) {
             return false;
         }
@@ -68,12 +63,14 @@ public class fade : MonoBehaviour {
         return true;
     }
 
-    public void whenDone(string s) {
+    public void WhenDone(string s)
+	{
         changeScene = true;
         scene = s;
     }
 
-    void stepIn() {
+    void StepIn()
+	{
         img.color = Color.Lerp(Color.black, Color.clear, (t) / duration);
         t += Time.deltaTime;
         if (img.color.a < 0.05) {
@@ -83,7 +80,8 @@ public class fade : MonoBehaviour {
         }
     }
 
-    void stepOut() {
+    void StepOut()
+	{
         img.color = Color.Lerp(Color.black, Color.clear, (duration - t) / duration);
         t += Time.deltaTime;
         if (img.color.a > 0.95) {

@@ -59,8 +59,8 @@ namespace PlayerState
 		{
 			if (InputManagement.Attack() && canAttack) {
 				Transition(new Attacking());
-			} else if (InputManagement.Speak() && Player.S.sign != null) {
-				Player.S.sign.StartReading();
+			} else if (InputManagement.Speak() && Player.S.dialogue != null) {
+				Player.S.dialogue.StartReading();
 				Transition(new Talking());
 			}
 }
@@ -125,7 +125,12 @@ namespace PlayerState
 
 		public override void CheckState() {}
 
-		public override void Update() {}
+		public override void Update()
+		{
+			if (InputManagement.Speak()) {
+				Player.S.dialogue.Advance();
+			}
+		}
 	}
 
 	public class Attacking : BasePlayerState
@@ -178,7 +183,7 @@ namespace PlayerState
 
 		public override void CheckState()
 		{
-			if (fade.S.fadingIn == true) {
+			if (Fade.S.fadingIn == true) {
 				Transition(new NormalMovement());
 			}
 		}

@@ -2,22 +2,22 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Gui_fade : MonoBehaviour {
-
-	Color startColor = new Color (0,0,0,0);
+public class GuiFade : MonoBehaviour
+{
 	public Color endColor;
 	public float duration;
-	float t;
-
 	public float delay = 0;
+
+	Color startColor;
+	Text txt;
+	float t;
 	float i;
 	bool done;
 	bool start;
-
-	Text txt;
-
-	// Use this for initialization
-	void Start () {
+	
+	void Start()
+	{
+		startColor = new Color(0, 0, 0, 0);
 		txt = GetComponent<Text>();
 		txt.color = startColor;
 		t = 0;
@@ -25,23 +25,23 @@ public class Gui_fade : MonoBehaviour {
 		done = false;
 		start = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	void Update()
+	{
 		i += Time.deltaTime;
 
 		if (i >= delay) {
 			start = true;
 		}
 
-		if(start && !done)
-			fade ();
+		if (start && !done) {
+			Fade();
+		}
 	}
 
-	void fade(){
-		//print (t / duration);
+	void Fade()
+	{
 		txt.color = Color.Lerp(startColor, endColor, (t) / duration);
-		//print (txt.color);
 		t += Time.deltaTime;
 		if (txt.color.a > 0.95) {
 			txt.color = endColor;

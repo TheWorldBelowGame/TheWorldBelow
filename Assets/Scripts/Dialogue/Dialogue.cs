@@ -21,60 +21,49 @@ public class Dialogue : MonoBehaviour
 
 	int current;
 	int size;
-
-	public void StartReading()
-	{
-		if (fall) {
-			Vector3 poi = Player.S.transform.position + Vector3.forward * CameraFollow.S.initOffset.z;
-			CameraFollow.S.SetPoiAverage(poi, poi);
-		} else {
-			CameraFollow.S.SetPoiAverage(Player.S.transform.position, transform.position);
-		}
-
-		isBeingRead = true;
-		background.gameObject.SetActive(true);
-		size = messages.Count;
-		if (fall) {
-			current = 0;
-			dialogue.text = messages[current];
-			face.sprite = faces[current];
-		} else {
-			current = -1;
-		}
-	}
 	
     void Start()
 	{
         background.gameObject.SetActive(false);
     }
-	
-    void Update()
-	{
-		if (InputManagement.Speak()) {
-			current++;
-			if (current < size) {
-				dialogue.text = messages[current];
-				face.sprite = faces[current];
-			} else {
-				background.gameObject.SetActive(false);
-				isBeingRead = false;
-				if (fall) {
-					fade.S.scene = "Main";
-					fade.S.fadingOut = true;
-					fade.S.changeScene = true;
-				} else {
-					CameraFollow.S.SetPoiPlayer();
-					Player.S.playerSM.ChangeState(new PlayerState.NormalMovement());
-				}
-			}
-		}
 
-		if (anim != null) {
-            if (isBeingRead) {
-                anim.SetInteger("State", kAnimTalking);
-            } else {
-                anim.SetInteger("State", kAnimIdle);
-            }
-        }
-    }
+	public void StartReading()
+	{
+		anim.SetInteger("State", kAnimTalking);
+		isBeingRead = true;
+		background.gameObject.SetActive(true);
+		size = messages.Count;
+
+		if (fall) {
+			current = 0;
+			dialogue.text = messages[current];
+			face.sprite = faces[current];
+			Vector3 poi = Player.S.transform.position + Vector3.forward * CameraFollow.S.initOffset.z;
+			CameraFollow.S.SetPoiAverage(poi, poi);
+		} else {
+			current = -1;
+			CameraFollow.S.SetPoiAverage(Player.S.transform.position, transform.position);
+		}
+	}
+
+	// Advances the dialogue one step
+	public void Advance()
+	{
+		current++;
+		if (current < size) {
+			dialogue.text = messages[current];
+			face.sprite = faces[current];
+		} else {
+			background.gameObject.SetActive(false);
+			isBeingRead = false;
+			if (fall) {
+				Fade.S.WhenDone("Main");
+				Fade.S.FadeOut();
+			} else {
+				CameraFollow.S.SetPoiPlayer();
+				Player.S.playerSM.ChangeState(new PlayerState.NormalMovement());
+			}
+			anim.SetInteger("State", kAnimIdle);
+		}
+	}
 }
