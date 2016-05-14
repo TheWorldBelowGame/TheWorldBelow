@@ -2,9 +2,12 @@
 
 public class Door : MonoBehaviour
 {
-    public GameObject inside;
+	// Public
+	[HideInInspector] public bool outsideOn;
+
+	// Visible in Editor
+	public GameObject inside;
     public GameObject outside;
-    public bool outsideOn;
 	
 	void Start()
 	{

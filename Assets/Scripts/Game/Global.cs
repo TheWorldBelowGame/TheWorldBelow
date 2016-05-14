@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Class to keep track of Global variables. Utilizes lazy initialization.
 public class Global
 {
+	// Singleton
     static Global _s = null;
     public static Global S
     {
@@ -14,9 +16,11 @@ public class Global
         }
     }
 
+	// Public
 	public int killed;
 	public int collected;
 
+	// Private
 	private Global()
 	{
         killed = 0;

@@ -4,10 +4,12 @@ using UnityEngine.UI;
 
 public class GuiFade : MonoBehaviour
 {
+	// Visible in Editor
 	public Color endColor;
 	public float duration;
 	public float delay = 0;
 
+	// Private
 	Color startColor;
 	Text txt;
 	float t;

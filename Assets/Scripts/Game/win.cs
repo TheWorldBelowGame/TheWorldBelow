@@ -4,8 +4,11 @@ using UnityEngine.SceneManagement;
 
 public class Win : MonoBehaviour
 {
+	// Visible in Editor
     public string goodEnding;
     public string badEnding;
+
+	// Private
     string scene;
 	
 	void Start()

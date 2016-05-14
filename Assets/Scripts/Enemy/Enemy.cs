@@ -3,18 +3,23 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
+	// Definitions
 	enum AnimState { idle, running, death, charge };
 
+	// Public
+	[HideInInspector] public bool charge = false;
+
+	// Visible in Editor
 	public float speed = 0.1f;
 	public float chargeSpeed = 3f;
     public float distance = 2;
     public bool startLeft = true;
-    public bool charge = false;
     public float chargeDistance = 5;
     public GameObject button = null;
 	public BoxCollider2D col;
 	public Animator anim;
 
+	// Private
 	Rigidbody2D rb;
     float start;
 	bool dead = false;

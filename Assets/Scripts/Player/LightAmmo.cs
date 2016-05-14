@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LightAmmo : MonoBehaviour {
-
-
+public class LightAmmo : MonoBehaviour
+{
+	// Private
     private float delay = LightPlatformEnabler.S.bullet_lifetime;
     private GameObject light_bullet_1;
     private GameObject light_bullet_2;
-
 
     void Update()
     {

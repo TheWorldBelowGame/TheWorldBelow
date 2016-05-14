@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InputManagement : MonoBehaviour
+// Static class to handle inputs. All input checks should come through this class.
+public static class InputManagement
 {
     // TRIGGERS AND D-PAD ARE DIFFERENT FOR WINDOWS AND MAC
     // WILL NEED FUNCTIONS FOR THOSE IF WE USE THEM
 
+	// Private
     static bool initialized = false;
     static string platform = "";
     

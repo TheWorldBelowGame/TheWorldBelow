@@ -2,20 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+// Generic dialogue behavior. Anything with dialogue implements this script.
 public class Dialogue : MonoBehaviour
 {
+	// Definitions
 	const int kAnimIdle = 0;
 	const int kAnimTalking = 1;
 
-    public List<string> messages;
+	// Public
+	[HideInInspector] public bool isBeingRead = false;
+
+	// Visible in Editor
+	public List<string> messages;
     public List<Sprite> faces;
     public Text dialogue;
     public Image background;
     public Image face;
-    public bool isBeingRead = false;
     public bool fall = false;
 	public Animator anim = null;
 
+	// Private
 	int current;
 	int size;
 	

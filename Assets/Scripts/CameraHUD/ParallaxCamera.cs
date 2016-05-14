@@ -3,9 +3,13 @@
 [ExecuteInEditMode]
 public class ParallaxCamera : MonoBehaviour 
 {
+	// Definitions
 	public delegate void ParallaxCameraDelegate(float deltaMovement);
+
+	// Visible in Editor
 	public ParallaxCameraDelegate onCameraTranslate;
 
+	// Private
 	float oldPosition;
 
 	void Start()

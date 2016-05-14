@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class Levels : MonoBehaviour
+// Utility class for changing levels.
+public class Levels
 {
     public void GotoLevel(string sceneName)
 	{

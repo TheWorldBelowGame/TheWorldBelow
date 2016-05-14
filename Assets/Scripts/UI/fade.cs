@@ -5,9 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class Fade : MonoBehaviour
 {
+	// Definitions
 	public const float defaultFadeTime = 1f;
 
+	// Private Singleton
 	static Fade S;
+
+	// Private
 	Image img;
 
 	void Start()

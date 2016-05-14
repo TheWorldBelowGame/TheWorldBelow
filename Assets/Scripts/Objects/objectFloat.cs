@@ -3,8 +3,10 @@ using System.Collections;
 
 public class ObjectFloat : MonoBehaviour
 {
+	// Visible in Editor
 	public float strength = 1f;
 
+	// Private
 	float initialPos;
 	AudioSource aud;
 	bool collected;

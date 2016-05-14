@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Follower_Movement : MonoBehaviour {
+public class FollowerMovement : MonoBehaviour
+{
     //Singleton 
-    public static Follower_Movement S;
+    public static FollowerMovement S;
     
     //Public Variables
     public GameObject player;
@@ -18,8 +19,7 @@ public class Follower_Movement : MonoBehaviour {
     public bool player_interrupt;
     private Vector2 destination;
     public Vector2 poi_destination;
-
-	// Use this for initialization
+	
 	void Awake()
     {
         S = this;
@@ -30,7 +30,6 @@ public class Follower_Movement : MonoBehaviour {
         poi_destination = transform.position;
     }
 	
-	// Update is called once per frame
 	void Update () {
         // Follower State:Busy
 

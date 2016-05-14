@@ -4,9 +4,11 @@ using System;
 
 public class Player : MonoBehaviour
 {
+	// Singleton
 	[HideInInspector] public static Player S;
 	[HideInInspector] public StateMachine<PlayerState.BasePlayerState> playerSM;
 
+	// Public
 	[HideInInspector] public GameObject door;
 	[HideInInspector] public Animator anim;
 	[HideInInspector] public Rigidbody2D rb2d;
@@ -15,9 +17,11 @@ public class Player : MonoBehaviour
 	[HideInInspector] public bool pause = false;
 	[HideInInspector] public Dialogue dialogue;
 
+	// Visible in Editor
 	public GameObject sword;
     public Vector3 spawn;
 
+	// Private
 	public void UseDoor()
 	{
 		CameraFollow.S.InOut();

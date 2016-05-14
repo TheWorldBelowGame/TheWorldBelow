@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// Attach to a box collider to show a button when the player enters the collider
 public class ShowButton : MonoBehaviour
 {
+	// Visible in Editor
     public GameObject button;
 	
 	void Start ()

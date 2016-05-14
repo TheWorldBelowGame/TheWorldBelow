@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Fall : MonoBehaviour
 {
+	// Visible in Editor
     public BackgroundScroll background1;
     public BackgroundScroll background2;
 

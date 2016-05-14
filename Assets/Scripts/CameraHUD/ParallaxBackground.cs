@@ -4,9 +4,13 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 public class ParallaxBackground : MonoBehaviour
 {
-	public static ParallaxBackground S;
+	// Singleton
+	[HideInInspector] public static ParallaxBackground S;
+
+	// Visible in Editor
 	public ParallaxCamera parallaxCamera;
 
+	// Private
 	List<ParallaxLayer> parallaxLayers;
 
 	void Awake()
@@ -20,11 +24,9 @@ public class ParallaxBackground : MonoBehaviour
 		if (parallaxCamera == null) {
 			parallaxCamera = Camera.main.GetComponent<ParallaxCamera>();
 		}
-
 		if (parallaxCamera != null) {
 			parallaxCamera.onCameraTranslate += Move;
 		}
-
 		SetLayers();
 	}
 

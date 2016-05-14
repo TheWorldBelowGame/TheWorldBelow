@@ -3,9 +3,11 @@ using System.Collections;
 
 public class BackgroundScroll : MonoBehaviour
 {
+	// Visible in Editor
     public float scrollSpeed;
     public float tileSizeZ;
 
+	// Private
 	Vector3 startPosition;
 	bool isScrolling;
     float startTime;

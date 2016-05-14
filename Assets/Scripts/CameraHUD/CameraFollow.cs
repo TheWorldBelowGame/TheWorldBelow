@@ -2,15 +2,20 @@
 
 public class CameraFollow : MonoBehaviour
 {
-    public static CameraFollow S;
-    
+	// Singleton
+	[HideInInspector] public static CameraFollow S;
+
+	// Public
+	[HideInInspector] public bool falling = false;
+
+	// Visible in Editor
 	public GameObject player;
     public Vector3 initOffset;
-    public bool falling = false;
 	public Camera outside;
 	public Camera inside;
 	public float speed = 0.1f;
 
+	// Private
 	Vector3 poi;
     Vector3 pos;
     bool outsideOn;

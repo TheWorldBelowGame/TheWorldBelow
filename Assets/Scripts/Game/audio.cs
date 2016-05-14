@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 public class Audio : MonoBehaviour
 {
+	// Singleton
     public static Audio S;
 
+	// Visible in Editor
     public AudioClip titleMusic;
     public AudioClip mainMusic;
 	public AudioClip wind;
 
+	// Private
 	AudioSource source;
 
 	void Awake()

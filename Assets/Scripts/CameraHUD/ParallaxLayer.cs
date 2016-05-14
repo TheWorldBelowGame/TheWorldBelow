@@ -3,6 +3,7 @@
 [ExecuteInEditMode]
 public class ParallaxLayer : MonoBehaviour
 {
+	// Visible in Editor
 	public float parallaxFactor;
 
 	public void Move(float delta)

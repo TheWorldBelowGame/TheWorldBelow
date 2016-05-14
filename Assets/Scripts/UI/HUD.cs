@@ -2,17 +2,19 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class HUD : MonoBehaviour {
-
-    public Text text;
-
-	// Use this for initialization
-	void Start () {
+// Controls the player HUD and updates any information there
+public class HUD : MonoBehaviour
+{
+	// Visible in Editor
+    public Text numOrbs;
+	
+	void Start()
+	{
 	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		text.text =  (10 - Global.S.collected).ToString();
+	void Update()
+	{
+		numOrbs.text =  (10 - Global.S.collected).ToString();
 	}
 }
