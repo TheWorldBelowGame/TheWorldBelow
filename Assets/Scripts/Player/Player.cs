@@ -73,7 +73,8 @@ public class Player : MonoBehaviour
 		    case "Enemy":
 				playerSM.ChangeState(new PlayerState.Dying());
 			    dead = true;
-                fade.S.fadingOut = true;
+                fade.S.fadeOut();
+                //die();
                 break;
         }
     }
@@ -113,16 +114,18 @@ public class Player : MonoBehaviour
 		playerSM.ChangeState(new PlayerState.Falling());
 	}
 
-    void Die() {
+    void Die()
+	{
         transform.position = spawn;
         Vector3 scale = rb2d.transform.localScale;
         scale.x = Mathf.Abs(scale.x);
         rb2d.transform.localScale = scale;
         Invoke("Undie", 0.5f);
     }
-
-    void Undie() {
+	
+    void Undie()
+	{
 		playerSM.Reset();
-		fade.S.fadingIn = true;
+        fade.S.fadeIn();
     }
 }
