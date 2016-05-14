@@ -1,30 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class scroll : MonoBehaviour {
+public class BackgroundScroll : MonoBehaviour
+{
     public float scrollSpeed;
     public float tileSizeZ;
 
-    bool s;
-
-    private Vector3 startPosition;
-
+	Vector3 startPosition;
+	bool isScrolling;
     float startTime;
 
-    void Start() {
-        s = false;
+    void Start()
+	{
+        isScrolling = false;
         startPosition = transform.localPosition;
     }
 
-    void Update() {
-        if (s) {
+    void Update()
+	{
+        if (isScrolling) {
             float newPosition = Mathf.Repeat((Time.time - startTime) * scrollSpeed, tileSizeZ);
             transform.localPosition = startPosition + Vector3.up * newPosition;
         }
     }
 
-    public void begin() {
-        s = true;
+    public void Begin()
+	{ 
+        isScrolling = true;
         startTime = Time.time;
     }
 }

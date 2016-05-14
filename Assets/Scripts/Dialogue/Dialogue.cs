@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class Sign : MonoBehaviour
+public class Dialogue : MonoBehaviour
 {
 	const int kAnimIdle = 0;
 	const int kAnimTalking = 1;

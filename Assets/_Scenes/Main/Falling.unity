@@ -275,8 +275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a33ad7e5f0d4f499ab97cec4914f49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  back1: {fileID: 1460947076}
-  back2: {fileID: 669122608}
+  background1: {fileID: 1460947076}
+  background2: {fileID: 669122608}
 --- !u!4 &64845326
 Transform:
   m_ObjectHideFlags: 0
@@ -1380,9 +1380,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 1563458531}
   - 33: {fileID: 1563458530}
-  - 61: {fileID: 1563458529}
-  - 114: {fileID: 1563458532}
   - 61: {fileID: 1563458533}
+  - 114: {fileID: 1563458532}
   m_Layer: 0
   m_Name: sign
   m_TagString: Untagged
@@ -1390,20 +1389,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &1563458529
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1563458528}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
 --- !u!33 &1563458530
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1444,12 +1429,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  dialogue_go: {fileID: 2086829983}
-  background_go: {fileID: 1909197399}
-  face_go: {fileID: 1009552951}
+  dialogue: {fileID: 2086829983}
+  background: {fileID: 1909197399}
+  face: {fileID: 1009552951}
   isBeingRead: 0
   fall: 1
-  button: {fileID: 0}
   anim: {fileID: 0}
 --- !u!61 &1563458533
 BoxCollider2D:
@@ -1493,7 +1477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 397084043}
-  init_offset: {x: 0, y: 2, z: -10}
+  initOffset: {x: 0, y: 0, z: 0}
   falling: 1
   outside: {fileID: 155192396}
   inside: {fileID: 670430781}

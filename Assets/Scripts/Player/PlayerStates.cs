@@ -110,7 +110,6 @@ namespace PlayerState
 			rb.transform.localScale = scale;
 
 			// Doors
-			Debug.Log(Player.S.door.ToString());
 			if (InputManagement.Action() && Player.S.door != null) {
 				Player.S.UseDoor();
 			}

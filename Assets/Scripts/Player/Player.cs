@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool walled;
 	[HideInInspector] public bool dead = false;
 	[HideInInspector] public bool pause = false;
-	[HideInInspector] public Sign sign;
+	[HideInInspector] public Dialogue sign;
 
 	public GameObject sword;
     public Vector3 spawn;
@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
 				door = coll.gameObject;
 				break;
 			case "Dialogue trigger":
-				sign = coll.gameObject.GetComponent<Sign>();
+				sign = coll.gameObject.GetComponent<Dialogue>();
 				break;
 		}
     }
