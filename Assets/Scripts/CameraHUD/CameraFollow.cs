@@ -21,7 +21,7 @@ public class CameraFollow : MonoBehaviour
         S = this;
     }
 	
-	void Start ()
+	void Start()
 	{
         transform.position = player.transform.position + initOffset;
         poi = player.transform.position + initOffset;
@@ -31,7 +31,7 @@ public class CameraFollow : MonoBehaviour
         dialogue = false;
     }
 	
-    void FixedUpdate ()
+    void FixedUpdate()
 	{
         pos = transform.position;
 
@@ -66,13 +66,20 @@ public class CameraFollow : MonoBehaviour
         outsideOn = !outsideOn;
     }
 
-    public void SetPoiPlayer() {
+	public void Reset()
+	{
+		transform.position = player.transform.position + initOffset;
+	}
+
+    public void SetPoiPlayer()
+	{
         poi = player.transform.position + initOffset;
         inside.orthographicSize = 5;
         dialogue = false;
     }
 
-    public void SetPoiAverage(Vector3 go1, Vector3 go2) {
+    public void SetPoiAverage(Vector3 go1, Vector3 go2)
+	{
         dialogue = true;
         poi.x = (go1.x + go2.x) / 2;
         poi.y = (go1.y + go2.y) / 2 - 0.5f;

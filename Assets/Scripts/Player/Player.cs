@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
 	[HideInInspector] public Rigidbody2D rb2d;
     [HideInInspector] public bool grounded;
     [HideInInspector] public bool walled;
-	[HideInInspector] public bool dead = false;
 	[HideInInspector] public bool pause = false;
 	[HideInInspector] public Dialogue dialogue;
 
@@ -50,12 +49,8 @@ public class Player : MonoBehaviour
 	void Update()
 	{
 		if (InputManagement.Start()) {
-			SceneManager.LoadScene (0);
+			SceneManager.LoadScene(0);
 		}
-
-        if (dead && !Fade.S.fadingOut) {
-			Die();
-        }
 		
 		playerSM.Update();
 	}
@@ -72,9 +67,6 @@ public class Player : MonoBehaviour
                 break;
 		    case "Enemy":
 				playerSM.ChangeState(new PlayerState.Dying());
-			    dead = true;
-                Fade.S.FadeOut();
-                //die();
                 break;
         }
     }
@@ -95,6 +87,11 @@ public class Player : MonoBehaviour
 			case "Dialogue trigger":
 				dialogue = coll.gameObject.GetComponent<Dialogue>();
 				break;
+			case "FallingDialogue":
+				rb2d.isKinematic = true;
+				dialogue = coll.gameObject.GetComponent<Dialogue>();
+				dialogue.StartReading();
+				break;
 		}
     }
 
@@ -113,19 +110,4 @@ public class Player : MonoBehaviour
 	{
 		playerSM.ChangeState(new PlayerState.Falling());
 	}
-
-    void Die()
-	{
-        transform.position = spawn;
-        Vector3 scale = rb2d.transform.localScale;
-        scale.x = Mathf.Abs(scale.x);
-        rb2d.transform.localScale = scale;
-        Invoke("Undie", 0.5f);
-    }
-	
-    void Undie()
-	{
-		playerSM.Reset();
-        Fade.S.FadeIn();
-    }
 }

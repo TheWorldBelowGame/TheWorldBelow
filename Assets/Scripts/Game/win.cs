@@ -15,11 +15,9 @@ public class Win : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll)
 	{
-        Fade.S.FadeOut();
-
         if (Global.S.collected >= 10) {
             scene = goodEnding;
         }
-        Fade.S.WhenDone(scene);
-    }
+		Fade.FadeOut(1f, scene);
+	}
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using UnityEngine;
-//using UnityEditor;
-using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
@@ -29,7 +26,10 @@ public class Dialogue : MonoBehaviour
 
 	public void StartReading()
 	{
-		anim.SetInteger("State", kAnimTalking);
+		if (anim != null) {
+			anim.SetInteger("State", kAnimTalking);
+		}
+
 		isBeingRead = true;
 		background.gameObject.SetActive(true);
 		size = messages.Count;
@@ -38,12 +38,13 @@ public class Dialogue : MonoBehaviour
 			current = 0;
 			dialogue.text = messages[current];
 			face.sprite = faces[current];
-			Vector3 poi = Player.S.transform.position + Vector3.forward * CameraFollow.S.initOffset.z;
-			CameraFollow.S.SetPoiAverage(poi, poi);
+			//Vector3 poi = Player.S.transform.position + Vector3.forward * CameraFollow.S.initOffset.z;
+			//CameraFollow.S.SetPoiAverage(poi, poi);
 		} else {
 			current = -1;
-			CameraFollow.S.SetPoiAverage(Player.S.transform.position, transform.position);
 		}
+		
+		CameraFollow.S.SetPoiAverage(Player.S.transform.position, transform.position);
 	}
 
 	// Advances the dialogue one step
@@ -57,8 +58,7 @@ public class Dialogue : MonoBehaviour
 			background.gameObject.SetActive(false);
 			isBeingRead = false;
 			if (fall) {
-				Fade.S.WhenDone("Main");
-				Fade.S.FadeOut();
+				Fade.FadeOut(1f, "Main");
 			} else {
 				CameraFollow.S.SetPoiPlayer();
 				Player.S.playerSM.ChangeState(new PlayerState.NormalMovement());

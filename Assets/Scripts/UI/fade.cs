@@ -1,93 +1,66 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
+using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class Fade : MonoBehaviour
 {
-    public static Fade S;
-    public float duration = 1f;
+	public const float defaultFadeTime = 1f;
 
-    bool _fadingIn;
-    bool _fadingOut;
-	public bool fadingIn { get { return _fadingIn; } }
-	public bool fadingOut { get { return _fadingOut; } }
-
+	static Fade S;
 	Image img;
-	bool changeScene;
-    string scene = "";
-    float t;
-	
+
 	void Start()
 	{
-        S = this;
+		S = this;
+		img = GetComponent<Image>();
 
-        img = GetComponent<Image>();
-        _fadingIn = true;
-        _fadingOut = false;
-        changeScene = false;
-        t = 0;
-        img.color = Color.black;
-    }
-	
-	void Update()
-	{
-        if (fadingIn) {
-            StepIn();
-        }
-        if (fadingOut) {
-            StepOut();
-        }
-        if (changeScene && !fadingOut) {
-            SceneManager.LoadScene(scene);
-        }
-    }
+		StartCoroutine(FadeInHelper(defaultFadeTime));
+	}
 
-    public bool FadeIn(float d = 1)
+	public static void FadeIn(float duration = 1f)
 	{
-        if (fadingIn || fadingOut) {
-            return false;
-        }
-        duration = d;
-        _fadingIn = true;
-        return true;
-    }
+		S.StartCoroutine(S.FadeInHelper(duration));
+	}
 
-    public bool FadeOut(float d = 1)
+	public static void FadeOut(float duration = 1f, string scene = null)
 	{
-        if (fadingIn || fadingOut) {
-            return false;
-        }
-        duration = d;
-        _fadingOut = true;
-        return true;
-    }
+		S.StartCoroutine(S.FadeOutHelper(duration, scene));
+	}
 
-    public void WhenDone(string s)
+	// Fade in from black over a given number of seconds.
+	IEnumerator FadeInHelper(float duration)
 	{
-        changeScene = true;
-        scene = s;
-    }
+		img.color = Color.black;
+		float timer = 0;
 
-    void StepIn()
-	{
-        img.color = Color.Lerp(Color.black, Color.clear, (t) / duration);
-        t += Time.deltaTime;
-        if (img.color.a < 0.05) {
-            img.color = Color.clear;
-            _fadingIn = false;
-            t = 0;
-        }
-    }
+		while (img.color.a > 0.05) {
+			timer += Time.deltaTime;
+			img.color = Color.Lerp(Color.black, Color.clear, timer / duration);
+			yield return new WaitForEndOfFrame();
+		}
 
-    void StepOut()
+		img.color = Color.clear;
+	}
+
+	// Fade to black over a given number of seconds.
+	// If the scene parameter is set, will change to the give scene at the end of the fade
+	IEnumerator FadeOutHelper(float duration, string scene)
 	{
-        img.color = Color.Lerp(Color.black, Color.clear, (duration - t) / duration);
-        t += Time.deltaTime;
-        if (img.color.a > 0.95) {
-            img.color = Color.black;
-            _fadingOut = false;
-            t = 0;
-        }
-    }
+		img.color = Color.clear;
+		float timer = 0;
+
+		while (img.color.a < 0.95) {
+			timer += Time.deltaTime;
+			float lastFrame = (duration - timer) / duration;
+			img.color = Color.Lerp(Color.black, Color.clear, lastFrame);
+			yield return new WaitForEndOfFrame();
+		}
+
+		img.color = Color.black;
+
+		if (scene != null) {
+			SceneManager.LoadScene(scene);
+		}
+	}
 }

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System;
+using System.Collections;
 
 public enum AnimState { Idle, Running, Jumping, Attack, Death, Falling };
 
@@ -30,6 +30,8 @@ namespace PlayerState
 
 	public abstract class BasePlayerState : State
 	{
+		// Only here because most states don't need to do anything on Finish
+		// This reduces the compiler errors for not implementing the Finish function lol
 		public override void Finish() {}
 
 		protected void SetAnim(AnimState state)
@@ -171,23 +173,59 @@ namespace PlayerState
 
 		public override void CheckState() {}
 
-		public override void Update() {}
+		public override void Update()
+		{
+			if (InputManagement.Speak()) {
+				Player.S.dialogue.Advance();
+			}
+		}
 	}
 
 	public class Dying : BasePlayerState
 	{
+		// Amount of time to keep the screen dark before respawning
+		const float deadTime = 0.2f;
+		GameObject deathHelper;
+
+		void Respawn()
+		{
+			Player.S.transform.position = Player.S.spawn;
+			Vector3 scale = Player.S.rb2d.transform.localScale;
+			scale.x = Mathf.Abs(scale.x);
+			Player.S.rb2d.transform.localScale = scale;
+			SetAnim(AnimState.Idle);
+			CameraFollow.S.Reset();
+		}
+
+		IEnumerator Die()
+		{
+			Fade.FadeOut();
+			// Wait for fade out to finish before continuing
+			yield return new WaitForSeconds(Fade.defaultFadeTime);
+			Respawn();
+
+			yield return new WaitForSeconds(deadTime);
+			Fade.FadeIn();
+			Transition(new NormalMovement());
+		}
+
 		public override void Start()
 		{
 			SetAnim(AnimState.Death);
+
+			// Have to start coroutine using a monobehaviour
+			deathHelper = new GameObject("DeathHelper");
+			MonoBehaviour deathHelperScript = deathHelper.AddComponent<MonoBehaviour>();
+			deathHelperScript.StartCoroutine(Die());
 		}
 
-		public override void CheckState()
-		{
-			if (Fade.S.fadingIn == true) {
-				Transition(new NormalMovement());
-			}
-		}
+		public override void CheckState() {}
 
 		public override void Update() {}
+
+		public override void Finish()
+		{
+			GameObject.Destroy(deathHelper);
+		}
 	}
 }
