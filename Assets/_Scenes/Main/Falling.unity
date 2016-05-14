@@ -275,8 +275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a33ad7e5f0d4f499ab97cec4914f49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  background1: {fileID: 1460947076}
-  background2: {fileID: 669122608}
+  background1: {fileID: 0}
+  background2: {fileID: 0}
 --- !u!4 &64845326
 Transform:
   m_ObjectHideFlags: 0
@@ -1477,7 +1477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 397084043}
-  initOffset: {x: 0, y: 0, z: 0}
+  initOffset: {x: 3, y: 2, z: -10}
   falling: 1
   outside: {fileID: 155192396}
   inside: {fileID: 670430781}

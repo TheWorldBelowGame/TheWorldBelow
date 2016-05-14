@@ -20989,7 +20989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1726495039}
-  initOffset: {x: 0, y: 0, z: 0}
+  initOffset: {x: 3, y: 2, z: -10}
   falling: 0
   outside: {fileID: 490195820}
   inside: {fileID: 394716319}
