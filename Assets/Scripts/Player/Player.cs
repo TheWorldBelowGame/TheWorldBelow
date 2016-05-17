@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
                 walled = true;
                 break;
 		    case "Enemy":
-				playerSM.ChangeState(new PlayerState.Dying());
+                Resources.ChangeHealth(-1);
                 break;
         }
     }
@@ -96,7 +96,13 @@ public class Player : MonoBehaviour
 				dialogue = coll.gameObject.GetComponent<Dialogue>();
 				dialogue.StartReading();
 				break;
-		}
+            case "HealthPickup":
+                Resources.ChangeHealth(1);
+                break;
+            case "EnergyPickup":
+                Resources.ChangeEnergy(1);
+                break;
+        }
     }
 
     void OnTriggerExit2D(Collider2D coll) {

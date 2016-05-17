@@ -201,6 +201,7 @@ namespace PlayerState
 			Player.S.rb2d.transform.localScale = scale;
 			SetAnim(AnimState.Idle);
 			CameraFollow.S.Reset();
+            Resources.Respawn();
 		}
 
 		IEnumerator Die()
