@@ -583,8 +583,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 069d4a9c25a23564ea6eeddc0714899c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goodEnding: Good Ending
-  badEnding: Bad Ending
+  goodEnding: 
+  badEnding: 
 --- !u!61 &52218021
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1169,9 +1169,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7348cfe8630269644bc75ad13793db65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outsideOn: 0
   inside: {fileID: 1245350048}
   outside: {fileID: 175215185}
-  outsideOn: 0
 --- !u!4 &128695900
 Transform:
   m_ObjectHideFlags: 0
@@ -1198,7 +1198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5113355e76965a9429e29dc7d4d95c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 349046288}
+  button: {fileID: 0}
 --- !u!1001 &137299630
 Prefab:
   m_ObjectHideFlags: 0
@@ -1883,7 +1883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4468b4080fa204d7ba6bf723fd5fc3b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strength: 0.25
+  strength: 1
 --- !u!82 &211878285
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3236,10 +3236,6 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 440178, guid: a19867acb68404f6680137b397d6f87f, type: 2}
   m_PrefabInternal: {fileID: 1168317283}
---- !u!1 &349046288 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 109670, guid: ca5d74ea327df48498e3c6e29bbb5815, type: 2}
-  m_PrefabInternal: {fileID: 649564005}
 --- !u!4 &349046289 stripped
 Transform:
   m_PrefabParentObject: {fileID: 437404, guid: ca5d74ea327df48498e3c6e29bbb5815, type: 2}
@@ -3420,6 +3416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 368e55e11d3890a418a200aad9c086ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBeingRead: 0
   messages:
   - It seems you have lost your way.
   - We once lived in these empty homes in peace.
@@ -3434,7 +3431,6 @@ MonoBehaviour:
   dialogue: {fileID: 522325421}
   background: {fileID: 794101313}
   face: {fileID: 187772634}
-  isBeingRead: 0
   fall: 0
   anim: {fileID: 371108131}
 --- !u!61 &371108129
@@ -3509,7 +3505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5113355e76965a9429e29dc7d4d95c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1742384716}
+  button: {fileID: 0}
 --- !u!1 &375034736
 GameObject:
   m_ObjectHideFlags: 0
@@ -4052,10 +4048,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 424230, guid: 4b3b6bc6b9c5442749dd5ee4f28bf50e, type: 2}
   m_PrefabInternal: {fileID: 400318043}
---- !u!1 &400380183 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 140162, guid: b25de45a4c01c6f428a701fea94962c2, type: 2}
-  m_PrefabInternal: {fileID: 778088636}
 --- !u!1001 &400540676
 Prefab:
   m_ObjectHideFlags: 0
@@ -4281,11 +4273,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955ba97c739dca0408cbaeb02f8acd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charge: 1
   speed: 1
   chargeSpeed: 3
   distance: 3
   startLeft: 1
-  charge: 1
   chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 423933568}
@@ -4808,11 +4800,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955ba97c739dca0408cbaeb02f8acd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charge: 1
   speed: 0
   chargeSpeed: 3
   distance: 5
   startLeft: 1
-  charge: 1
   chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 465814801}
@@ -4954,9 +4946,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7348cfe8630269644bc75ad13793db65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outsideOn: 0
   inside: {fileID: 802354877}
   outside: {fileID: 122472831}
-  outsideOn: 0
 --- !u!4 &466559366
 Transform:
   m_ObjectHideFlags: 0
@@ -4983,7 +4975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5113355e76965a9429e29dc7d4d95c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1888997167}
+  button: {fileID: 0}
 --- !u!4 &466775817 stripped
 Transform:
   m_PrefabParentObject: {fileID: 424230, guid: 4b3b6bc6b9c5442749dd5ee4f28bf50e, type: 2}
@@ -5032,6 +5024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 368e55e11d3890a418a200aad9c086ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBeingRead: 0
   messages:
   - Our world below is becoming an unplesant place to be.
   - I hope you are able to find your way home.
@@ -5043,7 +5036,6 @@ MonoBehaviour:
   dialogue: {fileID: 522325421}
   background: {fileID: 794101313}
   face: {fileID: 187772634}
-  isBeingRead: 0
   fall: 0
   anim: {fileID: 471138144}
 --- !u!95 &471138144
@@ -5118,7 +5110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5113355e76965a9429e29dc7d4d95c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 400380183}
+  button: {fileID: 0}
 --- !u!4 &472611666 stripped
 Transform:
   m_PrefabParentObject: {fileID: 474126, guid: 78103353befcf4ab486860a049fe8905, type: 2}
@@ -5276,11 +5268,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955ba97c739dca0408cbaeb02f8acd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charge: 0
   speed: 2
   chargeSpeed: 3
   distance: 5
   startLeft: 1
-  charge: 0
   chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 483481641}
@@ -6374,10 +6366,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 412298, guid: 3723a11053e664939ae12930aea2220b, type: 2}
   m_PrefabInternal: {fileID: 305228831}
---- !u!1 &596381894 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 140162, guid: b25de45a4c01c6f428a701fea94962c2, type: 2}
-  m_PrefabInternal: {fileID: 1430069754}
 --- !u!1 &597966145
 GameObject:
   m_ObjectHideFlags: 0
@@ -6890,7 +6878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4468b4080fa204d7ba6bf723fd5fc3b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strength: 0.25
+  strength: 1
 --- !u!82 &624759872
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7319,7 +7307,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5113355e76965a9429e29dc7d4d95c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1766029639}
+  button: {fileID: 0}
 --- !u!4 &664932928 stripped
 Transform:
   m_PrefabParentObject: {fileID: 458020, guid: 883fc124ce3de4958b35a1707550e03c, type: 2}
@@ -7990,11 +7978,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955ba97c739dca0408cbaeb02f8acd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charge: 0
   speed: 1
   chargeSpeed: 3
   distance: 3
   startLeft: 1
-  charge: 0
   chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 714082463}
@@ -8062,10 +8050,6 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 474126, guid: 78103353befcf4ab486860a049fe8905, type: 2}
   m_PrefabInternal: {fileID: 715342575}
---- !u!1 &716012801 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 109670, guid: ca5d74ea327df48498e3c6e29bbb5815, type: 2}
-  m_PrefabInternal: {fileID: 324613932}
 --- !u!4 &716012802 stripped
 Transform:
   m_PrefabParentObject: {fileID: 437404, guid: ca5d74ea327df48498e3c6e29bbb5815, type: 2}
@@ -9963,11 +9947,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955ba97c739dca0408cbaeb02f8acd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charge: 1
   speed: 0
   chargeSpeed: 3
   distance: 5
   startLeft: 1
-  charge: 1
   chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 862392664}
@@ -10928,6 +10912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 368e55e11d3890a418a200aad9c086ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBeingRead: 0
   messages:
   - It saddens me to see our friends turn red.
   - The sun once fought off their darkness.
@@ -10940,7 +10925,6 @@ MonoBehaviour:
   dialogue: {fileID: 522325421}
   background: {fileID: 794101313}
   face: {fileID: 187772634}
-  isBeingRead: 0
   fall: 0
   anim: {fileID: 958506761}
 --- !u!95 &958506761
@@ -10985,7 +10969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5113355e76965a9429e29dc7d4d95c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 596381894}
+  button: {fileID: 0}
 --- !u!1001 &960397728
 Prefab:
   m_ObjectHideFlags: 0
@@ -11750,6 +11734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 368e55e11d3890a418a200aad9c086ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBeingRead: 0
   messages:
   - I fear we might suffer the same fate as the small ones.
   - And I fear what will happen to those that live above.
@@ -11759,7 +11744,6 @@ MonoBehaviour:
   dialogue: {fileID: 522325421}
   background: {fileID: 794101313}
   face: {fileID: 187772634}
-  isBeingRead: 0
   fall: 0
   anim: {fileID: 1023180508}
 --- !u!61 &1023180510
@@ -11817,7 +11801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5113355e76965a9429e29dc7d4d95c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1345700338}
+  button: {fileID: 0}
 --- !u!1 &1026987478
 GameObject:
   m_ObjectHideFlags: 0
@@ -12508,11 +12492,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955ba97c739dca0408cbaeb02f8acd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charge: 0
   speed: 1
   chargeSpeed: 3
   distance: 6
   startLeft: 1
-  charge: 0
   chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 1072662148}
@@ -13067,11 +13051,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955ba97c739dca0408cbaeb02f8acd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charge: 0
   speed: 2
   chargeSpeed: 3
   distance: 8
   startLeft: 1
-  charge: 0
   chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 1113447824}
@@ -15079,11 +15063,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955ba97c739dca0408cbaeb02f8acd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charge: 0
   speed: 0
   chargeSpeed: 3
   distance: 0
   startLeft: 1
-  charge: 0
   chargeDistance: 5
   button: {fileID: 1766029639}
   col: {fileID: 1305897172}
@@ -15324,14 +15308,6 @@ BoxCollider2D:
   m_Offset: {x: 1.8039122, y: 1.5047857}
   serializedVersion: 2
   m_Size: {x: 7.0007496, y: 0.10725331}
---- !u!1 &1345700338 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 140162, guid: b25de45a4c01c6f428a701fea94962c2, type: 2}
-  m_PrefabInternal: {fileID: 1013717659}
---- !u!1 &1361583942 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 109670, guid: ca5d74ea327df48498e3c6e29bbb5815, type: 2}
-  m_PrefabInternal: {fileID: 1202671458}
 --- !u!4 &1361583944 stripped
 Transform:
   m_PrefabParentObject: {fileID: 437404, guid: ca5d74ea327df48498e3c6e29bbb5815, type: 2}
@@ -16724,11 +16700,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955ba97c739dca0408cbaeb02f8acd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charge: 0
   speed: 2
   chargeSpeed: 3
   distance: 8
   startLeft: 1
-  charge: 0
   chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 1580129726}
@@ -17955,11 +17931,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955ba97c739dca0408cbaeb02f8acd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charge: 0
   speed: 1
   chargeSpeed: 3
   distance: 7
   startLeft: 1
-  charge: 0
   chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 1668497060}
@@ -18409,9 +18385,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7348cfe8630269644bc75ad13793db65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outsideOn: 0
   inside: {fileID: 684723318}
   outside: {fileID: 401593401}
-  outsideOn: 0
 --- !u!114 &1732257619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18423,7 +18399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5113355e76965a9429e29dc7d4d95c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 716012801}
+  button: {fileID: 0}
 --- !u!4 &1733775888 stripped
 Transform:
   m_PrefabParentObject: {fileID: 420852, guid: 73747bbfa4116422aa8b0b03e4befb20, type: 2}
@@ -18482,10 +18458,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0444dce45850e455aaf0e8b2b31ecc7a, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1742384716 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 140162, guid: b25de45a4c01c6f428a701fea94962c2, type: 2}
-  m_PrefabInternal: {fileID: 1535365489}
 --- !u!4 &1742384717 stripped
 Transform:
   m_PrefabParentObject: {fileID: 415052, guid: b25de45a4c01c6f428a701fea94962c2, type: 2}
@@ -19260,7 +19232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46d469a5d1022d940b10ed33267d33e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 1833944956}
+  numOrbs: {fileID: 1833944956}
 --- !u!114 &1833944956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19526,10 +19498,6 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 494224, guid: 9cc7d6cd6e85946f19aeee1a853a99df, type: 2}
   m_PrefabInternal: {fileID: 767418506}
---- !u!1 &1888997167 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 109670, guid: ca5d74ea327df48498e3c6e29bbb5815, type: 2}
-  m_PrefabInternal: {fileID: 984339143}
 --- !u!4 &1888997168 stripped
 Transform:
   m_PrefabParentObject: {fileID: 437404, guid: ca5d74ea327df48498e3c6e29bbb5815, type: 2}
@@ -20566,9 +20534,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7348cfe8630269644bc75ad13793db65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outsideOn: 0
   inside: {fileID: 1595885031}
   outside: {fileID: 1434930998}
-  outsideOn: 0
 --- !u!114 &2022318831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20580,7 +20548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5113355e76965a9429e29dc7d4d95c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 1361583942}
+  button: {fileID: 0}
 --- !u!1001 &2028188317
 Prefab:
   m_ObjectHideFlags: 0
@@ -21215,11 +21183,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955ba97c739dca0408cbaeb02f8acd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charge: 0
   speed: 0.5
   chargeSpeed: 3
   distance: 3
   startLeft: 1
-  charge: 0
   chargeDistance: 5
   button: {fileID: 0}
   col: {fileID: 2100436349}
@@ -21299,9 +21267,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 430c516e9a1d54f21a5c1025cd07ea8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  falling: 0
   player: {fileID: 1726495039}
   initOffset: {x: 3, y: 2, z: -10}
-  falling: 0
   outside: {fileID: 490195820}
   inside: {fileID: 394716319}
   speed: 0.05

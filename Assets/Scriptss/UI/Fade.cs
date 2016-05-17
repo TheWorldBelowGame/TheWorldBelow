@@ -3,20 +3,26 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
+public enum FadeState { NONE, FADING_IN, FADING_OUT }
+
 public class Fade : MonoBehaviour
 {
 	// Definitions
 	public const float defaultFadeTime = 1f;
 
 	// Private Singleton
-	static Fade S;
+	public static FadeState fadeState;
+	static Fade fadeCanvasObj;
+	static Coroutine fadeInCoroutine;
+	static Coroutine fadeOutCoroutine;
 
 	// Private
 	Image img;
 
 	void Start()
 	{
-		S = this;
+		fadeCanvasObj = this;
+		fadeState = FadeState.NONE;
 		img = GetComponent<Image>();
 
 		StartCoroutine(FadeInHelper(defaultFadeTime));
@@ -24,12 +30,22 @@ public class Fade : MonoBehaviour
 
 	public static void FadeIn(float duration = 1f)
 	{
-		S.StartCoroutine(S.FadeInHelper(duration));
+		if (fadeState == FadeState.FADING_IN) {
+			Debug.Log("Tried to fade in while already fading in!");
+		} else if (fadeState == FadeState.FADING_OUT) {
+			fadeCanvasObj.StopCoroutine(fadeOutCoroutine);
+		}
+		fadeInCoroutine = fadeCanvasObj.StartCoroutine(fadeCanvasObj.FadeInHelper(duration));
 	}
 
 	public static void FadeOut(float duration = 1f, string scene = null)
 	{
-		S.StartCoroutine(S.FadeOutHelper(duration, scene));
+		if (fadeState == FadeState.FADING_OUT) {
+			Debug.Log("Tried to fade out while already fading out!");
+		} else if (fadeState == FadeState.FADING_IN) {
+			fadeCanvasObj.StopCoroutine(fadeInCoroutine);
+		}
+		fadeOutCoroutine = fadeCanvasObj.StartCoroutine(fadeCanvasObj.FadeOutHelper(duration, scene));
 	}
 
 	// Fade in from black over a given number of seconds.
