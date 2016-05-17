@@ -133,7 +133,10 @@ namespace PlayerState
 		public override void Update()
 		{
 			if (InputManagement.Speak()) {
-				Player.S.dialogue.Advance();
+				bool moreDialogue = Player.S.dialogue.Advance();
+				if (!moreDialogue) {
+					Transition(new NormalMovement());
+				}
 			}
 		}
 	}
@@ -191,6 +194,7 @@ namespace PlayerState
 	{
 		// Amount of time to keep the screen dark before respawning
 		const float deadTime = 0.2f;
+		// Temporary GameObject to help us run Die() as a coroutine
 		GameObject deathHelper;
 
 		void Respawn()
@@ -200,7 +204,7 @@ namespace PlayerState
 			scale.x = Mathf.Abs(scale.x);
 			Player.S.rb2d.transform.localScale = scale;
 			SetAnim(AnimState.Idle);
-			CameraFollow.S.Reset();
+			CameraFollow.FocusPlayer();
 		}
 
 		IEnumerator Die()

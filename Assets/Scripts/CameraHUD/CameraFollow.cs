@@ -2,9 +2,6 @@
 
 public class CameraFollow : MonoBehaviour
 {
-	// Singleton
-	[HideInInspector] public static CameraFollow S;
-
 	// Public
 	[HideInInspector] public bool falling = false;
 
@@ -16,20 +13,44 @@ public class CameraFollow : MonoBehaviour
 	public float speed = 0.1f;
 
 	// Private
-	Vector3 poi;
-    Vector3 pos;
+	static CameraFollow camerasObj;
+	Vector3 pointOfInterest;
+    Vector3 cameraPos;
     bool outsideOn;
     bool dialogue;
+	
+	// Static Functions
 
-    void Awake()
+	// Moves camera to focus on the player
+	public static void FocusPlayer()
 	{
-        S = this;
-    }
+		camerasObj.SetPoiPlayer();
+	}
+
+	// Moves camera to focus in the middle of the player and the given point
+	public static void FocusBetweenPlayerAndPoint(Vector3 dialoguePos)
+	{
+		camerasObj.SetPoiAverage(camerasObj.player.transform.position, dialoguePos);
+	}
+
+	// Switch the camera between Inside and Outside mode
+	public static void InOut()
+	{
+		camerasObj.InOutHelper();
+	}
+
+	// Private Functions
+
+	void StartDialogueHelper(Vector3 dialoguePos)
+	{
+		SetPoiAverage(player.transform.position, dialoguePos);
+	}
 	
 	void Start()
 	{
+		camerasObj = this;
         transform.position = player.transform.position + initOffset;
-        poi = player.transform.position + initOffset;
+        pointOfInterest = player.transform.position + initOffset;
         outsideOn = true;
         outside.gameObject.SetActive(true);
         inside.gameObject.SetActive(false);
@@ -38,28 +59,28 @@ public class CameraFollow : MonoBehaviour
 	
     void FixedUpdate()
 	{
-        pos = transform.position;
+        cameraPos = transform.position;
 
 		if (!dialogue) {
-			poi = player.transform.position + initOffset;
+			pointOfInterest = player.transform.position + initOffset;
 		}
 
-        pos = Vector3.Lerp(transform.position, poi, speed);
-        pos.x = (pos.x < 1.5f ? 1.5f : pos.x);
-        transform.position = pos;
+        cameraPos = Vector3.Lerp(transform.position, pointOfInterest, speed);
+        cameraPos.x = (cameraPos.x < 1.5f ? 1.5f : cameraPos.x);
+        transform.position = cameraPos;
 
     }
 
     void LateUpdate()
 	{
         if (falling) {
-            pos = transform.position;
-            pos.y = player.transform.position.y;
-            transform.position = pos;
+            cameraPos = transform.position;
+            cameraPos.y = player.transform.position.y;
+            transform.position = cameraPos;
         }
     }
 
-    public void InOut()
+    void InOutHelper()
 	{
         if (outsideOn) {
             outside.gameObject.SetActive(false);
@@ -71,24 +92,26 @@ public class CameraFollow : MonoBehaviour
         outsideOn = !outsideOn;
     }
 
-	public void Reset()
+	void Reset()
 	{
 		transform.position = player.transform.position + initOffset;
 	}
 
-    public void SetPoiPlayer()
+	// Makes the camera focus on the player
+    void SetPoiPlayer()
 	{
-        poi = player.transform.position + initOffset;
+        pointOfInterest = player.transform.position + initOffset;
         inside.orthographicSize = 5;
         dialogue = false;
     }
 
-    public void SetPoiAverage(Vector3 go1, Vector3 go2)
+	// Makes the camera focus on a position in the middle of point1 and point2
+    void SetPoiAverage(Vector3 point1, Vector3 point2)
 	{
         dialogue = true;
-        poi.x = (go1.x + go2.x) / 2;
-        poi.y = (go1.y + go2.y) / 2 - 0.5f;
-        poi.z = -10;
+        pointOfInterest.x = (point1.x + point2.x) / 2;
+        pointOfInterest.y = (point1.y + point2.y) / 2 - 0.5f;
+		pointOfInterest.z = initOffset.z;
         inside.orthographicSize = 3;
     }
 }
