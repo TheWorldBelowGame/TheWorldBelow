@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public enum FadeState { NONE, FADING_IN, FADING_OUT }
 
+// The Fade class has public static functions for other classes to call in order
+// to perform operations like fading in and out. It also has a private reference to
+// the actual Fade gameObject on the Canvas, which is set on Start. If we attach this
+// Fade script to that object, then the fadeCanvasObj will always point to that object,
+// and classes can still call the public static functions for proper functionality.
 public class Fade : MonoBehaviour
 {
 	// Definitions
@@ -12,13 +17,14 @@ public class Fade : MonoBehaviour
 
 	// Private Singleton
 	public static FadeState fadeState;
+
+	// Private
 	static Fade fadeCanvasObj;
 	static Coroutine fadeInCoroutine;
 	static Coroutine fadeOutCoroutine;
-
-	// Private
 	Image img;
 
+	// Update the static reference to the Fade image on the Canvas
 	void Start()
 	{
 		fadeCanvasObj = this;
@@ -28,6 +34,7 @@ public class Fade : MonoBehaviour
 		StartCoroutine(FadeInHelper(defaultFadeTime));
 	}
 
+	// Fade in from black over a given number of seconds.
 	public static void FadeIn(float duration = 1f)
 	{
 		if (fadeState == FadeState.FADING_IN) {
@@ -38,6 +45,8 @@ public class Fade : MonoBehaviour
 		fadeInCoroutine = fadeCanvasObj.StartCoroutine(fadeCanvasObj.FadeInHelper(duration));
 	}
 
+	// Fade to black over a given number of seconds.
+	// If the scene parameter is set, will change to the give scene at the end of the fade
 	public static void FadeOut(float duration = 1f, string scene = null)
 	{
 		if (fadeState == FadeState.FADING_OUT) {
@@ -48,7 +57,6 @@ public class Fade : MonoBehaviour
 		fadeOutCoroutine = fadeCanvasObj.StartCoroutine(fadeCanvasObj.FadeOutHelper(duration, scene));
 	}
 
-	// Fade in from black over a given number of seconds.
 	IEnumerator FadeInHelper(float duration)
 	{
 		img.color = Color.black;
@@ -63,8 +71,6 @@ public class Fade : MonoBehaviour
 		img.color = Color.clear;
 	}
 
-	// Fade to black over a given number of seconds.
-	// If the scene parameter is set, will change to the give scene at the end of the fade
 	IEnumerator FadeOutHelper(float duration, string scene)
 	{
 		img.color = Color.clear;

@@ -44,17 +44,16 @@ public class Dialogue : MonoBehaviour
 			current = 0;
 			dialogue.text = messages[current];
 			face.sprite = faces[current];
-			//Vector3 poi = Player.S.transform.position + Vector3.forward * CameraFollow.S.initOffset.z;
-			//CameraFollow.S.SetPoiAverage(poi, poi);
 		} else {
 			current = -1;
 		}
 		
-		CameraFollow.S.SetPoiAverage(Player.S.transform.position, transform.position);
+		CameraFollow.FocusBetweenPlayerAndPoint(transform.position);
 	}
 
 	// Advances the dialogue one step
-	public void Advance()
+	// Returns true if there is more dialogue, or false if the dialogue is over.
+	public bool Advance()
 	{
 		current++;
 		if (current < size) {
@@ -66,10 +65,11 @@ public class Dialogue : MonoBehaviour
 			if (fall) {
 				Fade.FadeOut(1f, "Main");
 			} else {
-				CameraFollow.S.SetPoiPlayer();
-				Player.S.playerSM.ChangeState(new PlayerState.NormalMovement());
+				CameraFollow.FocusPlayer();
+				return false;
 			}
 			anim.SetInteger("State", kAnimIdle);
 		}
+		return true;
 	}
 }

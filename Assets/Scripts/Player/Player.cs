@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
 	// Private
 	public void UseDoor()
 	{
-		CameraFollow.S.InOut();
+		CameraFollow.InOut();
 		door.GetComponent<Door>().InOut();
 		spawn = transform.position;
 	}
