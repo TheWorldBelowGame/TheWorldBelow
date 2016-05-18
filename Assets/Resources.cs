@@ -5,8 +5,10 @@ using System.Collections;
 
 public class Resources : MonoBehaviour {
 
+    //Singleton
     public static Resources S;
 
+    //Public
     public float health = 10;
     public float maxHealth = 10;
 
@@ -20,15 +22,12 @@ public class Resources : MonoBehaviour {
     public Color energyEmpty;
     public Color energyFull;
 
-    //Text txt;
-
     void Awake() {
         S = this;
     }
 
 	// Use this for initialization
 	void Start () {
-        //txt = GetComponentInChildren<Text>();
         UpdateResources();
 	}
 	
@@ -37,6 +36,7 @@ public class Resources : MonoBehaviour {
 
         S.UpdateResources();
 
+        //This is for testing
         if (Input.GetKeyDown(KeyCode.O)) {
             ChangeHealth(1);
         }
@@ -54,11 +54,14 @@ public class Resources : MonoBehaviour {
         }
     }
 
+    // Update Gui with current resources
+    // Called every frame
     void UpdateResources() {
-        //txt.text = health.ToString();
 
+        //Update Health
         healthFill.fillAmount = health / maxHealth;
 
+        //Update Energy
         for (int i = 0; i < energyImages.Count; i++) {
             if (maxEnergy <= i) {
                 energyImages[i].color = Color.clear;
@@ -70,11 +73,14 @@ public class Resources : MonoBehaviour {
         }
     }
 
+    // Resets Resources
+    // Possible to change to reset to non max values?
     public static void Respawn() {
         S.health = S.maxHealth;
         S.energy = S.maxEnergy;
     }
 
+    // Change Energy by amount
     public static void ChangeEnergy(int amount) {
         if (amount > 0) {
             S.energy = Mathf.Min(S.energy + amount, S.maxEnergy);
@@ -83,7 +89,8 @@ public class Resources : MonoBehaviour {
         }
     }
 
-    public static void ChangeHealth(int amount) {
+    //Changes Health by amount
+    public static void ChangeHealth(float amount) {
         if (amount > 0) {
             S.health = Mathf.Min(S.health + amount, S.maxHealth);
         } else {
