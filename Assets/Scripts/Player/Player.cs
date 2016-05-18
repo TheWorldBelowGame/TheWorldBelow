@@ -16,8 +16,7 @@ public class Player : MonoBehaviour
 	[HideInInspector] public Animator anim;
 	[HideInInspector] public Rigidbody2D rb2d;
     [HideInInspector] public bool grounded;
-	[HideInInspector] public bool pause = false;
-	[HideInInspector] public Dialogue dialogue;
+	[HideInInspector] public bool pause = false;	// TODO: Change this to a function that changes state
 
 	// Visible in Editor
 	public float WALK_FORCE = 4.0f;
@@ -29,6 +28,7 @@ public class Player : MonoBehaviour
     public Vector3 spawn;
 
 	// Private
+	Interactable interactableObj;
 
 	// Player States
 
@@ -51,6 +51,13 @@ public class Player : MonoBehaviour
 		Rigidbody2D rb;
 		bool canAttack;
 
+		void UseDoor()
+		{
+			CameraFollow.InOut();
+			S.door.GetComponent<Door>().InOut();
+			S.spawn = S.transform.position;
+		}
+
 		public override void Start()
 		{
 			canAttack = true;
@@ -62,8 +69,8 @@ public class Player : MonoBehaviour
 		{
 			if (InputManagement.Attack() && canAttack) {
 				Transition(new Attacking());
-			} else if (InputManagement.Speak() && S.dialogue != null) {
-				S.dialogue.StartReading();
+			} else if (InputManagement.Speak() && S.interactableObj != null) {
+				S.interactableObj.Interact();
 				Transition(new Talking());
 			}
 
@@ -107,7 +114,7 @@ public class Player : MonoBehaviour
 
 			// Doors
 			if (InputManagement.Action() && S.door != null) {
-				S.UseDoor();
+				UseDoor();
 			}
 		}
 	}
@@ -123,7 +130,7 @@ public class Player : MonoBehaviour
 		public override void Update()
 		{
 			if (InputManagement.Speak()) {
-				bool moreDialogue = S.dialogue.Advance();
+				bool moreDialogue = DialogueEngine.Advance();
 				if (!moreDialogue) {
 					Transition(new NormalMovement());
 				}
@@ -167,7 +174,7 @@ public class Player : MonoBehaviour
 		public override void Update()
 		{
 			if (InputManagement.Speak()) {
-				S.dialogue.Advance();
+				DialogueEngine.Advance();
 			}
 		}
 	}
@@ -224,13 +231,6 @@ public class Player : MonoBehaviour
 	{
 		S.playerSM.ChangeState(new Dying());
 	}
-
-	public void UseDoor()
-	{
-		CameraFollow.InOut();
-		door.GetComponent<Door>().InOut();
-		spawn = transform.position;
-	}
 	
 	void Awake() 
 	{
@@ -239,8 +239,6 @@ public class Player : MonoBehaviour
 		anim = GetComponent<Animator>();
 		rb2d = GetComponent<Rigidbody2D>();
         grounded = false;
-        door = null;
-		dialogue = null;
         spawn = transform.position;
 
 		InputManagement.init();
@@ -282,17 +280,15 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll)
 	{
+		interactableObj = coll.gameObject.GetComponent<Interactable>();
+
 		switch (coll.tag) {
 			case "Door":
 				door = coll.gameObject;
 				break;
-			case "Dialogue trigger":
-				dialogue = coll.gameObject.GetComponent<Dialogue>();
-				break;
 			case "FallingDialogue":
 				rb2d.isKinematic = true;
-				dialogue = coll.gameObject.GetComponent<Dialogue>();
-				dialogue.StartReading();
+				DialogueEngine.Begin("falling");
 				break;
             case "HealthPickup":
                 Resources.ChangeHealth(1);
@@ -308,9 +304,6 @@ public class Player : MonoBehaviour
 		switch (coll.tag) {
 			case "Door":
 				door = null;
-				break;
-			case "Dialogue trigger":
-				dialogue = null;
 				break;
 		}
 	}

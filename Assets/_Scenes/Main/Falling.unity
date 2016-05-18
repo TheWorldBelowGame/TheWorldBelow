@@ -1170,12 +1170,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 883fc124ce3de4958b35a1707550e03c, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &1009552951 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11449296, guid: b5e9ba128e337794198d42d9385dc028,
-    type: 2}
-  m_PrefabInternal: {fileID: 42488021}
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1 &1415136645
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,7 +1375,6 @@ GameObject:
   - 4: {fileID: 1563458531}
   - 33: {fileID: 1563458530}
   - 61: {fileID: 1563458533}
-  - 114: {fileID: 1563458532}
   m_Layer: 0
   m_Name: sign
   m_TagString: FallingDialogue
@@ -1408,33 +1401,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 15
---- !u!114 &1563458532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1563458528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 368e55e11d3890a418a200aad9c086ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  messages:
-  - Though the world seems bright, the Sun no longer sits in the sky.
-  - The Sun's absence will spread darkness and corruption.
-  - The girl who lives above has fallen,
-  - and wants to go home.
-  faces:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  dialogue: {fileID: 2086829983}
-  background: {fileID: 1909197399}
-  face: {fileID: 1009552951}
-  isBeingRead: 0
-  fall: 1
-  anim: {fileID: 0}
 --- !u!61 &1563458533
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1476,9 +1442,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 430c516e9a1d54f21a5c1025cd07ea8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  falling: 1
   player: {fileID: 397084043}
   initOffset: {x: 3, y: 2, z: -10}
-  falling: 1
   outside: {fileID: 155192396}
   inside: {fileID: 670430781}
   speed: 0.05
@@ -1538,12 +1504,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ebcd3ab07015d478aac0e2cbc85b3773, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &1909197399 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11470990, guid: b5e9ba128e337794198d42d9385dc028,
-    type: 2}
-  m_PrefabInternal: {fileID: 42488021}
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!1001 &1970103258
 Prefab:
   m_ObjectHideFlags: 0
@@ -1586,12 +1546,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 78103353befcf4ab486860a049fe8905, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &2086829983 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11429160, guid: b5e9ba128e337794198d42d9385dc028,
-    type: 2}
-  m_PrefabInternal: {fileID: 42488021}
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
 --- !u!224 &2092556715 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 22451450, guid: b5e9ba128e337794198d42d9385dc028,
