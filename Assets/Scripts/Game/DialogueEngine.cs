@@ -6,15 +6,10 @@ using System;
 
 class DialogueEngine : MonoBehaviour
 {
-	// Singleton
-	static DialogueEngine S;
-
-	// Visible in Editor
-	public Text dialogueObj;
-	public Image backgroundObj;
-	public Image faceObj;
-
 	// Private
+	static Image backgroundObj;
+	static Text dialogueObj;
+	static Image faceObj;
 	static Action onFinish;
 	static List<string> messages;
 	static List<Sprite> faces;
@@ -31,7 +26,16 @@ class DialogueEngine : MonoBehaviour
 		}
 
 		// Load messages and faces
-		StreamReader dialogueLines = new StreamReader(UnityEngine.Resources.Load<TextAsset>(actorName + ".txt").text);
+		messages = new List<string>();
+		faces = new List<Sprite>();
+		
+		TextAsset dialogueFile = UnityEngine.Resources.Load<TextAsset>("Dialogue/" + actorName);
+		if (dialogueFile == null) {
+			Debug.Log("Unable to load file: " + actorName);
+			return;
+		}
+
+		StreamReader dialogueLines = new StreamReader(new MemoryStream(dialogueFile.bytes));
 		string readText;
 		while ((readText = dialogueLines.ReadLine()) != null) {
 			messages.Add(readText);
@@ -39,7 +43,7 @@ class DialogueEngine : MonoBehaviour
 
 		inUse = true;
 		onFinish = _onFinish;
-		S.backgroundObj.gameObject.SetActive(true);
+		backgroundObj.gameObject.SetActive(true);
 		current = -1;
 		Advance();
 	}
@@ -51,9 +55,10 @@ class DialogueEngine : MonoBehaviour
 		current++;
 
 		if (current < messages.Count) {
-			S.dialogueObj.text = messages[current];
-			S.faceObj.sprite = faces[current];
+			dialogueObj.text = messages[current];
+			faceObj.sprite = faces[current];
 		} else {
+			backgroundObj.gameObject.SetActive(false);
 			inUse = false;
 			if (onFinish != null) {
 				onFinish();
@@ -65,10 +70,11 @@ class DialogueEngine : MonoBehaviour
 	
 	void Start()
 	{
-		S = this;
 		inUse = false;
+		backgroundObj = GameObject.Find("/Canvas/Background").GetComponent<Image>();
+		dialogueObj = GameObject.Find("/Canvas/Background/Dialogue").GetComponent<Text>();
+		faceObj = GameObject.Find("/Canvas/Background/Face").GetComponent<Image>();
+
 		backgroundObj.gameObject.SetActive(false);
 	}
-
-
 }
