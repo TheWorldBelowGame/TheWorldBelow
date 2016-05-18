@@ -238,6 +238,7 @@ GameObject:
   - 222: {fileID: 431901799}
   - 114: {fileID: 431901798}
   - 114: {fileID: 431901797}
+  - 114: {fileID: 431901800}
   m_Layer: 5
   m_Name: About
   m_TagString: Untagged
@@ -303,8 +304,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 702620746}
-        m_MethodName: gotoLevel
+      - m_Target: {fileID: 431901800}
+        m_MethodName: GotoLevel
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -349,6 +350,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 431901795}
+--- !u!114 &431901800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 431901795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e85cd58b6e11a8448a53439bd8b9a8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &502933333
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,6 +445,7 @@ GameObject:
   - 222: {fileID: 655131364}
   - 114: {fileID: 655131363}
   - 114: {fileID: 655131362}
+  - 114: {fileID: 655131365}
   m_Layer: 5
   m_Name: Controls
   m_TagString: Untagged
@@ -498,8 +511,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 702620746}
-        m_MethodName: gotoLevel
+      - m_Target: {fileID: 655131365}
+        m_MethodName: GotoLevel
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -544,6 +557,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 655131360}
+--- !u!114 &655131365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 655131360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e85cd58b6e11a8448a53439bd8b9a8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &702620741
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,6 +870,7 @@ GameObject:
   - 222: {fileID: 1089820461}
   - 114: {fileID: 1089820460}
   - 114: {fileID: 1089820459}
+  - 114: {fileID: 1089820462}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -911,8 +936,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 702620746}
-        m_MethodName: gotoLevel
+      - m_Target: {fileID: 1089820462}
+        m_MethodName: GotoLevel
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -957,6 +982,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1089820457}
+--- !u!114 &1089820462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1089820457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e85cd58b6e11a8448a53439bd8b9a8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1313511538
 GameObject:
   m_ObjectHideFlags: 0

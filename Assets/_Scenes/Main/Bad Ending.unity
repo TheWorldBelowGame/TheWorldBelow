@@ -580,6 +580,7 @@ GameObject:
   - 222: {fileID: 1805178265}
   - 114: {fileID: 1805178264}
   - 114: {fileID: 1805178263}
+  - 114: {fileID: 1805178266}
   m_Layer: 0
   m_Name: Menu button
   m_TagString: Untagged
@@ -644,7 +645,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1916774869}
+      - m_Target: {fileID: 1805178266}
         m_MethodName: GotoLevel
         m_Mode: 5
         m_Arguments:
@@ -690,6 +691,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1805178261}
+--- !u!114 &1805178266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1805178261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e85cd58b6e11a8448a53439bd8b9a8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1843838810 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11449296, guid: b5e9ba128e337794198d42d9385dc028,
@@ -896,21 +908,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5e9ba128e337794198d42d9385dc028, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1916774868 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 192008, guid: b5e9ba128e337794198d42d9385dc028, type: 2}
-  m_PrefabInternal: {fileID: 1916774867}
---- !u!114 &1916774869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1916774868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e85cd58b6e11a8448a53439bd8b9a8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2130023242
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,6 +935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 368e55e11d3890a418a200aad9c086ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBeingRead: 0
   messages:
   - wat
   faces:
@@ -945,7 +943,6 @@ MonoBehaviour:
   dialogue: {fileID: 1645801992}
   background: {fileID: 396706293}
   face: {fileID: 1843838810}
-  isBeingRead: 0
   fall: 0
   anim: {fileID: 0}
 --- !u!4 &2130023244
