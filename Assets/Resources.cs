@@ -97,7 +97,7 @@ public class Resources : MonoBehaviour {
             S.health = Mathf.Max(S.health + amount, 0);
         }
         if (S.health <= 0) {
-            Player.S.playerSM.ChangeState(new PlayerState.Dying());
+			Player.Kill();
         }
     }
 }

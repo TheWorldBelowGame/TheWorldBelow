@@ -46,7 +46,6 @@ public class StateMachine<T> where T : State
 	{
 		if (currentState != null)
 		{
-			currentState.CheckState();
 			currentState.Update();
 		}
 	}
@@ -63,8 +62,6 @@ public abstract class State
 	public Action<State> Transition;
 
 	public abstract void Start();
-	// CheckState is used to transition to different states
-	public abstract void CheckState();
 	public abstract void Update();
 	public abstract void Finish();
 }
