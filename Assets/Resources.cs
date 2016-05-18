@@ -1,18 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 using System.Collections;
 
 public class Resources : MonoBehaviour {
 
     public static Resources S;
 
-    public int health = 3;
-    public int energy = 3;
+    public float health = 10;
+    public float maxHealth = 10;
 
-    public int maxHealth = 3;
-    public int maxEnergy = 3;
+    public Image healthFill;
 
-    Text txt;
+    public int energy = 8;    
+    public int maxEnergy = 8;
+
+    public List<Image> energyImages;
+
+    public Color energyEmpty;
+    public Color energyFull;
+
+    //Text txt;
 
     void Awake() {
         S = this;
@@ -20,12 +28,15 @@ public class Resources : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        txt = GetComponent<Text>();
-        UpdateText();
+        //txt = GetComponentInChildren<Text>();
+        UpdateResources();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+        S.UpdateResources();
+
         if (Input.GetKeyDown(KeyCode.O)) {
             ChangeHealth(1);
         }
@@ -43,14 +54,25 @@ public class Resources : MonoBehaviour {
         }
     }
 
-    static void UpdateText() {
-        S.txt.text = "Health: " + S.health + "\n" + "Energy: " + S.energy;
+    void UpdateResources() {
+        //txt.text = health.ToString();
+
+        healthFill.fillAmount = health / maxHealth;
+
+        for (int i = 0; i < energyImages.Count; i++) {
+            if (maxEnergy <= i) {
+                energyImages[i].color = Color.clear;
+            } else if (energy > i) {
+                energyImages[i].color = energyFull;
+            } else {
+                energyImages[i].color = energyEmpty;
+            }
+        }
     }
 
     public static void Respawn() {
         S.health = S.maxHealth;
         S.energy = S.maxEnergy;
-        UpdateText();
     }
 
     public static void ChangeEnergy(int amount) {
@@ -59,7 +81,6 @@ public class Resources : MonoBehaviour {
         } else {
             S.energy = Mathf.Max(S.energy + amount, 0);
         }
-        UpdateText();
     }
 
     public static void ChangeHealth(int amount) {
@@ -68,7 +89,6 @@ public class Resources : MonoBehaviour {
         } else {
             S.health = Mathf.Max(S.health + amount, 0);
         }
-        UpdateText();
         if (S.health <= 0) {
             Player.S.playerSM.ChangeState(new PlayerState.Dying());
         }
