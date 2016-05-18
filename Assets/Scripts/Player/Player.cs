@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
 	[HideInInspector] public Animator anim;
 	[HideInInspector] public Rigidbody2D rb2d;
     [HideInInspector] public bool grounded;
-    [HideInInspector] public bool walled;
 	[HideInInspector] public bool pause = false;
 	[HideInInspector] public Dialogue dialogue;
 
@@ -94,11 +93,7 @@ public class Player : MonoBehaviour
 				SetAnim(AnimState.Idle);
 			} else {
 				SetAnim(AnimState.Running);
-				if (!S.grounded && S.walled) {
-					// cant move
-				} else {
-					rb.velocity = new Vector2(moveInput * maxSpeed, rb.velocity.y);
-				}
+				rb.velocity = new Vector2(moveInput * maxSpeed, rb.velocity.y);
 			}
 
 			// Control left/right facing
@@ -244,7 +239,6 @@ public class Player : MonoBehaviour
 		anim = GetComponent<Animator>();
 		rb2d = GetComponent<Rigidbody2D>();
         grounded = false;
-        walled = false;
         door = null;
 		dialogue = null;
         spawn = transform.position;
@@ -268,14 +262,12 @@ public class Player : MonoBehaviour
 	}
 
     // Checking if the player is grounded and can jump
-    void OnCollisionEnter2D(Collision2D coll) {
+    void OnCollisionEnter2D(Collision2D coll)
+	{
         switch (coll.gameObject.tag) {
             case "Ground":
             case "Hidden_Platform":
                 grounded = true;
-                break;
-            case "Wall":
-                walled = true;
                 break;
 		    case "Enemy":
                 Resources.ChangeHealth(-1);
@@ -283,15 +275,13 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnCollisionExit2D(Collision2D coll) {
-		switch (coll.gameObject.tag) {
-			case "Wall":
-				walled = false;
-				break;
-		}
+    void OnCollisionExit2D(Collision2D coll)
+	{
+
     }
 
-    void OnTriggerEnter2D(Collider2D coll) {
+    void OnTriggerEnter2D(Collider2D coll)
+	{
 		switch (coll.tag) {
 			case "Door":
 				door = coll.gameObject;
@@ -313,7 +303,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D coll) {
+    void OnTriggerExit2D(Collider2D coll)
+	{
 		switch (coll.tag) {
 			case "Door":
 				door = null;
