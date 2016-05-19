@@ -4,21 +4,20 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
-	// Definitions
+	// DEFINITIONS
 	public enum AnimState { Idle, Running, Jumping, Attack, Death, Falling };
 
-	// Singleton
+	// SINGLETON
 	[HideInInspector] public static Player S;
 	[HideInInspector] StateMachine<BasePlayerState> playerSM;
 
-	// Public
+	// PUBLIC
 	[HideInInspector] public GameObject door;
 	[HideInInspector] public Animator anim;
 	[HideInInspector] public Rigidbody2D rb2d;
     [HideInInspector] public bool grounded;
-	[HideInInspector] public bool pause = false;	// TODO: Change this to a function that changes state
 
-	// Visible in Editor
+	// VISIBLE IN EDITOR
 	public float WALK_FORCE = 4.0f;
 	public float RUN_FORCE = 6.5f;
 	public float JUMP_FORCE = 11f;
@@ -27,13 +26,12 @@ public class Player : MonoBehaviour
 	public GameObject sword;
     public Vector3 spawn;
 
-	// Private
+	// PRIVATE
 	Interactable interactableObj;
 
-	// Player States
+	// PLAYER STATES
 
-	// TODO: This shouldnt be public, but right now it has to be because of the way playerSM works
-	public abstract class BasePlayerState : State
+	abstract class BasePlayerState : State
 	{
 		// Only here because most states don't need to do anything on Finish
 		// This reduces the compiler errors for not implementing the Finish function lol
@@ -53,6 +51,9 @@ public class Player : MonoBehaviour
 
 		void UseDoor()
 		{
+			// Workaround because OnTriggerExit doesn't fire when we use doors?
+			S.interactableObj = null;
+
 			CameraFollow.InOut();
 			S.door.GetComponent<Door>().InOut();
 			S.spawn = S.transform.position;
@@ -227,11 +228,14 @@ public class Player : MonoBehaviour
 		}
 	}
 
+	// FUNCTIONS
+
+	// Kills the player. Public so that other scripts (specifically Resource Management) can cause player to die
 	public static void Kill()
 	{
 		S.playerSM.ChangeState(new Dying());
 	}
-	
+
 	void Awake() 
 	{
         S = this;
@@ -258,8 +262,7 @@ public class Player : MonoBehaviour
 		
 		playerSM.Update();
 	}
-
-    // Checking if the player is grounded and can jump
+	
     void OnCollisionEnter2D(Collision2D coll)
 	{
         switch (coll.gameObject.tag) {
@@ -273,18 +276,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnCollisionExit2D(Collision2D coll)
-	{
-
-    }
-
     void OnTriggerEnter2D(Collider2D coll)
 	{
-		interactableObj = coll.gameObject.GetComponent<Interactable>();
+		Interactable targetInteractable = coll.gameObject.GetComponent<Interactable>();
+		if (interactableObj == null && targetInteractable != null) {
+			interactableObj = targetInteractable;
+		}
 
 		switch (coll.tag) {
 			case "Door":
 				door = coll.gameObject;
+				break;
+			case "FallingTrigger":
+				playerSM.ChangeState(new Falling());
 				break;
 			case "FallingDialogue":
 				rb2d.isKinematic = true;
@@ -301,7 +305,7 @@ public class Player : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D coll)
 	{
-		if (interactableObj == coll.gameObject.GetComponent<Interactable>()) {
+		if (interactableObj != null && interactableObj == coll.gameObject.GetComponent<Interactable>()) {
 			interactableObj = null;
 		}
 
@@ -310,10 +314,5 @@ public class Player : MonoBehaviour
 				door = null;
 				break;
 		}
-	}
-
-	public void Fall()
-	{
-		playerSM.ChangeState(new Falling());
 	}
 }

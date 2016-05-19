@@ -10,7 +10,6 @@ public class Fall : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
 	{
         if (other.CompareTag("Player")) {
-			Player.S.Fall();
             background1.Begin();
             background2.Begin();
         }
