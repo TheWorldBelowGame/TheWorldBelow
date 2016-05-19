@@ -17,6 +17,7 @@ TagManager:
   - FallingDialogue
   - HealthPickup
   - EnergyPickup
+  - FallingTrigger
   layers:
   - Default
   - TransparentFX
