@@ -39,6 +39,7 @@ class DialogueEngine : MonoBehaviour
 		string readText;
 		while ((readText = dialogueLines.ReadLine()) != null) {
 			messages.Add(readText);
+			faces.Add(new Sprite());
 		}
 
 		inUse = true;

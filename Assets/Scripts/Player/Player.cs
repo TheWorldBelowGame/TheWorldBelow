@@ -301,6 +301,10 @@ public class Player : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D coll)
 	{
+		if (interactableObj == coll.gameObject.GetComponent<Interactable>()) {
+			interactableObj = null;
+		}
+
 		switch (coll.tag) {
 			case "Door":
 				door = null;
