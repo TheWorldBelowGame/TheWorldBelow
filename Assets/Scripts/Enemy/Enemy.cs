@@ -15,7 +15,6 @@ public class Enemy : MonoBehaviour
     public float distance = 2;
     public bool startLeft = true;
     public float chargeDistance = 5;
-    public GameObject button = null;
 	public BoxCollider2D col;
 	public Animator anim;
 
@@ -105,9 +104,6 @@ public class Enemy : MonoBehaviour
 		Vector2 vel = rb.velocity;
 		vel.x = 0f;
 		rb.velocity = vel;
-        if (button != null) {
-            Destroy(button.gameObject);
-        }
 	}
 
 }
