@@ -384,6 +384,7 @@ GameObject:
   - 114: {fileID: 11406904}
   - 114: {fileID: 11446616}
   - 114: {fileID: 11409820}
+  - 114: {fileID: 11403874}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -508,6 +509,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11403874
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 192008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58a906792e43f8a44ba0144d4668a8e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11406904
 MonoBehaviour:
   m_ObjectHideFlags: 1

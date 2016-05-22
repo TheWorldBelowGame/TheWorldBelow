@@ -143,7 +143,7 @@ public class Player : MonoBehaviour
 	class Attacking : BasePlayerState
 	{
 		float attackTimer;
-
+		
 		public override void Start()
 		{
 			SetAnim(AnimState.Attack);
@@ -239,17 +239,16 @@ public class Player : MonoBehaviour
 	void Awake() 
 	{
         S = this;
-		playerSM = new StateMachine<BasePlayerState>(new NormalMovement());
-		anim = GetComponent<Animator>();
-		rb2d = GetComponent<Rigidbody2D>();
-        grounded = false;
-        spawn = transform.position;
-
-		InputManagement.init();
 	}
 	
 	void Start()
 	{
+		playerSM = new StateMachine<BasePlayerState>(new NormalMovement());
+		anim = GetComponent<Animator>();
+		rb2d = GetComponent<Rigidbody2D>();
+		grounded = false;
+		spawn = transform.position;
+
 		sword.SetActive(false);
 		playerSM.ChangeState(new NormalMovement());
 	}
